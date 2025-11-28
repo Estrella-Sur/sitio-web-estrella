@@ -4,6 +4,16 @@ import Image from 'next/image';
 import { motion } from 'framer-motion';
 
 export default function OurHistorySection() {
+  // Colores de la paleta para los puntos de la línea histórica
+  const timelineColors = [
+    '#006a86', // Azul
+    '#99b944', // Verde claro
+    '#0d6f3c', // Verde oscuro
+    '#f1d02d', // Amarillo
+    '#006a86', // Azul
+    '#99b944', // Verde claro
+  ];
+
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -42,7 +52,7 @@ export default function OurHistorySection() {
             DOS DÉCADAS TRANSFORMANDO VIDAS
           </h1>
           <p className="text-lg text-text-light dark:text-text-dark max-w-4xl mx-auto">
-            La historia de la Organización "Estrella del Sur" se remonta al <span className="font-bold">7 de febrero de 2004</span>, cuando en una asamblea de padres de familia se tomó la decisión de fundar esta entidad con el propósito de trabajar incansablemente por el desarrollo integral de niñas y niños en las zonas periurbanas de la ciudad de Oruro.
+            La historia de la Organización &quot;Estrella del Sur&quot; se remonta al <span className="font-bold">7 de febrero de 2004</span>, cuando en una asamblea de padres de familia se tomó la decisión de fundar esta entidad con el propósito de trabajar incansablemente por el desarrollo integral de niñas y niños en las zonas periurbanas de la ciudad de Oruro.
           </p>
         </div>
 
@@ -68,10 +78,10 @@ export default function OurHistorySection() {
             <div className="md:w-1/4 flex-shrink-0 mb-4 md:mb-0 relative">
               <h2 className="text-5xl font-bold text-subtle-light dark:text-subtle-dark">2004</h2>
               {/* Bullet al lado derecho del año */}
-              <div className="absolute right-0 top-1/2 w-6 h-6 bg-gray-400 dark:bg-gray-600 rounded-full hidden md:block shadow-lg z-10" style={{ transform: 'translateX(-1.75rem) translateY(-50%)' }}></div>
+              <div className="absolute right-0 top-1/2 w-6 h-6 rounded-full hidden md:block shadow-lg z-10" style={{ transform: 'translateX(-1.75rem) translateY(-50%)', backgroundColor: timelineColors[0] }}></div>
             </div>
             <div className="relative md:w-3/4 pl-8 md:pl-0">
-              <div className="timeline-decorator md:hidden"></div>
+              <div className="timeline-decorator md:hidden" style={{ '--timeline-color': timelineColors[0] } as React.CSSProperties}></div>
               <div className="relative pl-8 md:pl-0">
                 <div className="mb-4">
                   <h4 className="text-lg font-semibold text-text-light dark:text-text-dark">FUNDACIÓN</h4>
@@ -84,7 +94,7 @@ export default function OurHistorySection() {
                   className="w-full h-48 object-cover rounded-lg shadow-md"
                 />
                 <p className="mt-4 text-subtle-light dark:text-subtle-dark">
-                  El 7 de febrero de 2004, en una asamblea de padres de familia se fundó "Estrella del Sur" para trabajar por el desarrollo integral de niñas y niños en las zonas periurbanas de Oruro. Con el apoyo inicial de Christian Children Fund, se patrocinó a 450 niños en el distrito 5.
+                  El 7 de febrero de 2004, en una asamblea de padres de familia se fundó &quot;Estrella del Sur&quot; para trabajar por el desarrollo integral de niñas y niños en las zonas periurbanas de Oruro. Con el apoyo inicial de Christian Children Fund, se patrocinó a 450 niños en el distrito 5.
                 </p>
               </div>
             </div>
@@ -98,10 +108,10 @@ export default function OurHistorySection() {
             <div className="md:w-1/4 flex-shrink-0 mb-4 md:mb-0 relative">
               <h2 className="text-5xl font-bold text-subtle-light dark:text-subtle-dark">2010</h2>
               {/* Bullet al lado derecho del año */}
-              <div className="absolute right-0 top-1/2 w-6 h-6 bg-gray-400 dark:bg-gray-600 rounded-full hidden md:block shadow-lg z-10" style={{ transform: 'translateX(-1.75rem) translateY(-50%)' }}></div>
+              <div className="absolute right-0 top-1/2 w-6 h-6 rounded-full hidden md:block shadow-lg z-10" style={{ transform: 'translateX(-1.75rem) translateY(-50%)', backgroundColor: timelineColors[1] }}></div>
             </div>
             <div className="relative md:w-3/4 pl-8 md:pl-0">
-              <div className="timeline-decorator md:hidden"></div>
+              <div className="timeline-decorator md:hidden" style={{ '--timeline-color': timelineColors[1] } as React.CSSProperties}></div>
               <div className="relative pl-8 md:pl-0">
                 <div className="mb-4">
                   <h4 className="text-lg font-semibold text-text-light dark:text-text-dark">PROYECTOS FAMILIARES</h4>
@@ -114,7 +124,7 @@ export default function OurHistorySection() {
                   className="w-full h-48 object-cover rounded-lg shadow-md"
                 />
                 <p className="mt-4 text-subtle-light dark:text-subtle-dark">
-                  Se implementaron proyectos familiares "Give and Love" que beneficiaron a más de 100 familias con emprendimientos en comida rápida, costura industrial y tejidos en telar. Se construyó infraestructura básica en Villa Challacollo incluyendo tanque de agua y asfaltado.
+                  Se implementaron proyectos familiares &quot;Give and Love&quot; que beneficiaron a más de 100 familias con emprendimientos en comida rápida, costura industrial y tejidos en telar. Se construyó infraestructura básica en Villa Challacollo incluyendo tanque de agua y asfaltado.
                 </p>
               </div>
             </div>
@@ -128,10 +138,10 @@ export default function OurHistorySection() {
             <div className="md:w-1/4 flex-shrink-0 mb-4 md:mb-0 relative">
               <h2 className="text-5xl font-bold text-subtle-light dark:text-subtle-dark">2011</h2>
               {/* Bullet al lado derecho del año */}
-              <div className="absolute right-0 top-1/2 w-6 h-6 bg-gray-400 dark:bg-gray-600 rounded-full hidden md:block shadow-lg z-10" style={{ transform: 'translateX(-1.75rem) translateY(-50%)' }}></div>
+              <div className="absolute right-0 top-1/2 w-6 h-6 rounded-full hidden md:block shadow-lg z-10" style={{ transform: 'translateX(-1.75rem) translateY(-50%)', backgroundColor: timelineColors[2] }}></div>
             </div>
             <div className="relative md:w-3/4 pl-8 md:pl-0">
-              <div className="timeline-decorator md:hidden"></div>
+              <div className="timeline-decorator md:hidden" style={{ '--timeline-color': timelineColors[2] } as React.CSSProperties}></div>
               <div className="relative pl-8 md:pl-0">
                 <div className="mb-4">
                   <h4 className="text-lg font-semibold text-text-light dark:text-text-dark">EXPANSIÓN TERRITORIAL</h4>
@@ -158,10 +168,10 @@ export default function OurHistorySection() {
             <div className="md:w-1/4 flex-shrink-0 mb-4 md:mb-0 relative">
               <h2 className="text-5xl font-bold text-subtle-light dark:text-subtle-dark">2019</h2>
               {/* Bullet al lado derecho del año */}
-              <div className="absolute right-0 top-1/2 w-6 h-6 bg-gray-400 dark:bg-gray-600 rounded-full hidden md:block shadow-lg z-10" style={{ transform: 'translateX(-1.75rem) translateY(-50%)' }}></div>
+              <div className="absolute right-0 top-1/2 w-6 h-6 rounded-full hidden md:block shadow-lg z-10" style={{ transform: 'translateX(-1.75rem) translateY(-50%)', backgroundColor: timelineColors[3] }}></div>
             </div>
             <div className="relative md:w-3/4 pl-8 md:pl-0">
-              <div className="timeline-decorator md:hidden"></div>
+              <div className="timeline-decorator md:hidden" style={{ '--timeline-color': timelineColors[3] } as React.CSSProperties}></div>
               <div className="relative pl-8 md:pl-0">
                 <div className="mb-4">
                   <h4 className="text-lg font-semibold text-text-light dark:text-text-dark">MODELOS PROGRAMÁTICOS</h4>
@@ -188,10 +198,10 @@ export default function OurHistorySection() {
             <div className="md:w-1/4 flex-shrink-0 mb-4 md:mb-0 relative">
               <h2 className="text-5xl font-bold text-subtle-light dark:text-subtle-dark">2020</h2>
               {/* Bullet al lado derecho del año */}
-              <div className="absolute right-0 top-1/2 w-6 h-6 bg-gray-400 dark:bg-gray-600 rounded-full hidden md:block shadow-lg z-10" style={{ transform: 'translateX(-1.75rem) translateY(-50%)' }}></div>
+              <div className="absolute right-0 top-1/2 w-6 h-6 rounded-full hidden md:block shadow-lg z-10" style={{ transform: 'translateX(-1.75rem) translateY(-50%)', backgroundColor: timelineColors[4] }}></div>
             </div>
             <div className="relative md:w-3/4 pl-8 md:pl-0">
-              <div className="timeline-decorator md:hidden"></div>
+              <div className="timeline-decorator md:hidden" style={{ '--timeline-color': timelineColors[4] } as React.CSSProperties}></div>
               <div className="relative pl-8 md:pl-0">
                 <div className="mb-4">
                   <h4 className="text-lg font-semibold text-text-light dark:text-text-dark">ADAPTACIÓN DIGITAL</h4>
@@ -218,10 +228,10 @@ export default function OurHistorySection() {
             <div className="md:w-1/4 flex-shrink-0 mb-4 md:mb-0 relative">
               <h2 className="text-5xl font-bold text-subtle-light dark:text-subtle-dark">2024</h2>
               {/* Bullet al lado derecho del año */}
-              <div className="absolute right-0 top-1/2 w-6 h-6 bg-gray-400 dark:bg-gray-600 rounded-full hidden md:block shadow-lg z-10" style={{ transform: 'translateX(-1.75rem) translateY(-50%)' }}></div>
+              <div className="absolute right-0 top-1/2 w-6 h-6 rounded-full hidden md:block shadow-lg z-10" style={{ transform: 'translateX(-1.75rem) translateY(-50%)', backgroundColor: timelineColors[5] }}></div>
             </div>
             <div className="relative md:w-3/4 pl-8 md:pl-0">
-              <div className="timeline-decorator md:hidden"></div>
+              <div className="timeline-decorator md:hidden" style={{ '--timeline-color': timelineColors[5] } as React.CSSProperties}></div>
               <div className="relative pl-8 md:pl-0">
                 <div className="mb-4">
                   <h4 className="text-lg font-semibold text-text-light dark:text-text-dark">INNOVACIÓN Y PROYECTOS QUE MARCARON LA DIFERENCIA</h4>
@@ -255,11 +265,8 @@ export default function OurHistorySection() {
           top: 0.5rem;
           width: 0.5rem;
           height: 0.5rem;
-          background-color: #A8A29E;
+          background-color: var(--timeline-color, #006a86);
           border-radius: 9999px;
-        }
-        .dark .timeline-decorator::before {
-          background-color: #78716C;
         }
       `}</style>
     </>

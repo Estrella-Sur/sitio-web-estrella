@@ -1,5 +1,3 @@
-import crypto from 'crypto'
-
 /**
  * Genera una contraseña temporal segura
  */

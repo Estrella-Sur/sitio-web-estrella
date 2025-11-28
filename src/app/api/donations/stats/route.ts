@@ -1,9 +1,9 @@
-import { NextRequest, NextResponse } from 'next/server'
+import { NextResponse } from 'next/server'
 import { getServerSession } from 'next-auth'
 import { authOptions } from '@/lib/auth'
 import { prisma } from '@/lib/prisma'
 
-export async function GET(request: NextRequest) {
+export async function GET() {
   try {
     const session = await getServerSession(authOptions)
     
@@ -60,7 +60,6 @@ export async function GET(request: NextRequest) {
     ])
 
     // Calcular progreso mensual
-    const currentMonth = new Date().getMonth() + 1
     const monthlyTarget = monthlyGoal ? Number(monthlyGoal.targetAmount) / 12 : 0
     
     // Obtener donaciones aprobadas del mes actual

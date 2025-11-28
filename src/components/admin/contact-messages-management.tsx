@@ -1,13 +1,13 @@
 'use client'
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
+import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { 
   Mail, 
   Phone, 
@@ -18,8 +18,7 @@ import {
   CheckCircle, 
   Clock,
   MessageSquare,
-  Search,
-  AlertTriangle
+  Search
 } from 'lucide-react';
 import { toast } from 'sonner';
 
@@ -41,7 +40,6 @@ export function ContactMessagesManagement() {
   const [selectedMessage, setSelectedMessage] = useState<ContactMessage | null>(null);
   const [deletingMessage, setDeletingMessage] = useState<ContactMessage | null>(null);
   const [updatingMessage, setUpdatingMessage] = useState<ContactMessage | null>(null);
-  const [dialogOpen, setDialogOpen] = useState(false);
   const [searchInput, setSearchInput] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
   const [filter, setFilter] = useState<'all' | 'read' | 'unread'>('all');
@@ -56,11 +54,7 @@ export function ContactMessagesManagement() {
     return () => clearTimeout(timer);
   }, [searchInput]);
 
-  useEffect(() => {
-    fetchMessages();
-  }, [filter, month, year]);
-
-  const fetchMessages = async () => {
+  const fetchMessages = useCallback(async () => {
     try {
       setLoading(true);
       const params = new URLSearchParams();
@@ -82,7 +76,11 @@ export function ContactMessagesManagement() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [filter, month, year]);
+
+  useEffect(() => {
+    fetchMessages();
+  }, [fetchMessages]);
 
   const handleClearSearch = () => {
     setSearchInput('');
@@ -96,28 +94,6 @@ export function ContactMessagesManagement() {
       'read': 'read'
     };
     setFilter(filterMap[value] || 'all');
-  };
-
-  const handleMarkAsRead = async (messageId: string) => {
-    try {
-      const response = await fetch(`/api/admin/contact-messages/${messageId}`, {
-        method: 'PATCH',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ isRead: true })
-      });
-
-      if (response.ok) {
-        toast.success('Mensaje marcado como leído');
-        fetchMessages();
-      } else {
-        throw new Error('Error al marcar mensaje');
-      }
-    } catch (error) {
-      console.error('Error al marcar mensaje:', error);
-      toast.error('Error al marcar mensaje');
-    }
   };
 
   const handleDeleteConfirm = async () => {
@@ -332,7 +308,7 @@ export function ContactMessagesManagement() {
                       </Badge>
                     )}
                     {message.isRead && (
-                        <Badge variant="outline" className="bg-green-100 text-green-800">
+                        <Badge variant="outline" className="bg-blue-100 text-blue-800">
                         <CheckCircle className="w-3 h-3 mr-1" />
                         Leído
                       </Badge>
@@ -580,7 +556,7 @@ export function ContactMessagesManagement() {
                           </div>
                         </div>
                       </div>
-                    <Badge variant="outline" className="bg-green-100 text-green-800">
+                    <Badge variant="outline" className="bg-blue-100 text-blue-800">
                         <CheckCircle className="w-3 h-3 mr-1" />
                         Leído
                       </Badge>
@@ -670,7 +646,7 @@ export function ContactMessagesManagement() {
             <div className="py-4">
               <p className="text-sm text-gray-600">
                 ¿Estás seguro de que quieres eliminar el mensaje de 
-                <strong> "{deletingMessage.name}"</strong> ({deletingMessage.email})?
+                <strong> &quot;{deletingMessage.name}&quot;</strong> ({deletingMessage.email})?
               </p>
               <p className="text-sm text-red-600 mt-2 font-medium">
                 Esta acción no se puede deshacer.
@@ -700,7 +676,7 @@ export function ContactMessagesManagement() {
             <div className="py-4">
               <p className="text-sm text-gray-600">
                 ¿Estás seguro de que quieres marcar como leído el mensaje de 
-                <strong> "{updatingMessage.name}"</strong> ({updatingMessage.email})?
+                <strong> &quot;{updatingMessage.name}&quot;</strong> ({updatingMessage.email})?
               </p>
             </div>
 

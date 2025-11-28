@@ -1,0 +1,415 @@
+﻿25:18  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+46:20  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+22:18  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+60:47  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+43:10  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+59:12  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+92:10  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+6:32  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+30:34  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+138:23  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+11:32  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+12:32  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+16:47  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+89:18  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+1:10  Warning: 'NextRequest' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+87:18  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+1:10  Warning: 'NextRequest' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+183:23  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+20:18  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+46:20  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+78:48  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+102:23  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+20:18  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+46:20  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+96:44  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+43:12  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+235:12  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+20:18  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+47:20  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+164:23  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+14:18  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+38:20  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+13:18  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+14:18  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+89:30  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+19:18  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+13:18  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+14:18  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+33:20  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+16:18  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+42:20  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+43:19  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+16:18  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+42:20  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+15:18  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+22:18  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+56:20  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+301:27  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+1:10  Warning: 'NextRequest' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+56:19  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+21:18  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+60:50  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+21:18  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+52:20  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+24:18  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+42:20  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+13:58  Warning: 'authenticatedRequest' is defined but never used. Allowed unused args must match /^_/u.  @typescript-eslint/no-unused-vars
+183:39  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+19:18  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+49:14  Warning: 'error' is defined but never used. Allowed unused caught errors must match /^_/u.  @typescript-eslint/no-unused-vars
+6:78  Warning: 'Users' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+6:85  Warning: 'Shield' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+6:93  Warning: 'Heart' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+8:8  Warning: 'Link' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+1082:25  Warning: Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+1092:27  Warning: `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`.  react/no-unescaped-entities
+1093:99  Warning: `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`.  react/no-unescaped-entities
+37:46  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+83:9  Warning: 'isActive' is assigned a value but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+22:17  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+391:66  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+412:53  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+30:17  Warning: 'session' is assigned a value but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+51:6  Warning: React Hook useEffect has a missing dependency: 'fetchApplications'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+142:9  Warning: 'getStatusIcon' is assigned a value but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+442:26  Warning: `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`.  react/no-unescaped-entities
+442:68  Warning: `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`.  react/no-unescaped-entities
+279:9  Warning: 'handleQuickApprove' is assigned a value but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+14:71  Warning: 'Download' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+15:27  Warning: 'getImagePlaceholderData' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+111:45  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+245:57  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+361:34  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+5:29  Warning: 'CardHeader' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+5:41  Warning: 'CardTitle' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+13:3  Warning: 'DollarSign' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+4:10  Warning: 'Card' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+4:16  Warning: 'CardContent' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+4:29  Warning: 'CardDescription' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+4:46  Warning: 'CardHeader' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+4:58  Warning: 'CardTitle' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+5:29  Warning: 'CardHeader' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+5:41  Warning: 'CardTitle' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+74:10  Warning: 'loading' is assigned a value but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+520:3  Warning: 'onEditUser' is defined but never used. Allowed unused args must match /^_/u.  @typescript-eslint/no-unused-vars
+12:52  Warning: 'Download' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+105:45  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+260:57  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+386:34  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+401:3  Warning: 'onToggleStatus' is defined but never used. Allowed unused args must match /^_/u.  @typescript-eslint/no-unused-vars
+402:3  Warning: 'onToggleFeatured' is defined but never used. Allowed unused args must match /^_/u.  @typescript-eslint/no-unused-vars
+450:19  Warning: Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+575:21  Warning: Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+9:48  Warning: 'Calendar' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+33:17  Warning: 'session' is assigned a value but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+51:6  Warning: React Hook useEffect has a missing dependency: 'fetchApplications'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+95:9  Warning: 'deleteApplication' is assigned a value but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+462:26  Warning: `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`.  react/no-unescaped-entities
+462:68  Warning: `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`.  react/no-unescaped-entities
+5:29  Warning: 'CardHeader' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+7:42  Warning: 'DollarSign' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+7:54  Warning: 'ExternalLink' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+7:68  Warning: 'ArrowRight' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+7:80  Warning: 'Share2' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+262:23  Warning: Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+9:10  Warning: 'Select' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+9:18  Warning: 'SelectContent' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+9:33  Warning: 'SelectItem' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+9:45  Warning: 'SelectTrigger' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+9:60  Warning: 'SelectValue' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+11:17  Warning: 'DollarSign' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+11:65  Warning: 'QrCode' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+11:98  Warning: 'XCircle' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+55:10  Warning: 'donationSubmitted' is assigned a value but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+231:17  Warning: Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+515:19  Warning: Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+539:99  Warning: `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`.  react/no-unescaped-entities
+539:114  Warning: `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`.  react/no-unescaped-entities
+43:9  Warning: A font-display parameter is missing (adding `&display=optional` is recommended). See: https://nextjs.org/docs/messages/google-font-display  @next/next/google-font-display
+43:9  Warning: Custom fonts not added in `pages/_document.js` will only load for a single page. This is discouraged. See: https://nextjs.org/docs/messages/no-page-custom-font  @next/next/no-page-custom-font
+44:9  Warning: Custom fonts not added in `pages/_document.js` will only load for a single page. This is discouraged. See: https://nextjs.org/docs/messages/no-page-custom-font  @next/next/no-page-custom-font
+46:9  Warning: Custom fonts not added in `pages/_document.js` will only load for a single page. This is discouraged. See: https://nextjs.org/docs/messages/no-page-custom-font  @next/next/no-page-custom-font
+4:8  Warning: 'Image' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+5:10  Warning: 'Card' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+5:16  Warning: 'CardContent' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+211:17  Warning: Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+28:15  Warning: Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+97:17  Warning: Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+139:17  Warning: Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+6:10  Warning: 'Badge' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+240:9  Warning: 'formatFileSize' is assigned a value but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+14:3  Warning: 'Users' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+15:3  Warning: 'Building2' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+19:3  Warning: 'FolderOpen' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+21:3  Warning: 'Wrench' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+25:3  Warning: 'AlertCircle' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+26:3  Warning: 'CheckCircle' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+19:21  Warning: 'Wrench' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+56:9  Warning: 'isContentManager' is assigned a value but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+19:3  Warning: 'ImageIcon' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+22:3  Warning: 'StarOff' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+89:6  Warning: React Hook useEffect has a missing dependency: 'fetchAlbums'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+747:72  Warning: `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`.  react/no-unescaped-entities
+747:94  Warning: `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`.  react/no-unescaped-entities
+45:3  Warning: 'onViewAlly' is defined but never used. Allowed unused args must match /^_/u.  @typescript-eslint/no-unused-vars
+7:10  Warning: 'Button' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+9:26  Warning: 'ExternalLink' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+9:33  Warning: 'DialogDescription' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+24:12  Warning: 'ImageIcon' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+75:6  Warning: React Hook useEffect has a missing dependency: 'fetchComplaints'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+117:9  Warning: 'handleStatusChange' is assigned a value but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+756:26  Warning: `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`.  react/no-unescaped-entities
+756:82  Warning: `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`.  react/no-unescaped-entities
+758:45  Warning: `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`.  react/no-unescaped-entities
+758:77  Warning: `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`.  react/no-unescaped-entities
+789:26  Warning: `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`.  react/no-unescaped-entities
+789:89  Warning: `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`.  react/no-unescaped-entities
+46:9  Warning: 'actionColor' is assigned a value but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+217:14  Warning: 'error' is defined but never used. Allowed unused caught errors must match /^_/u.  @typescript-eslint/no-unused-vars
+253:63  Warning: `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`.  react/no-unescaped-entities
+253:84  Warning: `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`.  react/no-unescaped-entities
+257:33  Warning: `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`.  react/no-unescaped-entities
+257:66  Warning: `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`.  react/no-unescaped-entities
+10:33  Warning: 'DialogDescription' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+22:3  Warning: 'AlertTriangle' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+44:10  Warning: 'dialogOpen' is assigned a value but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+44:22  Warning: 'setDialogOpen' is assigned a value but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+61:6  Warning: React Hook useEffect has a missing dependency: 'fetchMessages'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+101:9  Warning: 'handleMarkAsRead' is assigned a value but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+673:26  Warning: `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`.  react/no-unescaped-entities
+673:49  Warning: `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`.  react/no-unescaped-entities
+703:26  Warning: `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`.  react/no-unescaped-entities
+703:49  Warning: `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`.  react/no-unescaped-entities
+11:38  Warning: 'Eye' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+11:43  Warning: 'EyeOff' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+26:17  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+27:14  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+49:18  Warning: 'setSortBy' is assigned a value but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+50:21  Warning: 'setSortOrder' is assigned a value but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+51:10  Warning: 'selectedConvocatorias' is assigned a value but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+844:26  Warning: `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`.  react/no-unescaped-entities
+844:62  Warning: `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`.  react/no-unescaped-entities
+10:10  Warning: 'Upload' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+14:20  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+10:16  Warning: 'Upload' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+153:47  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+8:10  Warning: 'Select' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+8:18  Warning: 'SelectContent' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+8:33  Warning: 'SelectItem' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+8:45  Warning: 'SelectTrigger' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+8:60  Warning: 'SelectValue' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+12:28  Warning: 'Upload' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+371:76  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+372:90  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+11:16  Warning: 'Upload' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+69:77  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+82:75  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+95:85  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+233:47  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+9:10  Warning: 'Switch' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+10:19  Warning: 'Upload' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+10:16  Warning: 'Upload' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+162:47  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+8:36  Warning: 'Upload' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+273:21  Warning: Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+15:26  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+136:14  Warning: 'error' is defined but never used. Allowed unused caught errors must match /^_/u.  @typescript-eslint/no-unused-vars
+8:44  Warning: 'Upload' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+324:21  Warning: Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+71:61  Warning: `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`.  react/no-unescaped-entities
+71:73  Warning: `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`.  react/no-unescaped-entities
+4:74  Warning: 'DialogDescription' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+57:22  Warning: `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`.  react/no-unescaped-entities
+57:43  Warning: `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`.  react/no-unescaped-entities
+74:63  Warning: `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`.  react/no-unescaped-entities
+74:79  Warning: `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`.  react/no-unescaped-entities
+75:22  Warning: `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`.  react/no-unescaped-entities
+75:36  Warning: `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`.  react/no-unescaped-entities
+8:10  Warning: 'Trash2' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+51:17  Warning: 'errorData' is assigned a value but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+88:22  Warning: `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`.  react/no-unescaped-entities
+88:42  Warning: `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`.  react/no-unescaped-entities
+93:22  Warning: `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`.  react/no-unescaped-entities
+93:35  Warning: `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`.  react/no-unescaped-entities
+81:63  Warning: `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`.  react/no-unescaped-entities
+81:85  Warning: `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`.  react/no-unescaped-entities
+9:10  Warning: 'Trash2' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+49:11  Warning: 'isTokenValid' is assigned a value but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+124:22  Warning: `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`.  react/no-unescaped-entities
+124:38  Warning: `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`.  react/no-unescaped-entities
+93:22  Warning: `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`.  react/no-unescaped-entities
+93:36  Warning: `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`.  react/no-unescaped-entities
+88:22  Warning: `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`.  react/no-unescaped-entities
+88:34  Warning: `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`.  react/no-unescaped-entities
+75:22  Warning: `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`.  react/no-unescaped-entities
+75:36  Warning: `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`.  react/no-unescaped-entities
+10:19  Warning: 'Upload' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+23:17  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+24:14  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+68:63  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+69:28  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+69:56  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+238:33  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+284:20  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+396:50  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+10:10  Warning: 'Edit' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+10:16  Warning: 'Upload' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+232:47  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+6:10  Warning: 'Textarea' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+11:16  Warning: 'Upload' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+128:6  Warning: React Hook useEffect has a missing dependency: 'mapSectorsToSpanish'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+448:76  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+449:90  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+11:10  Warning: 'Edit' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+11:16  Warning: 'Upload' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+53:46  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+54:44  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+55:54  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+102:77  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+115:75  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+128:85  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+294:47  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+10:10  Warning: 'Switch' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+11:19  Warning: 'Upload' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+11:10  Warning: 'Edit' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+11:16  Warning: 'Upload' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+243:47  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+7:25  Warning: 'Upload' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+28:34  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+52:47  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+30:34  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+12:3  Warning: 'Upload' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+58:6  Warning: React Hook useEffect has a missing dependency: 'fetchImages'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+70:55  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+182:22  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+262:22  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+175:17  Warning: 'errorText' is assigned a value but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+428:3  Warning: 'onSelectAll' is defined but never used. Allowed unused args must match /^_/u.  @typescript-eslint/no-unused-vars
+432:3  Warning: 'onToggleFeatured' is defined but never used. Allowed unused args must match /^_/u.  @typescript-eslint/no-unused-vars
+7:29  Warning: 'CardHeader' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+7:41  Warning: 'CardTitle' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+18:3  Warning: 'Eye' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+20:3  Warning: 'User' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+97:6  Warning: React Hook useEffect has a missing dependency: 'fetchImages'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+266:22  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+365:22  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+551:93  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+574:15  Warning: Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+702:130  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+953:130  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+11:19  Warning: 'Upload' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+247:19  Warning: Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+9:51  Warning: 'Upload' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+105:6  Warning: React Hook useEffect has a missing dependency: 'fetchImages'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+253:23  Warning: Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+84:19  Warning: Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+12:32  Warning: 'Calendar' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+248:23  Warning: Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+618:78  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+27:3  Warning: 'Wrench' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+81:61  Warning: `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`.  react/no-unescaped-entities
+81:73  Warning: `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`.  react/no-unescaped-entities
+88:63  Warning: `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`.  react/no-unescaped-entities
+88:79  Warning: `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`.  react/no-unescaped-entities
+72:61  Warning: `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`.  react/no-unescaped-entities
+72:75  Warning: `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`.  react/no-unescaped-entities
+8:10  Warning: 'Eye' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+8:15  Warning: 'EyeOff' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+85:22  Warning: `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`.  react/no-unescaped-entities
+85:42  Warning: `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`.  react/no-unescaped-entities
+72:62  Warning: `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`.  react/no-unescaped-entities
+72:75  Warning: `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`.  react/no-unescaped-entities
+88:63  Warning: `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`.  react/no-unescaped-entities
+88:85  Warning: `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`.  react/no-unescaped-entities
+8:10  Warning: 'Eye' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+8:15  Warning: 'EyeOff' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+102:22  Warning: `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`.  react/no-unescaped-entities
+102:38  Warning: `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`.  react/no-unescaped-entities
+5:33  Warning: 'DialogDescription' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+81:22  Warning: `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`.  react/no-unescaped-entities
+81:36  Warning: `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`.  react/no-unescaped-entities
+16:34  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+80:130  Warning: `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`.  react/no-unescaped-entities
+80:144  Warning: `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`.  react/no-unescaped-entities
+14:34  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+77:22  Warning: `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`.  react/no-unescaped-entities
+77:36  Warning: `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`.  react/no-unescaped-entities
+29:3  Warning: 'Users' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+35:8  Warning: 'Image' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+1105:32  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+195:89  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+16:3  Warning: 'UserCheck' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+17:3  Warning: 'UserX' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+21:3  Warning: 'Filter' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+22:3  Warning: 'MoreHorizontal' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+28:3  Warning: 'Eye' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+29:3  Warning: 'EyeOff' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+97:6  Warning: React Hook useEffect has a missing dependency: 'filterUsers'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+14:3  Warning: 'Wrench' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+16:3  Warning: 'UserCheck' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+17:3  Warning: 'UserX' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+21:3  Warning: 'Filter' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+23:3  Warning: 'Edit' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+24:3  Warning: 'Trash2' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+28:8  Warning: 'Link' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+64:6  Warning: React Hook useEffect has a missing dependency: 'filterUsers'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+12:3  Warning: 'Image' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+13:3  Warning: 'ImageIcon' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+16:3  Warning: 'Newspaper' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+20:3  Warning: 'Calendar' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+23:3  Warning: 'Palette' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+29:3  Warning: 'AlertTriangle' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+319:43  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+369:43  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+387:51  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+77:14  Warning: 'error' is defined but never used. Allowed unused caught errors must match /^_/u.  @typescript-eslint/no-unused-vars
+8:10  Warning: 'getSession' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+8:22  Warning: 'signOut' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+8:31  Warning: 'signIn' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+47:9  Warning: 'router' is assigned a value but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+48:17  Warning: 'session' is assigned a value but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+5:22  Warning: 'signIn' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+5:30  Warning: 'signOut' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+16:9  Warning: 'router' is assigned a value but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+38:14  Warning: 'error' is defined but never used. Allowed unused caught errors must match /^_/u.  @typescript-eslint/no-unused-vars
+10:3  Warning: 'TrendingUp' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+18:3  Warning: 'Plus' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+5:47  Warning: 'TrendingUp' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+5:59  Warning: 'Eye' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+5:64  Warning: 'Briefcase' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+5:75  Warning: 'Settings' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+5:104  Warning: 'Shield' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+5:112  Warning: 'FolderOpen' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+5:22  Warning: 'TrendingDown' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+16:11  Warning: 'canManageUsers' is assigned a value but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+49:6  Warning: React Hook useEffect has a missing dependency: 'fetchGaleria'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+13:3  Warning: 'ExternalLink' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+14:3  Warning: 'Download' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+51:6  Warning: React Hook useEffect has a missing dependency: 'fetchGaleria'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+49:6  Warning: React Hook useEffect has a missing dependency: 'fetchGaleria'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+5:18  Warning: 'Users' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+5:25  Warning: 'Heart' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+5:32  Warning: 'BookOpen' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+29:8  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+219:7  Warning: 'calculateMapCenter' is assigned a value but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+239:9  Warning: 'stats' is assigned a value but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+334:19  Warning: Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+105:25  Warning: Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+37:44  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+135:6  Warning: React Hook useEffect has a missing dependency: 'loadData'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+20:10  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+40:48  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+117:11  Warning: 'emailVerificationToken' is assigned a value but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+183:25  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+27:17  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+50:50  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+41:61  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+17:34  Warning: 'request' is defined but never used. Allowed unused args must match /^_/u.  @typescript-eslint/no-unused-vars
+19:10  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+184:31  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+226:61  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+263:25  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+266:39  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+1:8  Warning: 'crypto' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+1:8  Warning: 'NextAuth' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars

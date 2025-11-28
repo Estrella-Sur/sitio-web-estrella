@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { X, ExternalLink, Play, Image as ImageIcon, Newspaper } from 'lucide-react';
+import Image from 'next/image';
 
 interface Programa {
   id: string;
@@ -199,7 +200,7 @@ export function ProgramasView({ programa, onClose }: ProgramasViewProps) {
                   <span>{programa._count?.news || programa.news?.length || 0} noticias relacionadas</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <ImageIcon className="h-4 w-4 text-green-500" />
+                  <ImageIcon className="h-4 w-4 text-blue-500" />
                   <span>{programa._count?.imageLibrary || programa.imageLibrary?.length || 0} imágenes en galería</span>
                 </div>
               </div>
@@ -245,9 +246,11 @@ export function ProgramasView({ programa, onClose }: ProgramasViewProps) {
                 <div className="grid grid-cols-2 gap-2">
                   {programa.imageLibrary.slice(0, 4).map((image) => (
                     <div key={image.id} className="aspect-square">
-                      <img
+                      <Image
                         src={image.imageUrl}
                         alt={image.imageAlt || image.title}
+                        width={200}
+                        height={200}
                         className="w-full h-full object-cover rounded"
                       />
                     </div>

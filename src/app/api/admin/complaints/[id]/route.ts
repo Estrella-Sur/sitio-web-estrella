@@ -34,7 +34,7 @@ export async function PATCH(
       );
     }
 
-    const complaint = await (prisma as any).complaint.update({
+    const complaint = await prisma.complaint.update({
       where: { id },
       data: {
         status,
@@ -84,7 +84,7 @@ export async function DELETE(
     const { id } = await params;
 
     // Obtener la denuncia antes de eliminarla para acceder a las evidencias
-    const existingComplaint = await (prisma as any).complaint.findUnique({
+    const existingComplaint = await prisma.complaint.findUnique({
       where: { id }
     });
 
@@ -141,7 +141,7 @@ export async function DELETE(
     }
 
     // Eliminar la denuncia de la base de datos
-    await (prisma as any).complaint.delete({
+    await prisma.complaint.delete({
       where: { id }
     });
 

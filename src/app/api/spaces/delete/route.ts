@@ -53,8 +53,8 @@ export async function POST(req: Request) {
       await storageService.deleteFile(bucket, key);
       console.log(`[Spaces][DELETE] Imagen eliminada: ${url}`);
       return NextResponse.json({ success: true, bucket, key });
-    } catch (err: any) {
-      const message = String(err?.message || err);
+    } catch (err: unknown) {
+      const message = String((err as { message?: unknown })?.message || err);
       // Tratar NoSuchKey como éxito idempotente
       if (/NoSuchKey|NotFound|404/.test(message)) {
         console.warn('Delete Spaces: objeto no existe, considerar éxito', { bucket, key, message });

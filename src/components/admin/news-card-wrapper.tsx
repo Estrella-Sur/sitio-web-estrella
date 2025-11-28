@@ -56,7 +56,7 @@ const categoryLabels = {
 };
 
 const categoryColors = {
-  NOTICIAS: 'bg-green-100 text-green-800 dark:bg-green-200 dark:text-green-900',
+  NOTICIAS: 'bg-blue-100 text-blue-800 dark:bg-blue-200 dark:text-blue-900',
   FUNDRAISING: 'bg-blue-100 text-blue-800 dark:bg-blue-200 dark:text-blue-900',
   COMPAÑIA: 'bg-purple-100 text-purple-800 dark:bg-purple-200 dark:text-purple-900',
   SIN_CATEGORIA: 'bg-gray-100 text-gray-800 dark:bg-gray-200 dark:text-gray-900'

@@ -69,7 +69,7 @@ export const ToggleEventStatusDialog: React.FC<ToggleEventStatusDialogProps> = (
         <DialogHeader>
           <DialogTitle>{actionCapitalized} Evento</DialogTitle>
           <DialogDescription>
-            ¿Estás seguro de que quieres {action} el evento "{event.title}"?
+            ¿Estás seguro de que quieres {action} el evento &quot;{event.title}&quot;?
             {isActivating 
               ? ' El evento será visible en la página pública.' 
               : ' El evento ya no será visible en la página pública.'

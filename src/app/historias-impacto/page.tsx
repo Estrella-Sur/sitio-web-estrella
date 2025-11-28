@@ -1,18 +1,15 @@
 'use client'
 
 import React, { useState, useEffect } from 'react';
-import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { 
   Play, 
   Heart, 
   Star,
-  Calendar,
   Search,
   Video,
   FileText,
-  ExternalLink,
   Clock,
   ArrowRight
 } from 'lucide-react';
@@ -250,7 +247,7 @@ export default function HistoriasImpactoPage() {
             <div className="text-red-600 dark:text-red-400 mb-4">
               <Heart className="h-16 w-16 mx-auto" />
             </div>
-            <h2 className="text-2xl font-bold text-text-light dark:text-text-dark mb-4">
+            <h2 className="text-2xl font-bold dark:text-text-dark mb-4" style={{ color: '#006a86' }}>
               Error al cargar los datos
             </h2>
             <p className="text-text-secondary-light dark:text-text-secondary-dark mb-8">
@@ -270,16 +267,29 @@ export default function HistoriasImpactoPage() {
       <SiteHeader />
       
       {/* Hero Section - Estilo Convergente */}
-      <div className="container mx-auto px-4 py-8">
-        <div className="grid lg:grid-cols-2 gap-12 items-center mb-12">
-          <div className="flex flex-col gap-6">
+      <div className="container mx-auto px-4 py-4 sm:py-6 md:py-8">
+        <div className="grid lg:grid-cols-2 gap-4 sm:gap-6 md:gap-12 items-start lg:items-center mb-4 sm:mb-6 md:mb-8 lg:mb-12">
+          <div className="flex flex-col gap-6 order-1 lg:order-1">
             <div>
-              <span className="bg-primary text-white text-xs font-bold px-3 py-1 rounded-md">HISTORIAS E IMPACTO</span>
+              <span className="text-white text-xs font-bold px-3 py-1 rounded-md" style={{ backgroundColor: '#99b944' }}>HISTORIAS E IMPACTO</span>
             </div>
-            <h1 className="text-5xl md:text-6xl font-extrabold font-display uppercase tracking-tight text-gray-900 dark:text-white">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold font-display uppercase tracking-tight dark:text-white break-words" style={{ color: '#006a86' }}>
               Historias que transforman comunidades
             </h1>
-            <p className="text-lg text-gray-600 dark:text-gray-400">
+            
+            {/* Hero Image - Mobile: debajo del título */}
+            <div className="relative h-[300px] lg:hidden mb-4">
+              <Image 
+                alt="Voluntarios distribuyendo ayuda comunitaria" 
+                className="w-full h-full object-cover object-center rounded-xl shadow-lg" 
+                src="/static-images/heroes/historias_hero.jpg"
+                width={1200}
+                height={300}
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent rounded-xl"></div>
+            </div>
+            
+            <p className="text-base sm:text-lg dark:text-gray-400" style={{ color: '#006a86' }}>
               Cada historia que compartimos es una ventana a las vidas que hemos tocado, los sueños que hemos ayudado a cumplir y las comunidades que hemos fortalecido.
             </p>
             {/* Estadísticas actualizadas */}
@@ -306,11 +316,13 @@ export default function HistoriasImpactoPage() {
             </div>
           </div>
           
-          {/* Hero Image */}
-          <div className="relative h-[500px]">
-            <img 
+          {/* Hero Image - Desktop: lado derecho */}
+          <div className="relative h-[500px] hidden lg:block order-2 lg:order-2">
+            <Image 
               alt="Voluntarios distribuyendo ayuda comunitaria" 
-              className="w-full h-full object-cover object-center rounded-xl shadow-lg" 
+              className="w-full h-full object-cover object-center rounded-xl shadow-lg"
+              width={1200}
+              height={500} 
               src="/static-images/heroes/historias_hero.jpg"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent rounded-xl"></div>
@@ -319,10 +331,10 @@ export default function HistoriasImpactoPage() {
       </div>
 
       {/* Grid Section */}
-      <section className="py-8 bg-background-light dark:bg-background-dark">
+      <section className="py-4 sm:py-6 md:py-8 bg-background-light dark:bg-background-dark">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col md:flex-row justify-between items-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-text-light dark:text-text-dark mb-6 md:mb-0">
+            <h2 className="text-3xl md:text-4xl font-bold tracking-tight dark:text-text-dark mb-6 md:mb-0" style={{ color: '#006a86' }}>
               {activeTab === 'videos' ? 'VIDEOS TESTIMONIALES' : 'HISTORIAS DE EXITO'}
             </h2>
             <div className="flex space-x-2 md:space-x-4">
@@ -410,7 +422,7 @@ export default function HistoriasImpactoPage() {
               {filteredVideos.length === 0 ? (
                 <div className="text-center py-16">
                   <Video className="h-16 w-16 text-gray-400 mx-auto mb-4" />
-                  <h3 className="text-xl font-semibold text-text-light dark:text-text-dark mb-2">
+                  <h3 className="text-xl font-semibold dark:text-text-dark mb-2" style={{ color: '#006a86' }}>
                     {searchTerm ? 'No se encontraron videos' : 'No hay videos testimoniales disponibles'}
                   </h3>
                   <p className="text-text-secondary-light dark:text-text-secondary-dark">
@@ -426,13 +438,15 @@ export default function HistoriasImpactoPage() {
                       <div key={video.id} className="bg-card-light dark:bg-card-dark rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow cursor-pointer h-full flex flex-col">
                           <div className="relative">
                             {thumbnailUrl ? (
-                              <img
+                              <Image
                                 src={thumbnailUrl}
                                 alt={video.title}
                                 className="w-full h-48 object-cover"
+                                width={400}
+                                height={192}
                               />
                             ) : (
-                            <div className="w-full h-48 bg-gradient-to-br from-emerald-50 via-blue-50 to-purple-50 dark:from-emerald-900/20 dark:via-blue-900/20 dark:to-purple-900/20 flex items-center justify-center">
+                            <div className="w-full h-48 bg-gradient-to-br from-blue-50 via-blue-100 to-purple-50 dark:from-blue-900/20 dark:via-blue-900/20 dark:to-purple-900/20 flex items-center justify-center">
                               <Video className="h-12 w-12 text-primary" />
                               </div>
                             )}
@@ -480,7 +494,7 @@ export default function HistoriasImpactoPage() {
                             </span>
                             <span className="text-subtext-light dark:text-subtext-dark">{formatDate(video.createdAt)}</span>
                           </div>
-                          <h3 className="text-lg font-bold text-text-light dark:text-text-dark mb-2 line-clamp-2">
+                          <h3 className="text-lg font-bold dark:text-text-dark mb-2 line-clamp-2" style={{ color: '#006a86' }}>
                               {video.title}
                         </h3>
                           <p className="text-sm text-subtext-light dark:text-subtext-dark line-clamp-3 flex-grow">
@@ -495,7 +509,7 @@ export default function HistoriasImpactoPage() {
                                   e.stopPropagation();
                                   openVideoDialog(video);
                                 }}
-                              className="text-primary hover:opacity-80"
+                              className="text-primary hover:opacity-80 hover:text-primary hover:bg-transparent active:bg-transparent focus:bg-transparent"
                               >
                                 Ver Video
                               <ArrowRight className="ml-1 h-3 w-3" />
@@ -517,7 +531,7 @@ export default function HistoriasImpactoPage() {
               {filteredStories.length === 0 ? (
                 <div className="text-center py-16">
                   <FileText className="h-16 w-16 text-gray-400 mx-auto mb-4" />
-                  <h3 className="text-xl font-semibold text-text-light dark:text-text-dark mb-2">
+                  <h3 className="text-xl font-semibold dark:text-text-dark mb-2" style={{ color: '#006a86' }}>
                     {searchTerm ? 'No se encontraron historias' : 'No hay historias de éxito disponibles'}
                   </h3>
                   <p className="text-text-secondary-light dark:text-text-secondary-dark">
@@ -544,7 +558,7 @@ export default function HistoriasImpactoPage() {
                             </span>
                             <span className="text-subtext-light dark:text-subtext-dark">{formatDate(story.createdAt)}</span>
                           </div>
-                          <h3 className="text-lg font-bold text-text-light dark:text-text-dark mb-2 line-clamp-2">
+                          <h3 className="text-lg font-bold dark:text-text-dark mb-2 line-clamp-2" style={{ color: '#006a86' }}>
                               {story.title}
                             </h3>
                           <p className="text-sm text-subtext-light dark:text-subtext-dark line-clamp-3 flex-grow">
@@ -554,7 +568,7 @@ export default function HistoriasImpactoPage() {
                               <Button
                                 variant="ghost"
                                 size="sm"
-                              className="text-primary hover:opacity-80"
+                              className="text-primary hover:opacity-80 hover:text-primary hover:bg-transparent active:bg-transparent focus:bg-transparent"
                               >
                                 Leer más
                               <ArrowRight className="ml-1 h-3 w-3" />

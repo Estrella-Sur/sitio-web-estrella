@@ -10,19 +10,31 @@ const config: Config = {
   theme: {
   	extend: {
   		fontFamily: {
-  			display: ["Poppins", "sans-serif"],
-  			condensed: ["Special Gothic Condensed", "sans-serif"],
+  			// Tipografía principal: Avant Garde Demi (para títulos, encabezados y botones)
+  			// Fallback: Poppins SemiBold
+  			sans: ['Century Gothic', 'Helvetica Neue', 'sans-serif'], // Tipografía secundaria para párrafos
+  			display: ['Avant Garde Demi', 'Poppins', 'sans-serif'], // Para títulos y encabezados
+  			heading: ['Avant Garde Demi', 'Poppins', 'sans-serif'], // Alias para encabezados
+  			condensed: ['Special Gothic Condensed', 'sans-serif'],
   		},
   		borderRadius: {
-  			DEFAULT: "0.25rem",
-  			lg: 'var(--radius)',
-  			md: 'calc(var(--radius) - 2px)',
-  			sm: 'calc(var(--radius) - 4px)'
+  			DEFAULT: "0.5rem", // 8px - Bordes redondeados suaves
+  			lg: 'var(--radius)', // 8px
+  			md: 'calc(var(--radius) - 2px)', // 6px
+  			sm: 'calc(var(--radius) - 4px)', // 4px
+  			xl: 'calc(var(--radius) + 2px)', // 10px
   		},
 			colors: {
-			"background-light": "#F3F1ED",
+			// Colores institucionales - Fundación Estrella del Sur
+			"institutional": {
+				primary: "#006a86", // Azul principal
+				secondary: "#6b7280", // Gris azulado
+				accent: "#f1d02d", // Amarillo
+				dark: "#1f2937", // Gris oscuro
+			},
+			"background-light": "#f5f9f8", // Fondo principal actualizado
 			"background-dark": "#1A1A1A",
-			"text-light": "#333333",
+			"text-light": "#006a86", // Azul principal como texto
 			"text-dark": "#F3F1ED",
 				"text-secondary-light": "#6B7280",
 				"text-secondary-dark": "#9CA3AF",
@@ -85,7 +97,12 @@ const config: Config = {
   				'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
   				border: 'hsl(var(--sidebar-border))',
   				ring: 'hsl(var(--sidebar-ring))'
-  			}
+  			},
+  			// Colores institucionales como variables CSS
+  			'institutional-primary': 'hsl(var(--color-primary))',
+  			'institutional-secondary': 'hsl(var(--color-secondary))',
+  			'institutional-accent': 'hsl(var(--color-accent))',
+  			'institutional-dark': 'hsl(var(--color-dark))'
   		}
   	}
   },

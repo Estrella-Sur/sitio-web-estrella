@@ -1,13 +1,13 @@
 'use client'
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { useToast } from '@/components/ui/use-toast';
 import { useSession } from 'next-auth/react';
 import { usePermissions } from '@/hooks/use-permissions';
-import { Eye, EyeOff, Search, RefreshCw, Plus } from 'lucide-react';
+import { Search, Plus } from 'lucide-react';
 import { CreateNewsForm } from '@/components/admin/create-news-form';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
@@ -44,18 +44,14 @@ interface NewsItem {
   };
 }
 
-const categoryLabels = {
-  NOTICIAS: 'Noticias',
-  FUNDRAISING: 'Fundraising',
-  COMPAÑIA: 'Compañía',
-  SIN_CATEGORIA: 'Sin Categoría'
-};
-
-const categoryColors = {
-  NOTICIAS: 'bg-blue-100 text-blue-800 dark:bg-blue-200 dark:text-blue-800',
-  FUNDRAISING: 'bg-orange-100 text-orange-800 dark:bg-orange-200 dark:text-orange-900',
-  COMPAÑIA: 'bg-green-100 text-green-800 dark:bg-green-200 dark:text-green-900',
-  SIN_CATEGORIA: 'bg-gray-100 text-gray-800 dark:bg-gray-200 dark:text-gray-900'
+const _getCategoryColor = (category: string) => {
+  const colorMap: Record<string, string> = {
+    NOTICIAS: '#006a86',
+    FUNDRAISING: '#99b944',
+    COMPAÑIA: '#0d6f3c',
+    SIN_CATEGORIA: '#f1d02d'
+  };
+  return colorMap[category] || '#006a86';
 };
 
 export const NewsManagement: React.FC = () => {
@@ -64,14 +60,13 @@ export const NewsManagement: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [statusFilter, setStatusFilter] = useState('ALL');
   const [selectedItems, setSelectedItems] = useState<string[]>([]);
-  const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
   const [sortBy, setSortBy] = useState<'title' | 'publishedAt' | 'createdAt'>('publishedAt');
   const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('desc');
   const { toast } = useToast();
   const { data: session } = useSession();
   const { canManageContent } = usePermissions();
 
-  const fetchData = async () => {
+  const fetchData = useCallback(async () => {
     try {
       setLoading(true);
       const params = new URLSearchParams();
@@ -85,7 +80,18 @@ export const NewsManagement: React.FC = () => {
       params.append('sortBy', sortBy);
       params.append('sortOrder', sortOrder);
 
-      const response = await fetch(`/api/news?${params.toString()}`);
+      const headers: HeadersInit = {
+        'Content-Type': 'application/json',
+      };
+
+      // Agregar token de autenticación si está disponible
+      if (session?.customToken) {
+        headers['Authorization'] = `Bearer ${session.customToken}`;
+      }
+
+      const response = await fetch(`/api/news?${params.toString()}`, {
+        headers,
+      });
       if (!response.ok) {
         throw new Error('Error al cargar noticias');
       }
@@ -101,14 +107,14 @@ export const NewsManagement: React.FC = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [searchTerm, statusFilter, sortBy, sortOrder, session?.customToken, toast]);
 
   useEffect(() => {
     const timeoutId = setTimeout(() => {
       fetchData();
     }, 300);
     return () => clearTimeout(timeoutId);
-  }, [statusFilter, searchTerm, sortBy, sortOrder]);
+  }, [fetchData]);
 
   const filteredNews = news;
   const activeNews = news.filter(item => item.isActive);
@@ -168,7 +174,7 @@ export const NewsManagement: React.FC = () => {
     }
   };
 
-  const handleDelete = async (id: string) => {
+  const _handleDelete = async (id: string) => {
     try {
       // Debug: Verificar estado de la sesión
       console.log('🔍 Debug eliminación noticia:', {
@@ -300,10 +306,6 @@ export const NewsManagement: React.FC = () => {
         </div>
         <div className="flex items-center space-x-2">
           <CreateNewsForm onNewsCreated={fetchData} />
-          <Button variant="outline" size="sm" onClick={fetchData}>
-            <RefreshCw className="mr-2 h-4 w-4" />
-            Actualizar
-          </Button>
         </div>
       </div>
 
@@ -331,7 +333,7 @@ export const NewsManagement: React.FC = () => {
               <SelectItem value="INACTIVE">Inactivos</SelectItem>
             </SelectContent>
           </Select>
-          <Select value={sortBy} onValueChange={(value: any) => setSortBy(value)}>
+          <Select value={sortBy} onValueChange={(value: string) => setSortBy(value as 'title' | 'publishedAt' | 'createdAt')}>
             <SelectTrigger className="w-[140px]">
               <SelectValue placeholder="Ordenar por" />
             </SelectTrigger>
@@ -458,11 +460,11 @@ function NewsList({
   loading,
   selectedItems,
   onSelectItem,
-  onClearSelection,
+  onClearSelection: _onClearSelection,
   onNewsDeleted,
   onNewsUpdated,
   onStatusChanged,
-  onToggleFeatured,
+  onToggleFeatured: _onToggleFeatured,
   getStatusBadgeVariant,
   formatDate
 }: NewsListProps) {

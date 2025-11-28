@@ -74,7 +74,7 @@ export const ChangePasswordModal: React.FC<ChangePasswordModalProps> = ({
       } else {
         setError(data.message || 'Error al cambiar contraseña')
       }
-    } catch (error) {
+    } catch (_error) {
       setError('Error de conexión. Inténtalo de nuevo.')
     } finally {
       setIsLoading(false)

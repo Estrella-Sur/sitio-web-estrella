@@ -15,9 +15,16 @@ export interface AuthenticatedRequest extends NextRequest {
 /**
  * Middleware para verificar autenticación JWT
  */
+interface AuthUser {
+  id: string
+  email: string
+  name?: string
+  role: UserRole
+}
+
 export async function verifyAuth(request: NextRequest): Promise<{
   isAuthenticated: boolean
-  user?: any
+  user?: AuthUser
   error?: string
 }> {
   try {
@@ -37,7 +44,10 @@ export async function verifyAuth(request: NextRequest): Promise<{
     const decoded = verifyAccessToken(token)
 
     // Obtener información actualizada del usuario
-    const user = await getUserById((decoded as any).id)
+    interface DecodedToken {
+      id: string
+    }
+    const user = await getUserById((decoded as DecodedToken).id)
     
     if (!user) {
       return {
@@ -51,7 +61,7 @@ export async function verifyAuth(request: NextRequest): Promise<{
       user: {
         id: user.id,
         email: user.email,
-        name: user.name,
+        name: user.name || undefined,
         role: user.role as UserRole
       }
     }

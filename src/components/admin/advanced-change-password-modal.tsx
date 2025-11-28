@@ -209,7 +209,7 @@ export function AdvancedChangePasswordModal({
                                 ? 'bg-red-500'
                                 : passwordStrength.strength <= 3
                                 ? 'bg-yellow-500'
-                                : 'bg-green-500'
+                                : 'bg-blue-500'
                               : 'bg-gray-200'
                           }`}
                         />
@@ -218,7 +218,7 @@ export function AdvancedChangePasswordModal({
                     <span className={`text-sm font-medium transition-colors duration-200 ${
                       passwordStrength.strength <= 2 ? 'text-red-600' :
                       passwordStrength.strength <= 3 ? 'text-yellow-600' :
-                      'text-green-600'
+                      'text-blue-600'
                     }`}>
                       {passwordStrength.strength <= 2 ? 'Débil' :
                        passwordStrength.strength <= 3 ? 'Media' : 'Fuerte'}
@@ -229,11 +229,11 @@ export function AdvancedChangePasswordModal({
                     {Object.entries(passwordStrength.checks).map(([key, passed]) => (
                       <div key={key} className="flex items-center gap-1">
                         {passed ? (
-                          <CheckCircle className="h-3 w-3 text-green-500" />
+                          <CheckCircle className="h-3 w-3 text-blue-500" />
                         ) : (
                           <XCircle className="h-3 w-3 text-red-500" />
                         )}
-                        <span className={passed ? 'text-green-600' : 'text-red-600'}>
+                        <span className={passed ? 'text-blue-600' : 'text-red-600'}>
                           {key === 'length' && '8+ caracteres'}
                           {key === 'uppercase' && 'Mayúscula'}
                           {key === 'lowercase' && 'Minúscula'}
@@ -277,7 +277,7 @@ export function AdvancedChangePasswordModal({
                       </div>
                     </FormControl>
                     {confirmPassword && newPassword === confirmPassword && (
-                      <div className="flex items-center gap-1 text-sm text-green-600">
+                      <div className="flex items-center gap-1 text-sm text-blue-600">
                         <CheckCircle className="h-4 w-4" />
                         Las contraseñas coinciden
                       </div>

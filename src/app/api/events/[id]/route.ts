@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 import { verifyAuth } from '@/lib/auth-middleware';
 import { storageService } from '@/lib/storage-service';
+import { Prisma } from '@prisma/client';
 
 // GET - Obtener evento específico
 export async function GET(
@@ -99,7 +100,7 @@ export async function PUT(
     };
 
     // Preparar datos para actualizar
-    const updateData: any = {};
+    const updateData: Prisma.EventUpdateInput = {};
     if (title) updateData.title = title;
     if (content !== undefined) updateData.content = content;
     if (imageUrl !== undefined) updateData.imageUrl = normalizeImageUrlForSave(imageUrl);

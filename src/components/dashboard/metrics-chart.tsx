@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { TrendingUp, TrendingDown, Activity } from 'lucide-react'
+import { TrendingUp, Activity } from 'lucide-react'
 
 interface ChartData {
   label: string

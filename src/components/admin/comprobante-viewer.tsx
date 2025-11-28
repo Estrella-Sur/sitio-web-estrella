@@ -49,7 +49,7 @@ export function ComprobanteViewer({
               </div>
               <div>
                 <span className="font-medium">Monto:</span>
-                <p className="text-gray-600 dark:text-gray-400">${amount.toLocaleString()}</p>
+                <p className="text-gray-600 dark:text-gray-400">Bs. {amount.toLocaleString('es-BO', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
               </div>
             </div>
           </div>

@@ -18,12 +18,9 @@ import {
   Shield, 
   Crown,
   Briefcase,
-  Wrench,
   Save,
   X,
-  Loader2,
-  AlertCircle,
-  CheckCircle
+  Loader2
 } from 'lucide-react'
 
 const editUserSchema = z.object({
@@ -87,7 +84,7 @@ export function AdvancedEditUserModal({ user, isOpen, onClose, onUserUpdated }: 
   const getRoleIcon = (role: UserRole) => {
     switch (role) {
       case UserRole.ADMINISTRATOR: return <Crown className="h-4 w-4 text-red-500" />
-      case UserRole.MANAGER: return <Briefcase className="h-4 w-4 text-green-500" />
+      case UserRole.MANAGER: return <Briefcase className="h-4 w-4 text-blue-500" />
       case UserRole.CONSULTANT: return <User className="h-4 w-4 text-blue-500" />
       default: return <User className="h-4 w-4 text-gray-500" />
     }

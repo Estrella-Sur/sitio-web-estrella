@@ -5,7 +5,6 @@ import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, DialogFooter } from '@/components/ui/dialog';
 import { useToast } from '@/components/ui/use-toast';
 import { useSession } from 'next-auth/react';
-import { Eye, EyeOff } from 'lucide-react';
 
 interface Methodology {
   id: string;
@@ -82,7 +81,7 @@ export function ToggleMethodologyStatusDialog({
         <div className="py-4">
           <p className="text-sm text-gray-600">
             ¿Estás seguro de que quieres {methodology.isActive ? 'desactivar' : 'activar'} la iniciativa 
-            <strong> "{methodology.title}"</strong>?
+            <strong> &quot;{methodology.title}&quot;</strong>?
           </p>
           {methodology.isActive && (
             <p className="text-sm text-gray-500 mt-2">

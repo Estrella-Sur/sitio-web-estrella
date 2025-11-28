@@ -9,11 +9,12 @@ import { Input } from '@/components/ui/input'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { Checkbox } from '@/components/ui/checkbox'
-import { Video, Search, Edit, Trash2, Eye, EyeOff, Download, RefreshCw, Calendar, User, Star, Clock } from 'lucide-react'
+import { Video, Search, Edit, Trash2, Eye, EyeOff, Calendar, User, Star, Clock } from 'lucide-react'
 import { CreateVideoTestimonialForm } from '@/components/admin/create-video-testimonial-form'
 import { ToggleVideoTestimonialStatusDialog } from '@/components/admin/toggle-video-testimonial-status-dialog'
 import { DeleteVideoTestimonialDialog } from '@/components/admin/delete-video-testimonial-dialog'
 import { EditVideoTestimonialForm } from '@/components/admin/edit-video-testimonial-form'
+import Image from 'next/image'
 
 interface VideoTestimonial {
   id: string
@@ -102,7 +103,7 @@ export default function VideoTestimonialsPage() {
     setVideos(prev => prev.filter(v => v.id !== videoId))
   }
 
-  const handleVideoUpdated = (updatedVideo: any) => {
+  const handleVideoUpdated = (updatedVideo: VideoTestimonial) => {
     setVideos(prev => prev.map(v => 
       v.id === updatedVideo.id 
         ? updatedVideo
@@ -230,10 +231,6 @@ export default function VideoTestimonialsPage() {
           {canCreateVideoTestimonials() && (
             <CreateVideoTestimonialForm onVideoCreated={fetchVideos} />
           )}
-          <Button variant="outline" size="sm" onClick={fetchVideos}>
-            <RefreshCw className="mr-2 h-4 w-4" />
-            Actualizar
-          </Button>
         </div>
       </div>
 
@@ -261,7 +258,7 @@ export default function VideoTestimonialsPage() {
               <SelectItem value="INACTIVE">Inactivos</SelectItem>
             </SelectContent>
           </Select>
-          <Select value={sortBy} onValueChange={(value: any) => setSortBy(value)}>
+          <Select value={sortBy} onValueChange={(value) => setSortBy(value as 'title' | 'createdAt' | 'updatedAt')}>
             <SelectTrigger className="w-[140px]">
               <SelectValue placeholder="Ordenar por" />
             </SelectTrigger>
@@ -387,7 +384,7 @@ interface VideoListProps {
   onToggleStatus: (videoId: string, newStatus: boolean) => void
   onToggleFeatured: (videoId: string, newFeatured: boolean) => void
   onVideoDeleted: (videoId: string) => void
-  onVideoUpdated: (updatedVideo: any) => void
+  onVideoUpdated: (updatedVideo: VideoTestimonial) => void
   canEditVideoTestimonials: () => boolean
   canDeleteVideoTestimonials: () => boolean
   getStatusBadgeVariant: (isActive: boolean) => "default" | "secondary"
@@ -402,8 +399,8 @@ function VideoList({
   selectedVideos,
   onSelectVideo,
   onSelectAll,
-  onToggleStatus,
-  onToggleFeatured,
+  onToggleStatus: _onToggleStatus,
+  onToggleFeatured: _onToggleFeatured,
   onVideoDeleted,
   onVideoUpdated,
   canEditVideoTestimonials,
@@ -451,10 +448,12 @@ function VideoList({
             <Card key={video.id} className="overflow-hidden">
               <div className="relative h-48">
                 {thumbnailUrl ? (
-                  <img
+                  <Image
                     src={thumbnailUrl}
                     alt={video.title}
-                    className="w-full h-full object-cover"
+                    fill
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                    className="object-cover"
                   />
                 ) : (
                   <div className="w-full h-full bg-gray-200 flex items-center justify-center">
@@ -469,7 +468,7 @@ function VideoList({
                 </div>
                 {video.isFeatured && (
                   <div className="absolute top-2 left-2">
-                    <Badge className="bg-yellow-500 text-white">
+                    <Badge className="text-white" style={{ backgroundColor: '#f1d02d' }}>
                       <Star className="mr-1 h-3 w-3" />
                       Destacado
                     </Badge>
@@ -576,10 +575,11 @@ function VideoList({
                     className="absolute top-1 right-1 z-10"
                   />
                   {thumbnailUrl ? (
-                    <img
+                    <Image
                       src={thumbnailUrl}
                       alt={video.title}
-                      className="w-full h-full object-cover rounded"
+                      fill
+                      className="object-cover rounded"
                     />
                   ) : (
                     <div className="w-full h-full bg-gray-200 rounded flex items-center justify-center">
@@ -587,7 +587,7 @@ function VideoList({
                     </div>
                   )}
                   {video.isFeatured && (
-                    <Badge className="absolute bottom-1 left-1 bg-yellow-500 text-white text-xs">
+                    <Badge className="absolute bottom-1 left-1 text-white text-xs" style={{ backgroundColor: '#f1d02d' }}>
                       <Star className="mr-1 h-2 w-2" />
                     </Badge>
                   )}

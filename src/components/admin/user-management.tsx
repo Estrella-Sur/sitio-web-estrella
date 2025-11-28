@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 import { useSession } from 'next-auth/react'
 import { UserRole, getRoleDisplayName } from '@/lib/roles'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
@@ -11,21 +11,14 @@ import { Input } from '@/components/ui/input'
 import { 
   Crown, 
   Briefcase, 
-  Wrench, 
   Users, 
-  UserCheck, 
-  UserX, 
   Calendar, 
   Mail, 
   Search,
-  Filter,
   MoreHorizontal,
-  Edit,
-  Trash2,
   Shield,
   ShieldOff
 } from 'lucide-react'
-import Link from 'next/link'
 
 interface User {
   id: string
@@ -59,25 +52,7 @@ export const UserManagement: React.FC<UserManagementProps> = ({ className }) => 
     }
   }, [session])
 
-  useEffect(() => {
-    filterUsers()
-  }, [users, searchTerm, roleFilter, statusFilter])
-
-  const fetchUsers = async () => {
-    try {
-      const response = await fetch('/api/users')
-      if (response.ok) {
-        const data = await response.json()
-        setUsers(data.users)
-      }
-    } catch (error) {
-      console.error('Error fetching users:', error)
-    } finally {
-      setIsLoading(false)
-    }
-  }
-
-  const filterUsers = () => {
+  const filterUsers = useCallback(() => {
     let filtered = users
 
     // Filtrar por término de búsqueda
@@ -101,14 +76,33 @@ export const UserManagement: React.FC<UserManagementProps> = ({ className }) => 
     }
 
     setFilteredUsers(filtered)
+  }, [users, searchTerm, roleFilter, statusFilter])
+
+  useEffect(() => {
+    filterUsers()
+  }, [filterUsers])
+
+  const fetchUsers = async () => {
+    try {
+      const response = await fetch('/api/users')
+      if (response.ok) {
+        const data = await response.json()
+        setUsers(data.users)
+      }
+    } catch (error) {
+      console.error('Error fetching users:', error)
+    } finally {
+      setIsLoading(false)
+    }
   }
+
 
   const getRoleIcon = (role: UserRole) => {
     switch (role) {
       case UserRole.ADMINISTRATOR:
         return <Crown className="h-4 w-4 text-red-500" />
       case UserRole.MANAGER:
-        return <Briefcase className="h-4 w-4 text-green-500" />
+        return <Briefcase className="h-4 w-4 text-blue-500" />
       default:
         return <Users className="h-4 w-4 text-gray-500" />
     }
@@ -119,7 +113,7 @@ export const UserManagement: React.FC<UserManagementProps> = ({ className }) => 
       case UserRole.ADMINISTRATOR:
         return 'bg-red-100 text-red-800 dark:bg-red-900/20 dark:text-red-300'
       case UserRole.MANAGER:
-        return 'bg-green-100 text-green-800 dark:bg-green-900/20 dark:text-green-300'
+        return 'bg-blue-100 text-blue-800 dark:bg-blue-900/20 dark:text-blue-300'
       default:
         return 'bg-gray-100 text-gray-800 dark:bg-gray-900/20 dark:text-gray-300'
     }

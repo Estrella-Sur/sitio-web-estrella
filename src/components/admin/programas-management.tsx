@@ -3,20 +3,13 @@
 import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Checkbox } from '@/components/ui/checkbox';
-import { Plus, Search, Edit, Trash2, Eye, EyeOff, X, Calendar } from 'lucide-react';
-import Image from 'next/image';
+import { Plus, Search } from 'lucide-react';
 import { toast } from 'sonner';
 import { CreateProgramaDialog } from './create-programa-dialog';
-import { EditProgramaDialog } from './edit-programa-dialog';
-import { DeleteProgramaDialog } from './delete-programa-dialog';
-import { ToggleProgramaStatusDialog } from './toggle-programa-status-dialog';
-import { ProgramasViewModal } from './programas-view-modal';
 import { ProgramaCardWrapper } from './programa-card-wrapper';
+import { ProgramasViewModal } from './programas-view-modal';
 
 interface Programa {
   id: string;
@@ -103,7 +96,7 @@ export function ProgramasManagement() {
     setSearchInput(value);
   };
 
-  const handleClearSearch = () => {
+  const _handleClearSearch = () => {
     setSearchInput('');
     setSearchTerm('');
   };
@@ -139,7 +132,7 @@ export function ProgramasManagement() {
     }
   };
 
-  const handleTabChange = (value: string) => {
+  const _handleTabChange = (value: string) => {
     setStatusFilter(value === 'all' ? 'ALL' : value === 'active' ? 'ACTIVE' : 'INACTIVE');
     setSelectedProgramas([]); // Limpiar selección al cambiar tab
   };
@@ -209,7 +202,7 @@ export function ProgramasManagement() {
               <SelectItem value="INACTIVE">Inactivos</SelectItem>
             </SelectContent>
           </Select>
-          <Select value={sortBy} onValueChange={(value: any) => setSortBy(value)}>
+          <Select value={sortBy} onValueChange={(value: string) => setSortBy(value)}>
             <SelectTrigger className="w-[140px]">
               <SelectValue placeholder="Ordenar por" />
             </SelectTrigger>
@@ -344,30 +337,21 @@ function ProgramasList({
   selectedProgramas, 
   onSelectPrograma, 
   onSuccess, 
-  onViewPrograma,
+  onViewPrograma: _onViewPrograma,
   searchTerm, 
-  sortBy, 
-  sortOrder,
-  onBulkToggleStatus,
-  onClearSelection
+  sortBy: _sortBy, 
+  sortOrder: _sortOrder,
+  onBulkToggleStatus: _onBulkToggleStatus,
+  onClearSelection: _onClearSelection
 }: ProgramasListProps) {
-  const [viewingPrograma, setViewingPrograma] = useState<Programa | null>(null);
-
-  const handleView = (programa: Programa) => {
-    setViewingPrograma(programa);
-  };
-
-  const handleViewClose = () => {
-    setViewingPrograma(null);
-  };
 
   return (
     <div className="space-y-4">
       {/* Información de resultados */}
       <div className="text-sm text-gray-600 dark:text-gray-400">
-        {searchTerm ? (
+            {searchTerm ? (
           <span>
-            {programas.length} programa{programas.length !== 1 ? 's' : ''} encontrado{programas.length !== 1 ? 's' : ''} para "{searchTerm}"
+            {programas.length} programa{programas.length !== 1 ? 's' : ''} encontrado{programas.length !== 1 ? 's' : ''} para &quot;{searchTerm}&quot;
           </span>
         ) : (
           <span>
@@ -396,7 +380,7 @@ function ProgramasList({
               <h3 className="text-lg font-medium mb-2">No se encontraron programas</h3>
               <p className="text-sm">
                 {searchTerm 
-                  ? `No hay programas que coincidan con "${searchTerm}"`
+                  ? `No hay programas que coincidan con &quot;${searchTerm}&quot;`
                   : 'No hay programas disponibles'
                 }
               </p>
@@ -412,7 +396,7 @@ function ProgramasList({
             selectedProgramas={selectedProgramas}
             onSelectPrograma={onSelectPrograma}
             onSuccess={onSuccess}
-            onViewPrograma={onViewPrograma}
+            onViewPrograma={_onViewPrograma}
           />
         ))}
       </div>

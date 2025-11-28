@@ -4,6 +4,7 @@ import { authOptions } from '@/lib/auth'
 import { prisma } from '@/lib/prisma'
 import { UserRole } from '@/lib/roles'
 import bcrypt from 'bcryptjs'
+import { Prisma, UserRole as PrismaUserRole } from '@prisma/client'
 
 export async function GET(request: NextRequest) {
   try {
@@ -18,13 +19,13 @@ export async function GET(request: NextRequest) {
     const status = searchParams.get('status')
     const search = searchParams.get('search')
     const sortBy = searchParams.get('sortBy') || 'name'
-    const sortOrder = searchParams.get('sortOrder') || 'asc'
+    const sortOrder = (searchParams.get('sortOrder') || 'asc') as 'asc' | 'desc'
 
     // Construir filtros
-    const where: any = {}
+    const where: Prisma.UserWhereInput = {}
     
     if (role && role !== 'ALL') {
-      where.role = role
+      where.role = role as PrismaUserRole
     }
     
     if (status && status !== 'ALL') {
@@ -33,19 +34,21 @@ export async function GET(request: NextRequest) {
     
     if (search) {
       where.OR = [
-        { name: { contains: search, mode: 'insensitive' } },
-        { email: { contains: search, mode: 'insensitive' } }
+        { name: { contains: search, mode: 'insensitive' as const } },
+        { email: { contains: search, mode: 'insensitive' as const } }
       ]
     }
 
     // Construir ordenamiento
-    const orderBy: any = {}
+    const orderBy: Prisma.UserOrderByWithRelationInput = {}
     if (sortBy === 'lastLogin') {
       orderBy.lastLoginAt = sortOrder
     } else if (sortBy === 'status') {
       orderBy.isActive = sortOrder
+    } else if (sortBy === 'name' || sortBy === 'email' || sortBy === 'role' || sortBy === 'createdAt') {
+      orderBy[sortBy as 'name' | 'email' | 'role' | 'createdAt'] = sortOrder
     } else {
-      orderBy[sortBy] = sortOrder
+      orderBy.createdAt = sortOrder
     }
 
     const users = await prisma.user.findMany({

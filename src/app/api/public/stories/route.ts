@@ -40,12 +40,12 @@ export async function GET() {
     }))
 
     return NextResponse.json(formattedStories)
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('Error al obtener stories públicas:', error)
     
     // Proporcionar más información sobre el error
-    const errorMessage = error?.message || 'Error desconocido'
-    const errorCode = error?.code || 'UNKNOWN_ERROR'
+    const errorMessage = (error as { message?: string })?.message || 'Error desconocido'
+    const errorCode = (error as { code?: string })?.code || 'UNKNOWN_ERROR'
     
     // Verificar si es un error de conexión a la base de datos
     if (errorMessage.includes('Can\'t reach database server') || errorCode === 'P1001') {

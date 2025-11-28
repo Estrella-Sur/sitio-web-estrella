@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { PrismaClient } from '@prisma/client';
+import { PrismaClient, Prisma, ComplaintStatus } from '@prisma/client';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth';
 
@@ -37,7 +37,7 @@ export async function GET(request: NextRequest) {
       const whereClause = conditions.length > 0 ? `WHERE ${conditions.join(' AND ')}` : '';
       const limitClause = limit ? `LIMIT ${parseInt(limit)}` : '';
       
-      complaints = await (prisma as any).$queryRawUnsafe(
+      complaints = await prisma.$queryRawUnsafe<unknown[]>(
         `SELECT c.*, 
          jsonb_build_object('id', u.id, 'name', u.name, 'email', u.email, 'role', u.role) as reviewer
          FROM complaints c
@@ -48,12 +48,12 @@ export async function GET(request: NextRequest) {
       );
     } else {
       // Usar Prisma normal para filtros simples
-      const where: any = {};
+      const where: Prisma.ComplaintWhereInput = {};
       if (status) {
-        where.status = status;
+        where.status = status as ComplaintStatus;
       }
 
-      complaints = await (prisma as any).complaint.findMany({
+      complaints = await prisma.complaint.findMany({
         where,
         take: limit ? parseInt(limit) : undefined,
         include: {

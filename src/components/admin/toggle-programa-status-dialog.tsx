@@ -85,7 +85,7 @@ export const ToggleProgramaStatusDialog: React.FC<ToggleProgramaStatusDialogProp
         <DialogHeader>
           <DialogTitle>{actionCapitalized} Programa</DialogTitle>
           <DialogDescription>
-            ¿Estás seguro de que quieres {action} el programa "{programa.sectorName}"?
+            ¿Estás seguro de que quieres {action} el programa &quot;{programa.sectorName}&quot;?
             {isActivating 
               ? ' El programa será visible en la página pública.' 
               : ' El programa ya no será visible en la página pública.'

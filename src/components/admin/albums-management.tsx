@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -16,10 +16,8 @@ import {
   Search, 
   Plus, 
   Upload,
-  ImageIcon,
   X,
-  Star,
-  StarOff
+  Star
 } from 'lucide-react';
 import Image from 'next/image';
 import { Checkbox as UICheckbox } from '@/components/ui/checkbox';
@@ -84,11 +82,7 @@ export function AlbumsManagement() {
     isFeatured: false,
   });
 
-  useEffect(() => {
-    fetchAlbums();
-  }, []);
-
-  const fetchAlbums = async () => {
+  const fetchAlbums = useCallback(async () => {
     try {
       setLoading(true);
       const response = await fetch('/api/admin/albums');
@@ -105,7 +99,11 @@ export function AlbumsManagement() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [toast]);
+
+  useEffect(() => {
+    fetchAlbums();
+  }, [fetchAlbums]);
 
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
@@ -475,13 +473,13 @@ export function AlbumsManagement() {
                   <CardTitle className="text-lg">{album.title}</CardTitle>
                   <div className="flex gap-1">
                     {album.isFeatured && (
-                      <Badge variant="outline" className="bg-yellow-100 text-yellow-800">
+                      <Badge variant="outline" className="border" style={{ backgroundColor: '#f1d02d20', color: '#f1d02d', borderColor: '#f1d02d' }}>
                         <Star className="w-3 h-3 mr-1" />
                         Destacado
                       </Badge>
                     )}
                     {album.isActive ? (
-                      <Badge variant="outline" className="bg-green-100 text-green-800">
+                      <Badge variant="outline" className="bg-blue-100 text-blue-800">
                         <Eye className="w-3 h-3 mr-1" />
                         Activo
                       </Badge>
@@ -744,7 +742,7 @@ export function AlbumsManagement() {
             </DialogHeader>
             <div className="py-4">
               <p className="text-sm text-gray-600">
-                ¿Estás seguro de que quieres eliminar el álbum <strong>"{deletingAlbum.title}"</strong>?
+                ¿Estás seguro de que quieres eliminar el álbum <strong>&quot;{deletingAlbum.title}&quot;</strong>?
               </p>
               <p className="text-sm text-red-600 mt-2 font-medium">
                 Esta acción eliminará todas las imágenes asociadas y no se puede deshacer.

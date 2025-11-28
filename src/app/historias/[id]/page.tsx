@@ -1,14 +1,12 @@
 'use client'
 
-import React, { useState, useEffect, use } from 'react';
+import React, { useState, useEffect, use, useCallback } from 'react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { 
-  ArrowLeft,
   Calendar,
   User,
   Share2,
-  ExternalLink,
   Heart,
   BookOpen
 } from 'lucide-react';
@@ -47,11 +45,7 @@ export default function StoryDetailPage({ params }: StoryDetailPageProps) {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  useEffect(() => {
-    fetchStory();
-  }, [resolvedParams.id]);
-
-  const fetchStory = async () => {
+  const fetchStory = useCallback(async () => {
     try {
       setLoading(true);
       const response = await fetch(`/api/public/stories/${resolvedParams.id}`);
@@ -70,7 +64,11 @@ export default function StoryDetailPage({ params }: StoryDetailPageProps) {
     } finally {
       setLoading(false);
     }
-  };
+  }, [resolvedParams.id]);
+
+  useEffect(() => {
+    fetchStory();
+  }, [fetchStory]);
 
   const formatDate = (dateString: string) => {
     return new Date(dateString).toLocaleDateString('es-ES', {

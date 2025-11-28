@@ -36,11 +36,23 @@ export async function PATCH(
     console.log('🔍 Looking for ally with id:', id);
     
     // Usar consulta SQL raw para evitar problemas de tipos
-    const existingAlly = await prisma.$queryRaw`
+    const existingAlly = await prisma.$queryRaw<Array<{
+      id: string;
+      name: string;
+      role: string;
+      description: string | null;
+      imageUrl: string | null;
+      imageAlt: string | null;
+      isActive: boolean;
+      isFeatured: boolean;
+      createdAt: Date;
+      updatedAt: Date;
+      createdBy: string;
+    }>>`
       SELECT id, name, role, description, "imageUrl", "imageAlt", "isActive", "isFeatured", "createdAt", "updatedAt", "createdBy"
       FROM allies 
       WHERE id = ${id}
-    ` as any[];
+    `;
 
     if (!existingAlly || existingAlly.length === 0) {
       console.log('❌ Ally not found:', id);
@@ -52,13 +64,13 @@ export async function PATCH(
 
     // Si se está intentando marcar como destacado, verificar el límite
     if (isFeatured && !ally.isFeatured) {
-      const featuredCount = await prisma.$queryRaw`
+      const featuredCount = await prisma.$queryRaw<Array<{ count: bigint }>>`
         SELECT COUNT(*) as count
         FROM allies 
         WHERE "isFeatured" = true AND "isActive" = true
-      ` as any[];
+      `;
 
-      const currentFeaturedCount = parseInt(featuredCount[0].count);
+      const currentFeaturedCount = Number(featuredCount[0].count);
       console.log('🔍 Current featured count:', currentFeaturedCount);
 
       if (currentFeaturedCount >= 3) {
@@ -85,11 +97,23 @@ export async function PATCH(
     console.log('✅ Ally updated successfully');
 
     // Obtener el aliado actualizado
-    const updatedAlly = await prisma.$queryRaw`
+    const updatedAlly = await prisma.$queryRaw<Array<{
+      id: string;
+      name: string;
+      role: string;
+      description: string | null;
+      imageUrl: string | null;
+      imageAlt: string | null;
+      isActive: boolean;
+      isFeatured: boolean;
+      createdAt: Date;
+      updatedAt: Date;
+      createdBy: string;
+    }>>`
       SELECT id, name, role, description, "imageUrl", "imageAlt", "isActive", "isFeatured", "createdAt", "updatedAt", "createdBy"
       FROM allies 
       WHERE id = ${id}
-    ` as any[];
+    `;
 
     const allyData = updatedAlly[0];
 

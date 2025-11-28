@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -48,7 +48,7 @@ export const ProjectsManagement: React.FC = () => {
   const { data: session } = useSession();
   const { canManageContent } = usePermissions();
 
-  const fetchData = async () => {
+  const fetchData = useCallback(async () => {
     try {
       setLoading(true);
       const params = new URLSearchParams();
@@ -62,7 +62,18 @@ export const ProjectsManagement: React.FC = () => {
       params.append('sortBy', sortBy);
       params.append('sortOrder', sortOrder);
 
-      const response = await fetch(`/api/projects?${params.toString()}`);
+      const headers: HeadersInit = {
+        'Content-Type': 'application/json',
+      };
+
+      // Agregar token de autenticación si está disponible
+      if (session?.customToken) {
+        headers['Authorization'] = `Bearer ${session.customToken}`;
+      }
+
+      const response = await fetch(`/api/projects?${params.toString()}`, {
+        headers,
+      });
       if (!response.ok) {
         throw new Error('Error al cargar proyectos');
       }
@@ -78,14 +89,14 @@ export const ProjectsManagement: React.FC = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [session?.customToken, statusFilter, searchTerm, sortBy, sortOrder, toast]);
 
   useEffect(() => {
     const timeoutId = setTimeout(() => {
       fetchData();
     }, 300);
     return () => clearTimeout(timeoutId);
-  }, [statusFilter, searchTerm, sortBy, sortOrder]);
+  }, [fetchData]);
 
   const filteredProjects = projects;
   const activeProjects = projects.filter(item => item.isActive);
@@ -199,7 +210,7 @@ export const ProjectsManagement: React.FC = () => {
           } else {
             console.error('❌ Error del servidor (sin detalles):', response.status, response.statusText);
           }
-        } catch (parseError) {
+        } catch (_parseError) {
           console.error('❌ Error del servidor (respuesta no válida):', response.status, response.statusText);
         }
         
@@ -335,7 +346,7 @@ export const ProjectsManagement: React.FC = () => {
               <SelectItem value="INACTIVE">Inactivos</SelectItem>
             </SelectContent>
           </Select>
-          <Select value={sortBy} onValueChange={(value: any) => setSortBy(value)}>
+          <Select value={sortBy} onValueChange={(value: string) => setSortBy(value as 'title' | 'executionStart' | 'executionEnd' | 'createdAt')}>
             <SelectTrigger className="w-[140px]">
               <SelectValue placeholder="Ordenar por" />
             </SelectTrigger>
@@ -463,11 +474,11 @@ function ProjectsList({
   loading,
   selectedItems,
   onSelectItem,
-  onClearSelection,
+  onClearSelection: _onClearSelection,
   onDelete,
   onProjectUpdated,
   onStatusChanged,
-  onToggleFeatured,
+  onToggleFeatured: _onToggleFeatured,
   getStatusBadgeVariant,
   formatDate
 }: ProjectsListProps) {

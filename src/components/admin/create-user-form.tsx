@@ -225,7 +225,7 @@ export function CreateUserForm({ onUserCreated }: CreateUserFormProps) {
           <div className="space-y-4">
             <Card>
               <CardHeader>
-                <CardTitle className="text-green-600">¡Usuario Creado Exitosamente!</CardTitle>
+                <CardTitle className="text-blue-600">¡Usuario Creado Exitosamente!</CardTitle>
                 <CardDescription>
                   El usuario ha sido creado. Guarda la contraseña generada de forma segura.
                 </CardDescription>

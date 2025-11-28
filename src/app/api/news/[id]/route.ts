@@ -40,7 +40,7 @@ export async function GET(
             title: true,
           },
         },
-      } as any,
+      },
     });
 
     if (!news) {
@@ -232,7 +232,7 @@ export async function PUT(
             title: true,
           },
         },
-      } as any,
+      },
     });
 
     // Función helper para normalizar imageUrl antes de devolver

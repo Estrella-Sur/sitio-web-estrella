@@ -13,7 +13,7 @@ import {
 import { usePermissions } from '@/hooks/use-permissions'
 
 export function QuickActions() {
-  const { canManageUsers, canManageContent } = usePermissions()
+  const { canManageContent } = usePermissions()
 
   return (
     <Card>

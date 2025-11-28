@@ -1,18 +1,16 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Badge } from '@/components/ui/badge';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { useToast } from '@/components/ui/use-toast';
-import { useSession } from 'next-auth/react';
 import { usePermissions } from '@/hooks/use-permissions';
 import { Checkbox } from '@/components/ui/checkbox';
-import { Edit, Trash2, Eye, EyeOff, Calendar, User, Upload, ImageIcon } from 'lucide-react';
+import { Edit, Trash2, Calendar, User, ImageIcon } from 'lucide-react';
 import Image from 'next/image';
 
 interface NewsItem {
@@ -60,11 +58,9 @@ export const NewsEventsManagement: React.FC<NewsEventsManagementProps> = ({ defa
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
   const [editingItem, setEditingItem] = useState<NewsItem | EventItem | null>(null);
   const [selectedItems, setSelectedItems] = useState<string[]>([]);
-  const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
   const [uploading, setUploading] = useState(false);
   const { toast } = useToast();
-  const { data: session } = useSession();
-  const { isAdmin, canManageContent } = usePermissions();
+  const { canManageContent } = usePermissions();
 
   // Form states
   const [formData, setFormData] = useState({
@@ -79,7 +75,7 @@ export const NewsEventsManagement: React.FC<NewsEventsManagementProps> = ({ defa
     location: '',
   });
 
-  const fetchData = async () => {
+  const fetchData = useCallback(async () => {
     try {
       setLoading(true);
       const [newsResponse, eventsResponse] = await Promise.all([
@@ -96,7 +92,7 @@ export const NewsEventsManagement: React.FC<NewsEventsManagementProps> = ({ defa
         const eventsData = await eventsResponse.json();
         setEvents(eventsData);
       }
-    } catch (error) {
+    } catch (_error) {
       toast({
         title: 'Error',
         description: 'Error al cargar los datos',
@@ -105,11 +101,11 @@ export const NewsEventsManagement: React.FC<NewsEventsManagementProps> = ({ defa
     } finally {
       setLoading(false);
     }
-  };
+  }, [toast]);
 
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [fetchData]);
 
   const resetForm = () => {
     setFormData({
@@ -205,7 +201,7 @@ export const NewsEventsManagement: React.FC<NewsEventsManagementProps> = ({ defa
       } else {
         throw new Error('Error al crear');
       }
-    } catch (error) {
+    } catch (_error) {
       toast({
         title: 'Error',
         description: 'Error al crear el elemento',
@@ -259,7 +255,7 @@ export const NewsEventsManagement: React.FC<NewsEventsManagementProps> = ({ defa
       } else {
         throw new Error('Error al actualizar');
       }
-    } catch (error) {
+    } catch (_error) {
       toast({
         title: 'Error',
         description: 'Error al actualizar el elemento',
@@ -286,7 +282,7 @@ export const NewsEventsManagement: React.FC<NewsEventsManagementProps> = ({ defa
       } else {
         throw new Error('Error al eliminar');
       }
-    } catch (error) {
+    } catch (_error) {
       toast({
         title: 'Error',
         description: 'Error al eliminar el elemento',

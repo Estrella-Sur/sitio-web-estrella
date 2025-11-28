@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 import { verifyAuth } from '@/lib/auth-middleware';
+import { Prisma } from '@prisma/client';
 
 // GET - Obtener noticias (públicas o con filtros para admin)
 export async function GET(request: NextRequest) {
@@ -11,13 +12,13 @@ export async function GET(request: NextRequest) {
     const search = searchParams.get('search');
     const isActive = searchParams.get('isActive');
     const sortBy = searchParams.get('sortBy') || 'publishedAt';
-    const sortOrder = searchParams.get('sortOrder') || 'desc';
+    const sortOrder = (searchParams.get('sortOrder') || 'desc') as 'asc' | 'desc';
 
     // Verificar si es una request autenticada (admin)
     const authResult = await verifyAuth(request);
     const isAuthenticated = authResult.isAuthenticated;
 
-    const where: any = {};
+    const where: Prisma.NewsWhereInput = {};
 
     // Si no está autenticado, solo mostrar noticias activas
     if (!isAuthenticated) {
@@ -43,7 +44,7 @@ export async function GET(request: NextRequest) {
     }
 
     // Configurar ordenamiento
-    const orderBy: any = {};
+    const orderBy: Prisma.NewsOrderByWithRelationInput = {};
     if (sortBy === 'title') {
       orderBy.title = sortOrder;
     } else if (sortBy === 'createdAt') {
@@ -93,7 +94,7 @@ export async function GET(request: NextRequest) {
     };
 
     // Normalizar imageUrl en todas las noticias
-    const normalizedNews = news.map((item: any) => ({
+    const normalizedNews = news.map((item) => ({
       ...item,
       imageUrl: normalizeImageUrl(item.imageUrl),
       imageAlt: item.imageAlt || null,
@@ -113,12 +114,14 @@ export async function GET(request: NextRequest) {
 export async function POST(request: NextRequest) {
   try {
     const authResult = await verifyAuth(request);
-    if (!authResult.isAuthenticated) {
+    if (!authResult.isAuthenticated || !authResult.user) {
       return NextResponse.json(
         { error: 'No autorizado' },
         { status: 401 }
       );
     }
+
+    const user = authResult.user;
 
     const body = await request.json();
     const {
@@ -157,7 +160,7 @@ export async function POST(request: NextRequest) {
         programId,
         projectId,
         methodologyId,
-        createdBy: authResult.user.id,
+        createdBy: user.id,
       },
       include: {
         author: {

@@ -1,10 +1,11 @@
 'use client';
 
+import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
-import { X, ExternalLink, Play, Image as ImageIcon, Newspaper } from 'lucide-react';
+import { ExternalLink, Play, Image as ImageIcon, Newspaper } from 'lucide-react';
 
 interface Programa {
   id: string;
@@ -201,7 +202,7 @@ export function ProgramasViewModal({ programa, isOpen, onClose }: ProgramasViewM
                     <span>{programa._count?.news || programa.news?.length || 0} noticias relacionadas</span>
                   </div>
                   <div className="flex items-center gap-2">
-                    <ImageIcon className="h-4 w-4 text-green-500" />
+                    <ImageIcon className="h-4 w-4 text-blue-500" />
                     <span>{programa._count?.imageLibrary || programa.imageLibrary?.length || 0} imágenes en galería</span>
                   </div>
                 </div>
@@ -246,11 +247,12 @@ export function ProgramasViewModal({ programa, isOpen, onClose }: ProgramasViewM
                 <CardContent>
                   <div className="grid grid-cols-2 gap-2">
                     {programa.imageLibrary.slice(0, 4).map((image) => (
-                      <div key={image.id} className="aspect-square">
-                        <img
+                      <div key={image.id} className="aspect-square relative">
+                        <Image
                           src={image.imageUrl}
                           alt={image.imageAlt || image.title}
-                          className="w-full h-full object-cover rounded"
+                          fill
+                          className="object-cover rounded"
                         />
                       </div>
                     ))}

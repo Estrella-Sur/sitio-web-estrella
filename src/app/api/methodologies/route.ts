@@ -16,11 +16,11 @@ export async function GET(request: NextRequest) {
 
     if (search) {
       where.OR = [
-        { title: { contains: search, mode: 'insensitive' } },
-        { description: { contains: search, mode: 'insensitive' } },
-        { shortDescription: { contains: search, mode: 'insensitive' } },
-        { ageGroup: { contains: search, mode: 'insensitive' } },
-        { targetAudience: { contains: search, mode: 'insensitive' } },
+        { title: { contains: search, mode: 'insensitive' as const } },
+        { description: { contains: search, mode: 'insensitive' as const } },
+        { shortDescription: { contains: search, mode: 'insensitive' as const } },
+        { ageGroup: { contains: search, mode: 'insensitive' as const } },
+        { targetAudience: { contains: search, mode: 'insensitive' as const } },
       ];
     }
 
@@ -75,9 +75,11 @@ export async function GET(request: NextRequest) {
 export async function POST(request: NextRequest) {
   try {
     const authResult = await verifyAuth(request);
-    if (!authResult.isAuthenticated) {
+    if (!authResult.isAuthenticated || !authResult.user) {
       return NextResponse.json({ error: 'No autorizado' }, { status: 401 });
     }
+
+    const user = authResult.user;
 
     const body = await request.json();
     const {
@@ -120,7 +122,7 @@ export async function POST(request: NextRequest) {
         methodology,
         resources,
         evaluation,
-        createdBy: authResult.user.id,
+        createdBy: user.id,
       },
       include: {
         creator: {

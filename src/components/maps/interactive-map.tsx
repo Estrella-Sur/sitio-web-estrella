@@ -2,7 +2,8 @@
 
 import React, { useEffect } from 'react';
 import dynamic from 'next/dynamic';
-import { MapPin, Users, Heart, BookOpen } from 'lucide-react';
+import { MapPin } from 'lucide-react';
+import Image from 'next/image';
 
 // Importar dinámicamente para evitar problemas de SSR
 const MapContainer = dynamic(
@@ -26,6 +27,7 @@ const Popup = dynamic(
 );
 
 // Importar Leaflet dinámicamente
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 let L: any = null;
 
 interface LocationData {
@@ -58,12 +60,12 @@ const locations: LocationData[] = [
     programs: ['Atención Integral', 'Coordinación Regional', 'Servicios Comunitarios'],
     beneficiaries: 0,
     icon: <MapPin className="h-4 w-4" />,
-    color: 'bg-blue-500',
+    color: '#006a86',
     address: 'Prolongación Adolfo Mier esq. Juan Mendoza (Barrio San Miguel)',
     contact: '52-65173',
     schedule: 'Lunes a Viernes 08:30 - 12:30 | 14:30 - 18:30',
     number: 1,
-    image: '/static-images/sections/seccion-childfund.jpg',
+    image: '/static-images/maps/frontis_QUIRQUINCHO.jpg',
     status: 'active',
     department: 'Oruro'
   },
@@ -76,12 +78,12 @@ const locations: LocationData[] = [
     programs: ['Desarrollo Comunitario', 'Capacitación', 'Apoyo Social'],
     beneficiaries: 0,
     icon: <MapPin className="h-4 w-4" />,
-    color: 'bg-red-500',
+    color: '#99b944',
     address: 'Calle 7 entre C y D sector Kantuta',
     contact: '52-53384',
     schedule: 'Lunes a Viernes 08:30 - 12:30 | 14:30 - 18:30',
     number: 2,
-    image: '/static-images/sections/tarjeta-metodologias.jpg',
+    image: '/static-images/maps/frontis_CEPROK.jpg',
     status: 'active',
     department: 'Oruro'
   },
@@ -94,12 +96,12 @@ const locations: LocationData[] = [
     programs: ['Atención Comunitaria', 'Servicios Sociales', 'Apoyo Familiar'],
     beneficiaries: 0,
     icon: <MapPin className="h-4 w-4" />,
-    color: 'bg-green-500',
+    color: '#0d6f3c',
     address: 'Daniel Calvo #990 esquina Aguirre (Villa challacollo)',
     contact: '52-64381',
     schedule: 'Lunes a Viernes 08:30 - 12:30 | 14:30 - 18:30',
     number: 3,
-    image: '/static-images/sections/tarjeta-programas.jpg',
+    image: '/static-images/maps/frontis_VILLACHALLACOLLO.jpg',
     status: 'active',
     department: 'Oruro'
   },
@@ -112,12 +114,12 @@ const locations: LocationData[] = [
     programs: ['Servicios Especializados', 'Atención de Mercado', 'Apoyo Comercial'],
     beneficiaries: 0,
     icon: <MapPin className="h-4 w-4" />,
-    color: 'bg-purple-500',
+    color: '#f1d02d',
     address: 'Mercado Pumas Andinos',
     contact: '69832703',
     schedule: 'Lunes, Miércoles y Viernes 08:30 - 12:30 | 14:30 - 18:30',
     number: 4,
-    image: '/static-images/sections/tarjeta-proyectos.jpg',
+    image: '/static-images/maps/frontis_PUMAS.jpg',
     status: 'active',
     department: 'Oruro'
   },
@@ -130,12 +132,12 @@ const locations: LocationData[] = [
     programs: ['Servicios Comunitarios', 'Atención Local', 'Desarrollo Social'],
     beneficiaries: 0,
     icon: <MapPin className="h-4 w-4" />,
-    color: 'bg-orange-500',
+    color: '#006a86',
     address: 'A. Arce entre C. 6 de Agosto',
     contact: '69832702',
     schedule: 'Martes y Jueves 08:30 - 12:30 | 14:30 - 18:30',
     number: 5,
-    image: '/static-images/sections/seccion-impato-generado.jpg',
+    image: '/static-images/maps/frontis_VINTO.jpg',
     status: 'active',
     department: 'Oruro'
   },
@@ -148,12 +150,12 @@ const locations: LocationData[] = [
     programs: ['Servicios Regionales', 'Atención de Tránsito', 'Apoyo Logístico'],
     beneficiaries: 0,
     icon: <MapPin className="h-4 w-4" />,
-    color: 'bg-pink-500',
+    color: '#99b944',
     address: 'Urbanización Villa Dorina cerca a la Carretera Oruro-Cochabamba',
     contact: '69832702',
     schedule: 'Martes, Miércoles y Jueves 08:30 - 12:30 | 14:30 - 18:30',
     number: 6,
-    image: '/static-images/sections/seccion-childfund.jpg',
+    image: '/static-images/maps/frontis_VILLA DORINA.jpg',
     status: 'active',
     department: 'Oruro'
   },
@@ -168,12 +170,12 @@ const locations: LocationData[] = [
     programs: ['Servicios Regionales', 'Desarrollo Comunitario', 'Atención Integral'],
     beneficiaries: 0,
     icon: <MapPin className="h-4 w-4" />,
-    color: 'bg-gray-400',
+    color: '#0d6f3c',
     address: 'Municipio de Cobija (Próximamente)',
     contact: 'Por definir',
     schedule: 'Por definir',
     number: 7,
-    image: '/static-images/sections/seccion-childfund.jpg',
+    image: '/static-images/maps/frontis_COBIJA.jpg',
     status: 'future',
     department: 'Pando'
   },
@@ -186,7 +188,7 @@ const locations: LocationData[] = [
     programs: ['Servicios Fronterizos', 'Desarrollo Comunitario', 'Atención Integral'],
     beneficiaries: 0,
     icon: <MapPin className="h-4 w-4" />,
-    color: 'bg-gray-400',
+    color: '#f1d02d',
     address: 'Municipio de Guayaramerín (Próximamente)',
     contact: 'Por definir',
     schedule: 'Por definir',
@@ -204,7 +206,7 @@ const locations: LocationData[] = [
     programs: ['Servicios Urbanos', 'Desarrollo Comunitario', 'Atención Integral'],
     beneficiaries: 0,
     icon: <MapPin className="h-4 w-4" />,
-    color: 'bg-gray-400',
+    color: '#006a86',
     address: 'Ciudad de El Alto (Próximamente)',
     contact: 'Por definir',
     schedule: 'Por definir',
@@ -214,16 +216,6 @@ const locations: LocationData[] = [
     department: 'La Paz'
   }
 ];
-
-// Función para calcular el centro del mapa basado en todas las ubicaciones
-const calculateMapCenter = (locations: LocationData[]): [number, number] => {
-  if (locations.length === 0) return [-17.9760202, -67.0897769]; // Centro por defecto en Oruro
-  
-  const sumLat = locations.reduce((sum, loc) => sum + loc.coordinates[0], 0);
-  const sumLng = locations.reduce((sum, loc) => sum + loc.coordinates[1], 0);
-  
-  return [sumLat / locations.length, sumLng / locations.length];
-};
 
 // Función para obtener los departamentos únicos
 const getUniqueDepartments = (locations: LocationData[]): string[] => {
@@ -235,8 +227,6 @@ const getUniqueDepartments = (locations: LocationData[]): string[] => {
 const InteractiveMap: React.FC = () => {
   const [isLeafletReady, setIsLeafletReady] = React.useState(false);
   
-  // Calcular estadísticas dinámicas
-  const stats = getMapStatistics(locations);
   // Centro fijo en Oruro, Bolivia
   const mapCenter: [number, number] = [-17.9760202, -67.0897769];
 
@@ -263,9 +253,13 @@ const InteractiveMap: React.FC = () => {
   const getMarkerIcon = (color: string, number: number) => {
     if (!L) return null;
     
+    const isHexColor = color.startsWith('#');
+    const colorStyle = isHexColor ? `background-color: ${color};` : '';
+    const colorClass = isHexColor ? '' : color;
+    
     return L.divIcon({
       className: 'custom-marker',
-      html: `<div class="w-8 h-8 ${color} rounded-full border-2 border-white shadow-lg flex items-center justify-center text-white text-sm font-bold">${number}</div>`,
+      html: `<div class="w-8 h-8 ${colorClass} rounded-full border-2 border-white shadow-lg flex items-center justify-center text-white text-sm font-bold" style="${colorStyle}">${number}</div>`,
       iconSize: [32, 32],
       iconAnchor: [16, 16],
     });
@@ -310,7 +304,7 @@ const InteractiveMap: React.FC = () => {
             <Popup className="custom-popup">
               <div className="p-3 max-w-80">
                 <div className="flex items-center gap-2 mb-3">
-                  <div className={`w-6 h-6 ${location.color} rounded-full flex items-center justify-center text-white text-sm font-bold`}>
+                  <div className="w-6 h-6 rounded-full flex items-center justify-center text-white text-sm font-bold" style={{ backgroundColor: location.color }}>
                     {location.number}
                   </div>
                   <div>
@@ -326,14 +320,14 @@ const InteractiveMap: React.FC = () => {
                 </div>
                 
                 {/* Imagen del lugar */}
-                <div className="mb-3">
-                  <img 
+                <div className="mb-3 relative w-full h-32">
+                  <Image 
                     src={location.image} 
                     alt={location.name}
-                    className="w-full h-32 object-cover rounded-lg shadow-sm"
-                    onError={(e) => {
-                      e.currentTarget.src = '/placeholder-image.svg';
-                    }}
+                    fill
+                    className="object-cover rounded-lg shadow-sm"
+                    sizes="(max-width: 768px) 100vw, 320px"
+                    unoptimized
                   />
                 </div>
                 

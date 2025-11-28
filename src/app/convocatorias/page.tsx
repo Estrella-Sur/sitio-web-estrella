@@ -34,7 +34,7 @@ export default function ConvocatoriasPage() {
         if (response.ok) {
           const data = await response.json();
           // Mapear los datos de la API al formato esperado por el frontend
-          const mappedData = data.map((item: any) => ({
+          const mappedData = data.map((item: { id: string; title: string; description: string; imageUrl: string; startDate: string; endDate: string; status: string; requirements: unknown; documents: unknown; createdAt: string }) => ({
             id: item.id,
             title: item.title,
             description: item.description,
@@ -62,7 +62,7 @@ export default function ConvocatoriasPage() {
   const getStatusBadge = (status: string) => {
     switch (status) {
       case 'active':
-        return <Badge className="bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200">Activa</Badge>;
+        return <Badge className="bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200">Activa</Badge>;
       case 'upcoming':
         return <Badge className="bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200">Próxima</Badge>;
       case 'closed':
@@ -80,7 +80,7 @@ export default function ConvocatoriasPage() {
     });
   };
 
-  const isActive = (endDate: string) => {
+  const _isActive = (endDate: string) => {
     return new Date(endDate) >= new Date();
   };
 
@@ -89,21 +89,21 @@ export default function ConvocatoriasPage() {
       <SiteHeader />
       
       {/* Hero Section */}
-      <div className="relative min-h-screen flex items-center bg-hero">
+      <div className="relative min-h-screen flex items-start bg-hero">
         <div className="absolute inset-0 bg-black opacity-40 dark:opacity-60"></div>
-        <main className="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8 flex justify-center">
-          <div className="max-w-4xl text-white text-center">
+        <main className="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8 pt-8 md:pt-12 flex justify-center md:justify-start">
+          <div className="max-w-4xl text-white text-center md:text-left">
             <div className="mb-6">
-              <span className="inline-block bg-orange-400 text-gray-900 text-sm font-bold uppercase px-4 py-2 tracking-wider rounded">
+              <span className="inline-block text-white text-xs font-bold uppercase px-3 py-1.5 tracking-wider rounded" style={{ backgroundColor: '#99b944' }}>
                 Oportunidades de Trabajo
               </span>
             </div>
-            <h1 className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-extrabold leading-tight text-white mb-6">
+            <h1 className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-7xl xl:text-8xl font-extrabold leading-tight text-white mb-6">
               ÚNETE A<br/>
               NUESTRO<br/>
               EQUIPO
             </h1>
-            <p className="text-lg md:text-xl text-gray-200 max-w-3xl mx-auto mb-8">
+            <p className="text-lg md:text-xl text-gray-200 max-w-3xl mb-8">
               Descubre las oportunidades de trabajo y consultorías que tenemos disponibles. 
               Forma parte de nuestro equipo y contribuye al desarrollo social de Bolivia.
             </p>

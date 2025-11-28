@@ -1,6 +1,7 @@
 "use client"
 
 import { useState, useEffect, useCallback } from 'react'
+import { useSession } from 'next-auth/react'
 import { usePermissions } from '@/hooks/use-permissions'
 import { Card, CardContent } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
@@ -10,8 +11,8 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { Checkbox } from '@/components/ui/checkbox'
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
-import { FileText, Search, MoreHorizontal, Edit, Trash2, Eye, EyeOff, Download, RefreshCw, Calendar, User } from 'lucide-react'
-import { isValidImageUrl, getImagePlaceholderData } from '@/lib/image-utils'
+import { FileText, Search, MoreHorizontal, Edit, Trash2, Eye, EyeOff, Calendar, User } from 'lucide-react'
+import { isValidImageUrl } from '@/lib/image-utils'
 import { CreateStoryForm } from '@/components/admin/create-story-form'
 import { ToggleStoryStatusDialog } from '@/components/admin/toggle-story-status-dialog'
 import { DeleteStoryDialog } from '@/components/admin/delete-story-dialog'
@@ -37,6 +38,7 @@ interface Story {
 }
 
 export default function StoriesPage() {
+  const { data: session } = useSession()
   const { canManaMANAGERies, canCreateStories, canEditStories, canDeleteStories } = usePermissions()
   const [stories, setStories] = useState<Story[]>([])
   const [loading, setLoading] = useState(true)
@@ -56,7 +58,18 @@ export default function StoriesPage() {
       params.append('sortBy', sortBy)
       params.append('sortOrder', sortOrder)
 
-      const response = await fetch(`/api/stories?${params.toString()}`)
+      const headers: HeadersInit = {
+        'Content-Type': 'application/json',
+      }
+
+      // Agregar token de autenticación si está disponible
+      if (session?.customToken) {
+        headers['Authorization'] = `Bearer ${session.customToken}`
+      }
+
+      const response = await fetch(`/api/stories?${params.toString()}`, {
+        headers,
+      })
       
       if (!response.ok) {
         throw new Error('Error al cargar historias')
@@ -70,7 +83,7 @@ export default function StoriesPage() {
     } finally {
       setLoading(false)
     }
-  }, [statusFilter, searchTerm, sortBy, sortOrder])
+  }, [statusFilter, searchTerm, sortBy, sortOrder, session?.customToken])
 
   useEffect(() => {
     const timeoutId = setTimeout(() => {
@@ -95,7 +108,7 @@ export default function StoriesPage() {
     setStories(prev => prev.filter(s => s.id !== storyId))
   }
 
-  const handleStoryUpdated = (updatedStory: any) => {
+  const handleStoryUpdated = (updatedStory: Story) => {
     setStories(prev => prev.map(s => 
       s.id === updatedStory.id 
         ? updatedStory
@@ -202,10 +215,6 @@ export default function StoriesPage() {
           {canCreateStories() && (
             <CreateStoryForm onStoryCreated={fetchStories} />
           )}
-          <Button variant="outline" size="sm" onClick={fetchStories}>
-            <RefreshCw className="mr-2 h-4 w-4" />
-            Actualizar
-          </Button>
         </div>
       </div>
 
@@ -233,7 +242,7 @@ export default function StoriesPage() {
               <SelectItem value="INACTIVE">Inactivos</SelectItem>
             </SelectContent>
           </Select>
-          <Select value={sortBy} onValueChange={(value: any) => setSortBy(value)}>
+          <Select value={sortBy} onValueChange={(value) => setSortBy(value as 'title' | 'createdAt' | 'updatedAt')}>
             <SelectTrigger className="w-[140px]">
               <SelectValue placeholder="Ordenar por" />
             </SelectTrigger>
@@ -349,7 +358,7 @@ interface StoryListProps {
   onSelectAll: () => void
   onToggleStatus: (storyId: string, newStatus: 'ACTIVE' | 'INACTIVE') => void
   onStoryDeleted: (storyId: string) => void
-  onStoryUpdated: (updatedStory: any) => void
+  onStoryUpdated: (updatedStory: Story) => void
   canEditStories: () => boolean
   canDeleteStories: () => boolean
   getStatusBadgeVariant: (status: string) => "default" | "secondary"

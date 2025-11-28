@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { prisma } from '@/lib/prisma'
+import { Prisma } from '@prisma/client'
 
 // GET - Obtener videos testimoniales públicos (solo activos)
 export async function GET(request: NextRequest) {
@@ -12,7 +13,7 @@ export async function GET(request: NextRequest) {
     const skip = (page - 1) * limit
 
     // Construir filtros - solo videos activos
-    const where: any = {
+    const where: Prisma.VideoTestimonialWhereInput = {
       isActive: true
     }
 

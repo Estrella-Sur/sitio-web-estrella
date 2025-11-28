@@ -7,7 +7,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { useToast } from '@/components/ui/use-toast';
 import { useSession } from 'next-auth/react';
-import { Plus, Upload, ImageIcon } from 'lucide-react';
+import { Plus, ImageIcon } from 'lucide-react';
 import Image from 'next/image';
 
 interface CreateEventFormProps {
@@ -150,7 +150,7 @@ export const CreateEventForm: React.FC<CreateEventFormProps> = ({ onEventCreated
     }
   };
 
-  const handleChange = (field: string, value: any) => {
+  const handleChange = (field: string, value: string | Date | File | boolean | null) => {
     setFormData(prev => ({
       ...prev,
       [field]: value,

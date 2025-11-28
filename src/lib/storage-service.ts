@@ -181,8 +181,12 @@ export class StorageService {
           )
           
           console.log(`[StorageService][DELETE] Archivo eliminado: ${filename}`);
-        } catch (deleteError: any) {
-          const errorMessage = String(deleteError?.message || deleteError);
+        } catch (deleteError: unknown) {
+          const errorMessage = String(
+            deleteError && typeof deleteError === 'object' && 'message' in deleteError
+              ? deleteError.message
+              : deleteError
+          );
           // Si es NoSuchKey, considerar éxito idempotente pero loguearlo
           if (/NoSuchKey|NotFound|404/.test(errorMessage)) {
             console.log(`[StorageService][DELETE] Archivo no encontrado (ya eliminado): ${filename}`);
@@ -223,7 +227,7 @@ export class StorageService {
   /**
    * Lista archivos en un bucket
    */
-  async listFiles(bucket: string, prefix?: string): Promise<any[]> {
+  async listFiles(bucket: string, prefix?: string): Promise<Array<{ Key?: string; Size?: number; LastModified?: Date }>> {
     try {
       if (this.s3Client) {
         const command = new ListObjectsV2Command({
@@ -260,21 +264,29 @@ export class StorageService {
           await this.s3Client.send(
             new HeadBucketCommand({ Bucket: bucket })
           )
-        } catch (error: any) {
+        } catch (error: unknown) {
           // Si el error es 404, el bucket no existe y hay que crearlo
-          if (error.$metadata?.httpStatusCode === 404) {
-            const createBucketParams: any = {
-              Bucket: bucket,
-            }
-            
+          const httpError = error && typeof error === 'object' && '$metadata' in error
+            ? error as { $metadata?: { httpStatusCode?: number } }
+            : null;
+          if (httpError?.$metadata?.httpStatusCode === 404) {
             // us-east-1 no requiere LocationConstraint
             if (this.region !== 'us-east-1') {
-              createBucketParams.CreateBucketConfiguration = {
-                LocationConstraint: this.region,
-              }
+              await this.s3Client.send(
+                new CreateBucketCommand({
+                  Bucket: bucket,
+                  CreateBucketConfiguration: {
+                    LocationConstraint: this.region as 'us-west-1' | 'us-west-2' | 'eu-west-1' | 'eu-central-1' | 'ap-south-1' | 'ap-southeast-1' | 'ap-southeast-2' | 'ap-northeast-1' | 'sa-east-1',
+                  },
+                })
+              )
+            } else {
+              await this.s3Client.send(
+                new CreateBucketCommand({
+                  Bucket: bucket,
+                })
+              )
             }
-            
-            await this.s3Client.send(new CreateBucketCommand(createBucketParams))
           } else {
             throw error
           }

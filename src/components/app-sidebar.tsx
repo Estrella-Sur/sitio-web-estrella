@@ -9,24 +9,18 @@ import {
   LogOut,
   ChevronRight,
   FolderOpen,
-  Image,
-  ImageIcon,
   Settings,
   Briefcase,
-  Newspaper,
   Camera,
   Handshake,
   Shield,
-  Calendar,
   Building2,
   Megaphone,
-  Palette,
   Images,
   DollarSign,
   Heart,
   Target,
   MessageSquare,
-  AlertTriangle,
 } from "lucide-react"
 import Link from "next/link"
 import { useSession, signOut } from "next-auth/react"
@@ -59,8 +53,29 @@ const normalizeRole = (role: string): string => {
   return roleMap[role] || 'MANAGER'
 }
 
+// Tipos para los elementos del menú
+interface NavSubItem {
+  title: string
+  url: string
+  showFor?: string[]
+}
+
+interface NavItem {
+  title: string
+  url?: string
+  icon?: React.ComponentType<{ className?: string }>
+  showFor?: string[]
+  items?: NavSubItem[]
+}
+
+interface NavSection {
+  title: string
+  icon: React.ComponentType<{ className?: string }>
+  items: NavItem[]
+}
+
 // Organización del sidebar por secciones con estructura original
-const getNavSections = (userRole: string) => {
+const getNavSections = (userRole: string): NavSection[] => {
   // Normalizar el rol
   const normalizedRole = normalizeRole(userRole)
   
@@ -316,7 +331,7 @@ const getNavSections = (userRole: string) => {
       return item.showFor.includes(normalizedRole)
     }).map(item => ({
       ...item,
-      items: item.items?.filter((subItem: any) => {
+      items: item.items?.filter((subItem: NavSubItem) => {
         if (!subItem.showFor) return true
         return subItem.showFor.includes(normalizedRole)
       })
@@ -366,10 +381,10 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
             </SidebarGroupLabel>
             <SidebarGroupContent>
               <SidebarMenu>
-                {section.items.map((item: any) => (
+                {section.items.map((item: NavItem) => (
                   <SidebarMenuItem key={item.title}>
                     {item.url && item.url !== "#" ? (
-                      <SidebarMenuButton asChild tooltip={item.title} className="hover:bg-sidebar-accent hover:text-sidebar-accent-foreground">
+                      <SidebarMenuButton asChild tooltip={item.title} className="hover:text-primary shadow-none">
                         <Link href={item.url}>
                           <span>{item.title}</span>
                         </Link>
@@ -377,14 +392,14 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                     ) : (
                       <SidebarMenuButton 
                         tooltip={item.title}
-                        className="bg-sidebar-accent/40 text-sidebar-foreground/70 hover:bg-sidebar-accent/40 hover:text-sidebar-foreground/70"
+                        className="text-sidebar-foreground/70 hover:text-primary shadow-none"
                       >
                         <span>{item.title}</span>
                       </SidebarMenuButton>
                     )}
                     {item.items?.length ? (
                       <SidebarMenuSub>
-                        {item.items.map((subItem: any) => (
+                        {item.items.map((subItem: NavSubItem) => (
                           <SidebarMenuSubItem key={subItem.title}>
                             <SidebarMenuSubButton asChild>
                               <Link href={subItem.url}>
@@ -408,7 +423,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
           <SidebarMenuItem>
             <SidebarMenuButton
               size="lg"
-              className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
+              className="data-[state=open]:text-sidebar-accent-foreground"
             >
               <Avatar className="h-8 w-8 rounded-lg">
                 <AvatarImage src="" alt={session?.user?.name || ""} />

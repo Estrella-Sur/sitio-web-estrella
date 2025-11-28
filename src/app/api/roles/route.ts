@@ -1,11 +1,11 @@
-import { NextRequest, NextResponse } from 'next/server'
+import { NextResponse } from 'next/server'
 import { withRole } from '@/lib/auth-middleware'
 import { UserRole, ROLE_PERMISSIONS, getAllRoles, getRoleDescription } from '@/lib/roles'
 
 /**
  * GET /api/roles - Obtener información de roles y permisos
  */
-export const GET = withRole(UserRole.ADMINISTRATOR)(async (request: NextRequest) => {
+export const GET = withRole(UserRole.ADMINISTRATOR)(async () => {
   try {
     const roles = getAllRoles().map(role => ({
       role,

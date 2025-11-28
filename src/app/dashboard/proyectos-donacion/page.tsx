@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -18,20 +18,16 @@ import {
   TrendingUp,
   Users,
   Calendar,
-  CreditCard,
-  QrCode,
-  Eye,
   Search,
-  Filter,
-  Download,
   Power,
   PowerOff
 } from 'lucide-react';
 import { useToast } from '@/components/ui/use-toast';
+import { useSession } from 'next-auth/react';
 import { ToggleDonationProjectStatusDialog } from '@/components/admin/toggle-donation-project-status-dialog';
 import { DeleteDonationProjectDialog } from '@/components/admin/delete-donation-project-dialog';
 import Image from 'next/image';
-import { Upload, X, ImageIcon } from 'lucide-react';
+import { ImageIcon } from 'lucide-react';
 
 interface DonationProject {
   id: string;
@@ -75,7 +71,7 @@ interface DonationProjectForm {
 
 export default function ProyectosDonacionDashboardPage() {
   const [donationProjects, setDonationProjects] = useState<DonationProject[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [_loading, setLoading] = useState(true);
   const [selectedProject, setSelectedProject] = useState<DonationProject | null>(null);
   const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false);
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
@@ -107,14 +103,27 @@ export default function ProyectosDonacionDashboardPage() {
   });
   
   const { toast } = useToast();
+  const { data: session } = useSession();
 
   useEffect(() => {
     fetchDonationProjects();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const fetchDonationProjects = async () => {
     try {
-      const response = await fetch('/api/donation-projects');
+      const headers: HeadersInit = {
+        'Content-Type': 'application/json',
+      };
+
+      // Agregar token de autenticación si está disponible
+      if (session?.customToken) {
+        headers['Authorization'] = `Bearer ${session.customToken}`;
+      }
+
+      const response = await fetch('/api/donation-projects', {
+        headers,
+      });
       if (response.ok) {
         const data = await response.json();
         setDonationProjects(data);
@@ -203,10 +212,10 @@ export default function ProyectosDonacionDashboardPage() {
     setUploading(false);
     
     try {
-      let finalQrImageUrl = formData.qrImageUrl;
-      let finalQrImageAlt = formData.qrImageAlt;
-      let finalReferenceImageUrl = formData.referenceImageUrl;
-      let finalReferenceImageAlt = formData.referenceImageAlt;
+      let finalQrImageUrl: string | null = formData.qrImageUrl;
+      let finalQrImageAlt: string | null = formData.qrImageAlt;
+      let finalReferenceImageUrl: string | null = formData.referenceImageUrl;
+      let finalReferenceImageAlt: string | null = formData.referenceImageAlt;
 
       // Subir QR si se seleccionó uno
       if (selectedQrFile) {
@@ -334,10 +343,10 @@ export default function ProyectosDonacionDashboardPage() {
     setUploading(false);
 
     try {
-      let finalQrImageUrl = formData.qrImageUrl;
-      let finalQrImageAlt = formData.qrImageAlt;
-      let finalReferenceImageUrl = formData.referenceImageUrl;
-      let finalReferenceImageAlt = formData.referenceImageAlt;
+      let finalQrImageUrl: string | null = formData.qrImageUrl;
+      let finalQrImageAlt: string | null = formData.qrImageAlt;
+      let finalReferenceImageUrl: string | null = formData.referenceImageUrl;
+      let finalReferenceImageAlt: string | null = formData.referenceImageAlt;
 
       // Subir QR si se seleccionó uno nuevo
       if (selectedQrFile) {
@@ -373,8 +382,8 @@ export default function ProyectosDonacionDashboardPage() {
         }
       } else if (qrMarkedForDeletion) {
         // Si se marcó para eliminar, establecer como null
-        finalQrImageUrl = null as any;
-        finalQrImageAlt = null as any;
+        finalQrImageUrl = null;
+        finalQrImageAlt = null;
       }
 
       // Subir imagen de referencia si se seleccionó una nueva
@@ -411,8 +420,8 @@ export default function ProyectosDonacionDashboardPage() {
         }
       } else if (referenceMarkedForDeletion) {
         // Si se marcó para eliminar, establecer como null
-        finalReferenceImageUrl = null as any;
-        finalReferenceImageAlt = null as any;
+        finalReferenceImageUrl = null;
+        finalReferenceImageAlt = null;
       }
 
       // Actualizar el proyecto de donación
@@ -830,8 +839,8 @@ export default function ProyectosDonacionDashboardPage() {
         <Card>
           <CardContent className="p-6">
             <div className="flex items-center">
-              <div className="p-2 bg-green-100 dark:bg-green-900 rounded-lg">
-                <TrendingUp className="h-6 w-6 text-green-600 dark:text-green-400" />
+              <div className="p-2 bg-blue-100 dark:bg-blue-900 rounded-lg">
+                <TrendingUp className="h-6 w-6 text-blue-600 dark:text-blue-400" />
               </div>
               <div className="ml-4">
                 <p className="text-sm font-medium text-gray-600 dark:text-gray-400">Proyectos Activos</p>
@@ -925,7 +934,7 @@ export default function ProyectosDonacionDashboardPage() {
                       <Button
                         variant="outline"
                         size="sm"
-                        className={project.isActive ? "text-orange-600 hover:text-orange-700" : "text-green-600 hover:text-green-700"}
+                        className={project.isActive ? "text-orange-600 hover:text-orange-700" : "text-blue-600 hover:text-blue-700"}
                         title={project.isActive ? "Desactivar proyecto" : "Activar proyecto"}
                       >
                         {project.isActive ? <PowerOff className="w-4 h-4" /> : <Power className="w-4 h-4" />}

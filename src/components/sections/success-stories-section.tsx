@@ -216,7 +216,7 @@ export default function SuccessStoriesSection() {
             />
           </div>
           
-          <div className="bg-black bg-opacity-90 dark:bg-black dark:bg-opacity-90 p-8 md:p-12">
+          <div className="bg-primary bg-opacity-95 dark:bg-primary dark:bg-opacity-95 p-8 md:p-12">
             <div className="flex flex-col md:flex-row md:items-end md:justify-between">
               <div className="md:w-3/5">
                 <h1 className="text-3xl md:text-4xl font-bold text-white leading-tight">

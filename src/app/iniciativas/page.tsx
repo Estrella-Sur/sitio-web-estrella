@@ -77,7 +77,7 @@ export default function InitiativesPage() {
       const response = await fetch(url);
       
       if (!response.ok) {
-        const errorData = await response.json().catch(() => ({}));
+        await response.json().catch(() => ({}));
         throw new Error(`Error al cargar iniciativas: ${response.status}`);
       }
       const data = await response.json();
@@ -154,9 +154,9 @@ export default function InitiativesPage() {
       case 'MEDIOS_DE_VIDA':
         return <Users className="h-6 w-6 text-purple-500" />;
       case 'PROTECCION':
-        return <Shield className="h-6 w-6 text-green-500" />;
+        return <Shield className="h-6 w-6 text-blue-500" />;
       case 'SOSTENIBILIDAD':
-        return <Shield className="h-6 w-6 text-emerald-500" />;
+        return <Shield className="h-6 w-6 text-blue-500" />;
       case 'DESARROLLO_INFANTIL_TEMPRANO':
         return <Heart className="h-6 w-6 text-pink-500" />;
       case 'NINEZ_EN_CRISIS':
@@ -179,9 +179,9 @@ export default function InitiativesPage() {
       case 'MEDIOS_DE_VIDA':
         return 'bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-200';
       case 'PROTECCION':
-        return 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200';
+        return 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200';
       case 'SOSTENIBILIDAD':
-        return 'bg-emerald-100 text-emerald-800 dark:bg-emerald-900 dark:text-emerald-200';
+        return 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200';
       case 'DESARROLLO_INFANTIL_TEMPRANO':
         return 'bg-pink-100 text-pink-800 dark:bg-pink-900 dark:text-pink-200';
       case 'NINEZ_EN_CRISIS':
@@ -191,7 +191,7 @@ export default function InitiativesPage() {
     }
   };
 
-  const getSectorDisplayName = (sectors: string[]) => {
+  const _getSectorDisplayName = (sectors: string[]) => {
     if (!sectors || sectors.length === 0) return 'Sin sector';
     const sector = sectors[0];
     const sectorSpanish = sectorLabels[sector] || sector;
@@ -220,7 +220,7 @@ export default function InitiativesPage() {
       
       {/* Hero Section */}
       <div 
-        className="relative min-h-screen flex items-center"
+        className="relative min-h-screen flex items-start"
         style={{
           backgroundImage: "url('/static-images/heroes/iniciativas_hero.jpg')",
           backgroundSize: 'cover',
@@ -228,19 +228,19 @@ export default function InitiativesPage() {
         }}
       >
         <div className="absolute inset-0 bg-black opacity-40 dark:opacity-60"></div>
-        <main className="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8 flex justify-center">
-          <div className="max-w-4xl text-white text-center">
+        <main className="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8 pt-8 md:pt-12 flex justify-center md:justify-start">
+          <div className="max-w-4xl text-white text-center md:text-left">
             <div className="mb-6">
-              <span className="inline-block bg-orange-400 text-gray-900 text-sm font-bold uppercase px-4 py-2 tracking-wider rounded">
+              <span className="inline-block text-white text-xs font-bold uppercase px-3 py-1.5 tracking-wider rounded" style={{ backgroundColor: '#99b944' }}>
                 Iniciativas Innovadoras
               </span>
             </div>
-            <h1 className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-extrabold leading-tight text-white mb-6">
+            <h1 className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-7xl xl:text-8xl font-extrabold leading-tight text-white mb-6">
               INICIATIVAS<br/>
               DE IMPACTO<br/>
               SOCIAL
             </h1>
-            <p className="text-lg md:text-xl text-gray-200 max-w-3xl mx-auto mb-8">
+            <p className="text-lg md:text-xl text-gray-200 max-w-3xl mb-8">
               Proyectamos y ejecutamos iniciativas innovadoras de alcance masivo a través de Unidades Educativas y Centros de Salud, diseñadas para diferentes grupos etarios.
             </p>
             <div className="mt-8">
@@ -341,10 +341,10 @@ export default function InitiativesPage() {
                             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                           />
                         ) : (
-                          <div className="w-full h-64 bg-gradient-to-br from-emerald-200 to-blue-200 dark:from-emerald-800 dark:to-blue-800 flex items-center justify-center group-hover:scale-105 transition-transform duration-300">
+                          <div className="w-full h-64 bg-gradient-to-br from-blue-200 to-blue-300 dark:from-blue-800 dark:to-blue-900 flex items-center justify-center group-hover:scale-105 transition-transform duration-300">
                             <div className="text-center">
-                              <span className="material-symbols-outlined text-6xl text-emerald-600 dark:text-emerald-400 mb-4">science</span>
-                              <p className="text-lg font-bold text-emerald-700 dark:text-emerald-300 font-condensed">Iniciativa</p>
+                              <span className="material-symbols-outlined text-6xl text-blue-600 dark:text-blue-400 mb-4">science</span>
+                              <p className="text-lg font-bold text-blue-700 dark:text-blue-300 font-condensed">Iniciativa</p>
                             </div>
                           </div>
                         )}
@@ -448,10 +448,10 @@ export default function InitiativesPage() {
                       className="object-cover"
                     />
                   ) : (
-                    <div className="w-full h-full bg-gradient-to-br from-emerald-200 to-blue-200 dark:from-emerald-800 dark:to-blue-800 flex items-center justify-center">
+                    <div className="w-full h-full bg-gradient-to-br from-blue-200 to-blue-300 dark:from-blue-800 dark:to-blue-900 flex items-center justify-center">
                       <div className="text-center">
-                        <span className="material-symbols-outlined text-6xl text-emerald-600 dark:text-emerald-400 mb-4">science</span>
-                        <p className="text-lg font-bold text-emerald-700 dark:text-emerald-300 font-condensed">Iniciativa Innovadora</p>
+                        <span className="material-symbols-outlined text-6xl text-blue-600 dark:text-blue-400 mb-4">science</span>
+                        <p className="text-lg font-bold text-blue-700 dark:text-blue-300 font-condensed">Iniciativa Innovadora</p>
                       </div>
                     </div>
                   )}

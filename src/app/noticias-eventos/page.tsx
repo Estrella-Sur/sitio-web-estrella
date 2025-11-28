@@ -6,7 +6,6 @@ import { useNewsAndEvents } from '@/hooks/use-news-events';
 import { Card } from '@/components/ui/card';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Button } from '@/components/ui/button';
-import Link from 'next/link';
 import { Navbar } from '@/components/layout/navbar';
 import { Header } from '@/components/layout/header';
 import { SiteFooter } from '@/components/layout/site-footer';

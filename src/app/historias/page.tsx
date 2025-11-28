@@ -7,6 +7,7 @@ import Link from 'next/link'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { ArrowRight, Calendar, User } from 'lucide-react'
+import Image from 'next/image'
 
 interface Story {
   id: string
@@ -119,10 +120,12 @@ export default function HistoriasPage() {
             {stories.map((story) => (
               <Card key={story.id} className="overflow-hidden hover:shadow-lg transition-shadow">
                 <div className="aspect-video overflow-hidden">
-                  <img
+                  <Image
                     src={story.imageUrl}
                     alt={story.imageAlt || story.title}
                     className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+                    width={400}
+                    height={225}
                   />
                 </div>
                 <CardHeader>

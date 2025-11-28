@@ -86,13 +86,13 @@ export function ToggleUserStatusDialog({ user, onStatusChanged, children }: Togg
               {isCurrentlyActive ? (
                 <UserX className="h-8 w-8 text-red-500" />
               ) : (
-                <UserCheck className="h-8 w-8 text-green-500" />
+                <UserCheck className="h-8 w-8 text-blue-500" />
               )}
               <div>
                 <p className="font-medium">{user.name}</p>
                 <p className="text-sm text-gray-600">{user.email}</p>
                 <p className="text-sm text-gray-500">
-                  Estado actual: <span className={`font-medium ${isCurrentlyActive ? 'text-green-600' : 'text-red-600'}`}>
+                  Estado actual: <span className={`font-medium ${isCurrentlyActive ? 'text-blue-600' : 'text-red-600'}`}>
                     {isCurrentlyActive ? 'Activo' : 'Inactivo'}
                   </span>
                 </p>

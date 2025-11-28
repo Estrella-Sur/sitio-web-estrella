@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 import { verifyAuth } from '@/lib/simple-auth-middleware';
+import { Prisma, TransparencyCategory } from '@prisma/client';
 
 // GET - Obtener documentos de transparencia (públicos o con filtros para admin)
 export async function GET(request: NextRequest) {
@@ -11,15 +12,14 @@ export async function GET(request: NextRequest) {
     const limit = searchParams.get('limit') ? parseInt(searchParams.get('limit')!) : undefined;
     const search = searchParams.get('search');
     const isActive = searchParams.get('isActive');
-    const year = searchParams.get('year') ? parseInt(searchParams.get('year')!) : undefined;
     const sortBy = searchParams.get('sortBy') || 'createdAt';
-    const sortOrder = searchParams.get('sortOrder') || 'desc';
+    const sortOrder = (searchParams.get('sortOrder') || 'desc') as 'asc' | 'desc';
 
     // Verificar si es una request autenticada (admin)
     const authResult = await verifyAuth(request);
     const isAuthenticated = authResult.isAuthenticated;
 
-    const where: any = {};
+    const where: Prisma.TransparencyDocumentWhereInput = {};
 
     // Si no está autenticado, solo mostrar documentos activos
     if (!isAuthenticated) {
@@ -32,7 +32,7 @@ export async function GET(request: NextRequest) {
     }
 
     if (category) {
-      where.category = category;
+      where.category = category as TransparencyCategory;
     }
 
     if (featured === 'true') {
@@ -43,14 +43,14 @@ export async function GET(request: NextRequest) {
     // Agregar búsqueda por título y descripción
     if (search) {
       where.OR = [
-        { title: { contains: search, mode: 'insensitive' } },
-        { description: { contains: search, mode: 'insensitive' } },
-        { fileName: { contains: search, mode: 'insensitive' } },
+        { title: { contains: search, mode: 'insensitive' as const } },
+        { description: { contains: search, mode: 'insensitive' as const } },
+        { fileName: { contains: search, mode: 'insensitive' as const } },
       ];
     }
 
     // Configurar ordenamiento
-    const orderBy: any = {};
+    const orderBy: Prisma.TransparencyDocumentOrderByWithRelationInput = {};
     if (sortBy === 'title') {
       orderBy.title = sortOrder;
     } else if (sortBy === 'category') {
@@ -87,12 +87,14 @@ export async function GET(request: NextRequest) {
 export async function POST(request: NextRequest) {
   try {
     const authResult = await verifyAuth(request);
-    if (!authResult.isAuthenticated) {
+    if (!authResult.isAuthenticated || !authResult.user) {
       return NextResponse.json(
         { error: 'No autorizado' },
         { status: 401 }
       );
     }
+
+    const user = authResult.user;
 
     const body = await request.json();
     const {
@@ -128,7 +130,7 @@ export async function POST(request: NextRequest) {
         fileUrl,
         category,
         isFeatured,
-        createdBy: authResult.user.id,
+        createdBy: user.id,
       },
       include: {
         creator: {

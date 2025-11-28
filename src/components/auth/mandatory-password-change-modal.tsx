@@ -4,8 +4,6 @@ import React, { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import * as z from 'zod'
-import { useRouter } from 'next/navigation'
-import { getSession, signOut, signIn, useSession } from 'next-auth/react'
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/dialog'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -44,8 +42,6 @@ export function MandatoryPasswordChangeModal({
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [showSuccess, setShowSuccess] = useState(false)
   const { toast } = useToast()
-  const router = useRouter()
-  const { data: session } = useSession()
 
   const form = useForm<PasswordChangeFormData>({
     resolver: zodResolver(passwordChangeSchema),
@@ -128,7 +124,7 @@ export function MandatoryPasswordChangeModal({
           <DialogTitle className="flex items-center gap-2 text-xl">
             {showSuccess ? (
               <>
-                <CheckCircle className="h-6 w-6 text-green-500" />
+                <CheckCircle className="h-6 w-6 text-blue-500" />
                 Contraseña Actualizada
               </>
             ) : (
@@ -149,17 +145,17 @@ export function MandatoryPasswordChangeModal({
 
         {showSuccess ? (
           // Estado de éxito
-          <div className="bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg p-6 mb-4">
+          <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-6 mb-4">
             <div className="text-center">
-              <CheckCircle className="h-12 w-12 text-green-500 mx-auto mb-4" />
-              <h3 className="text-lg font-semibold text-green-800 dark:text-green-200 mb-2">
+              <CheckCircle className="h-12 w-12 text-blue-500 mx-auto mb-4" />
+              <h3 className="text-lg font-semibold text-blue-800 dark:text-blue-200 mb-2">
                 ¡Contraseña Actualizada Correctamente!
               </h3>
-              <p className="text-sm text-green-700 dark:text-green-300 mb-4">
+              <p className="text-sm text-blue-700 dark:text-blue-300 mb-4">
                 Tu contraseña ha sido cambiada exitosamente. Iniciando sesión automáticamente...
               </p>
-              <div className="flex items-center justify-center gap-2 text-green-600 dark:text-green-400">
-                <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-green-600"></div>
+              <div className="flex items-center justify-center gap-2 text-blue-600 dark:text-blue-400">
+                <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-blue-600"></div>
                 <span className="text-sm">Procesando...</span>
               </div>
             </div>
@@ -236,7 +232,7 @@ export function MandatoryPasswordChangeModal({
                               ? 'bg-red-500'
                               : passwordStrength.strength <= 3
                               ? 'bg-yellow-500'
-                              : 'bg-green-500'
+                              : 'bg-blue-500'
                             : 'bg-gray-200'
                         }`}
                       />
@@ -245,7 +241,7 @@ export function MandatoryPasswordChangeModal({
                   <span className={`text-sm font-medium ${
                     passwordStrength.strength <= 2 ? 'text-red-600' :
                     passwordStrength.strength <= 3 ? 'text-yellow-600' :
-                    'text-green-600'
+                    'text-blue-600'
                   }`}>
                     {passwordStrength.strength <= 2 ? 'Débil' :
                      passwordStrength.strength <= 3 ? 'Media' : 'Fuerte'}
@@ -256,11 +252,11 @@ export function MandatoryPasswordChangeModal({
                   {Object.entries(passwordStrength.checks).map(([key, passed]) => (
                     <div key={key} className="flex items-center gap-1">
                       {passed ? (
-                        <CheckCircle className="h-3 w-3 text-green-500" />
+                        <CheckCircle className="h-3 w-3 text-blue-500" />
                       ) : (
                         <XCircle className="h-3 w-3 text-red-500" />
                       )}
-                      <span className={passed ? 'text-green-600' : 'text-red-600'}>
+                      <span className={passed ? 'text-blue-600' : 'text-red-600'}>
                         {key === 'length' && '8+ caracteres'}
                         {key === 'uppercase' && 'Mayúscula'}
                         {key === 'lowercase' && 'Minúscula'}
@@ -304,7 +300,7 @@ export function MandatoryPasswordChangeModal({
                     </div>
                   </FormControl>
                   {confirmPassword && newPassword === confirmPassword && (
-                    <div className="flex items-center gap-1 text-sm text-green-600">
+                    <div className="flex items-center gap-1 text-sm text-blue-600">
                       <CheckCircle className="h-4 w-4" />
                       Las contraseñas coinciden
                     </div>

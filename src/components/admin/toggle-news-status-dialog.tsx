@@ -69,7 +69,7 @@ export const ToggleNewsStatusDialog: React.FC<ToggleNewsStatusDialogProps> = ({
         <DialogHeader>
           <DialogTitle>{actionCapitalized} Noticia</DialogTitle>
           <DialogDescription>
-            ¿Estás seguro de que quieres {action} la noticia "{news.title}"?
+            ¿Estás seguro de que quieres {action} la noticia &quot;{news.title}&quot;?
             {isActivating 
               ? ' La noticia será visible en la página pública.' 
               : ' La noticia ya no será visible en la página pública.'

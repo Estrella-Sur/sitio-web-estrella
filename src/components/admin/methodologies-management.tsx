@@ -3,14 +3,12 @@
 import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Badge } from '@/components/ui/badge';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { 
   Search, 
-  Plus, 
-  Loader2
+  Plus
 } from 'lucide-react';
 import { toast } from 'sonner';
 import { useSession } from 'next-auth/react';
@@ -212,7 +210,7 @@ export function MethodologiesManagement() {
     }
   };
 
-  const handleToggleFeatured = async (methodologyId: string, isFeatured: boolean) => {
+  const _handleToggleFeatured = async (methodologyId: string, isFeatured: boolean) => {
     if (!session?.customToken) {
       toast.error('No estás autenticado. Por favor inicia sesión.');
       return;
@@ -293,16 +291,16 @@ export function MethodologiesManagement() {
     toast.info('Selección limpiada');
   };
 
-  const getCategoryColor = (category: string) => {
+  const _getCategoryColor = (category: string) => {
     switch (category) {
       case 'EDUCACION':
         return 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200';
       case 'SALUD':
         return 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200';
       case 'SOCIAL':
-        return 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200';
+        return 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200';
       case 'AMBIENTAL':
-        return 'bg-emerald-100 text-emerald-800 dark:bg-emerald-900 dark:text-emerald-200';
+        return 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200';
       default:
         return 'bg-gray-100 text-gray-800 dark:bg-gray-900 dark:text-gray-200';
     }
@@ -422,7 +420,7 @@ export function MethodologiesManagement() {
               <SelectItem value="NINEZ_EN_CRISIS">Niñez en Crisis</SelectItem>
             </SelectContent>
           </Select>
-          <Select value={sortBy} onValueChange={(value: any) => setSortBy(value)}>
+          <Select value={sortBy} onValueChange={(value: string) => setSortBy(value as 'title' | 'createdAt' | 'updatedAt')}>
             <SelectTrigger className="w-[140px]">
               <SelectValue placeholder="Ordenar por" />
             </SelectTrigger>

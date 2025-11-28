@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { PrismaClient } from '@prisma/client';
+import { PrismaClient, Prisma } from '@prisma/client';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth';
 
@@ -86,7 +86,7 @@ export async function GET(request: NextRequest) {
     const { searchParams } = new URL(request.url);
     const isActive = searchParams.get('isActive');
 
-    const where: any = {};
+    const where: Prisma.DonationProjectWhereInput = {};
     if (isActive !== null) where.isActive = isActive === 'true';
 
     const donationProjects = await prisma.donationProject.findMany({

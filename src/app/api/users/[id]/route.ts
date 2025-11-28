@@ -2,7 +2,6 @@ import { NextRequest, NextResponse } from 'next/server'
 import { withSimpleRole } from '@/lib/simple-auth-middleware'
 import { UserRole } from '@/lib/roles'
 import { prisma } from '@/lib/prisma'
-import { hashPassword, verifyPassword } from '@/lib/security'
 
 /**
  * GET /api/users/[id] - Obtener usuario específico
@@ -11,7 +10,7 @@ export async function GET(
   request: NextRequest,
   { params }: { params: Promise<{ id: string }> }
 ) {
-  return withSimpleRole([UserRole.ADMINISTRATOR], async (authenticatedRequest) => {
+  return withSimpleRole([UserRole.ADMINISTRATOR], async (_authenticatedRequest) => {
     try {
       const resolvedParams = await params;
       const userId = resolvedParams.id
@@ -181,7 +180,7 @@ export const DELETE = async (
     console.log('✅ Usuario encontrado:', user.email)
 
     // No permitir que el usuario se elimine a sí mismo
-    const currentUserId = (request as any).user?.id
+    const currentUserId = (request as NextRequest & { user?: { id: string } }).user?.id
     if (userId === currentUserId) {
       console.log('❌ Intento de auto-eliminación bloqueado')
       return NextResponse.json(

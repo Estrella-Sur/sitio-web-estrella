@@ -4,8 +4,7 @@ import {
   verifyPassword, 
   validatePasswordStrength, 
   validateEmail, 
-  sanitizeInput,
-  generateEmailVerificationToken
+  sanitizeInput
 } from './security'
 import { UserRole, isValidRole } from './roles'
 
@@ -114,9 +113,8 @@ export async function registerUser(data: RegisterData): Promise<AuthResult> {
     })
 
     // Generar token de verificación de email
-    const emailVerificationToken = generateEmailVerificationToken()
-    
     // TODO: Enviar email de verificación
+    // const emailVerificationToken = generateEmailVerificationToken()
     // await sendEmailVerification(email, emailVerificationToken)
 
     return {
@@ -180,7 +178,7 @@ export async function verifyCredentials(data: LoginData): Promise<AuthResult> {
     if (!isPasswordValid) {
       // Incrementar intentos fallidos
       const loginAttempts = user.loginAttempts + 1
-      const updateData: any = { loginAttempts }
+      const updateData: { loginAttempts: number; lockedUntil?: Date } = { loginAttempts }
 
       // Bloquear cuenta si excede el límite (5 intentos)
       if (loginAttempts >= 5) {

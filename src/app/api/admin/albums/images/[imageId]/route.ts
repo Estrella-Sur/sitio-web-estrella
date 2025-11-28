@@ -56,7 +56,6 @@ export async function PUT(
     };
 
     // Si se está reemplazando la imagen, eliminar la anterior
-    let oldImageUrl = existingImage.imageUrl;
     if (imageUrl && imageUrl !== existingImage.imageUrl) {
       const { bucket, key } = extractBucketAndKey(existingImage.imageUrl);
       if (bucket && key) {
@@ -66,7 +65,6 @@ export async function PUT(
           console.warn('[GalleryImages][PUT] No se pudo eliminar imagen anterior del bucket:', e);
         }
       }
-      oldImageUrl = imageUrl;
     }
 
     const image = await prisma.galleryImage.update({

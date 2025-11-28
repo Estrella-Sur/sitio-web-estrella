@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
+import { Prisma, ResourceCategory, ResourceSubcategory } from '@prisma/client';
 
 // GET - Obtener recursos públicos
 export async function GET(request: NextRequest) {
@@ -11,18 +12,18 @@ export async function GET(request: NextRequest) {
     const limit = searchParams.get('limit') ? parseInt(searchParams.get('limit')!) : undefined;
     const search = searchParams.get('search');
     const sortBy = searchParams.get('sortBy') || 'createdAt';
-    const sortOrder = searchParams.get('sortOrder') || 'desc';
+    const sortOrder = (searchParams.get('sortOrder') || 'desc') as 'asc' | 'desc';
 
-    const where: any = {
+    const where: Prisma.ResourceWhereInput = {
       isActive: true, // Solo recursos activos para usuarios públicos
     };
 
     if (category) {
-      where.category = category;
+      where.category = category as ResourceCategory;
     }
 
     if (subcategory) {
-      where.subcategory = subcategory;
+      where.subcategory = subcategory as ResourceSubcategory;
     }
 
     if (featured === 'true') {
@@ -39,7 +40,7 @@ export async function GET(request: NextRequest) {
     }
 
     // Configurar ordenamiento
-    const orderBy: any = {};
+    const orderBy: Prisma.ResourceOrderByWithRelationInput = {};
     if (sortBy === 'title') {
       orderBy.title = sortOrder;
     } else if (sortBy === 'category') {

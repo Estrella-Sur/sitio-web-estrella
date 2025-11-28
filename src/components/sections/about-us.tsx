@@ -2,8 +2,9 @@
 
 import React from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { Heart, Users, Award, Globe, Handshake, Star, TrendingUp, Shield, Stethoscope, GraduationCap, Smile } from 'lucide-react';
+import { Heart, Users, TrendingUp, Shield, Stethoscope } from 'lucide-react';
 
 export const AboutUs: React.FC = () => {
   return (
@@ -90,7 +91,7 @@ export const AboutUs: React.FC = () => {
                 viewport={{ once: true }}
               >
                 <div className="flex items-start space-x-3">
-                  <Stethoscope className="h-5 w-5 text-green-600 mt-0.5 flex-shrink-0" />
+                  <Stethoscope className="h-5 w-5 text-blue-600 mt-0.5 flex-shrink-0" />
                   <p className="text-sm text-subtext-light dark:text-subtext-dark leading-relaxed">
                     <span className="font-semibold text-text-light dark:text-text-dark">Salud sexual integral y educación temprana:</span> Brindamos educación integral en salud sexual y reproductiva, adaptada a cada etapa del desarrollo.
                   </p>
@@ -138,20 +139,20 @@ export const AboutUs: React.FC = () => {
                    >
                      {/* Botón de Donación */}
                      <div className="flex flex-col sm:flex-row gap-4">
-                       <a 
+                       <Link 
                          href="/donar" 
                          className="inline-flex items-center justify-center bg-primary hover:bg-primary/90 text-white px-6 py-3 rounded-lg font-bold transition-all duration-300 shadow-lg hover:shadow-xl font-condensed"
                        >
                          DONAR AHORA
                          <Heart className="ml-2 h-4 w-4 fill-current" />
-                       </a>
+                       </Link>
                        
-                       <a 
+                       <Link 
                          href="/contacto" 
                          className="inline-flex items-center justify-center bg-card-light dark:bg-card-dark hover:bg-card-light/90 dark:hover:bg-card-dark/90 text-text-light dark:text-text-dark border border-border-light dark:border-border-dark px-6 py-3 rounded-lg font-bold transition-all duration-300 shadow-lg hover:shadow-xl font-condensed"
                        >
                          CONTACTAR
-                       </a>
+                       </Link>
                      </div>
                    </motion.div>
           </motion.div>
@@ -183,7 +184,7 @@ export const AboutUs: React.FC = () => {
                 viewport={{ once: true }}
               >
                 <p className="text-gray-800 dark:text-gray-200 text-sm leading-relaxed mb-4 italic">
-                  "Nuestro compromiso es proteger la niñez y garantizar que crezcan libres de violencia, con cuidado y respeto en cada paso"
+                  &quot;Nuestro compromiso es proteger la niñez y garantizar que crezcan libres de violencia, con cuidado y respeto en cada paso&quot;
                 </p>
                 <div className="flex items-center space-x-3">
                   <div className="w-10 h-10 rounded-full bg-primary overflow-hidden">

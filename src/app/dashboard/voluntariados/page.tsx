@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/dialog';
-import { Mail, Phone, ExternalLink, Briefcase, Calendar, Eye } from 'lucide-react';
+import { Mail, Phone, ExternalLink, Briefcase, Eye } from 'lucide-react';
 import { toast } from 'sonner';
 import { redirect } from 'next/navigation';
 import { useSession } from 'next-auth/react';
@@ -30,7 +30,7 @@ interface VolunteerApplication {
 }
 
 export default function VoluntariadosPage() {
-  const { data: session, status } = useSession();
+  const { status } = useSession();
   const [applications, setApplications] = useState<VolunteerApplication[]>([]);
   const [loading, setLoading] = useState(true);
   const [selectedStatus, setSelectedStatus] = useState<string>('all');
@@ -48,7 +48,7 @@ export default function VoluntariadosPage() {
 
   useEffect(() => {
     fetchApplications();
-  }, [selectedStatus, selectedYear, selectedMonth]);
+  }, [selectedStatus, selectedYear, selectedMonth]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const fetchApplications = async () => {
     setLoading(true);
@@ -92,7 +92,7 @@ export default function VoluntariadosPage() {
     }
   };
 
-  const deleteApplication = async (applicationId: string) => {
+  const _deleteApplication = async (applicationId: string) => {
     if (!confirm('¿Estás seguro de que quieres eliminar esta aplicación?')) {
       return;
     }
@@ -121,7 +121,7 @@ export default function VoluntariadosPage() {
       case 'REVIEWING':
         return <Badge variant="outline" className="bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200">En Revisión</Badge>;
       case 'APPROVED':
-        return <Badge variant="outline" className="bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200">Aprobado</Badge>;
+        return <Badge variant="outline" className="bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200">Aprobado</Badge>;
       case 'REJECTED':
         return <Badge variant="outline" className="bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200">Rechazado</Badge>;
       default:
@@ -459,7 +459,7 @@ export default function VoluntariadosPage() {
             <div className="py-4">
               <p className="text-sm text-gray-600">
                 ¿Estás seguro de que quieres cambiar el estado de la aplicación de 
-                <strong> "{statusChangeDialog.application.fullName}"</strong>?
+                <strong> &quot;{statusChangeDialog.application.fullName}&quot;</strong>?
               </p>
               <p className="text-sm text-gray-500 mt-2">
                 Estado actual: <strong>{getStatusText(statusChangeDialog.application.status)}</strong>

@@ -57,7 +57,18 @@ export const EventsManagement: React.FC = () => {
       params.append('sortBy', sortBy);
       params.append('sortOrder', sortOrder);
 
-      const response = await fetch(`/api/events?${params.toString()}`);
+      const headers: HeadersInit = {
+        'Content-Type': 'application/json',
+      };
+
+      // Agregar token de autenticación si está disponible
+      if (session?.customToken) {
+        headers['Authorization'] = `Bearer ${session.customToken}`;
+      }
+
+      const response = await fetch(`/api/events?${params.toString()}`, {
+        headers,
+      });
       if (!response.ok) {
         throw new Error('Error al cargar eventos');
       }
@@ -73,7 +84,7 @@ export const EventsManagement: React.FC = () => {
     } finally {
       setLoading(false);
     }
-  }, [statusFilter, searchTerm, sortBy, sortOrder, toast]);
+  }, [statusFilter, searchTerm, sortBy, sortOrder, toast, session?.customToken]);
 
   useEffect(() => {
     const timeoutId = setTimeout(() => {
@@ -260,9 +271,6 @@ export const EventsManagement: React.FC = () => {
         </div>
         <div className="flex items-center space-x-2">
           <CreateEventForm onEventCreated={fetchData} />
-          <Button variant="outline" size="sm" onClick={fetchData}>
-            Actualizar
-          </Button>
         </div>
       </div>
 

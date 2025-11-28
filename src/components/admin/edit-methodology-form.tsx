@@ -5,11 +5,10 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Badge } from '@/components/ui/badge';
-import { Loader2, Save, X, Upload, ImageIcon } from 'lucide-react';
+import { Loader2, Save, X, ImageIcon } from 'lucide-react';
 import { useToast } from '@/components/ui/use-toast';
 import Image from 'next/image';
 
@@ -388,11 +387,11 @@ export function EditMethodologyForm({ methodology, onSuccess, onCancel }: EditMe
       case 'EDUCACION':
         return 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200';
       case 'MEDIOS_DE_VIDA':
-        return 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200';
+        return 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200';
       case 'PROTECCION':
         return 'bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-200';
       case 'SOSTENIBILIDAD':
-        return 'bg-emerald-100 text-emerald-800 dark:bg-emerald-900 dark:text-emerald-200';
+        return 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200';
       case 'DESARROLLO_INFANTIL_TEMPRANO':
         return 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200';
       case 'NINEZ_EN_CRISIS':
@@ -434,20 +433,20 @@ export function EditMethodologyForm({ methodology, onSuccess, onCancel }: EditMe
               <div className="space-y-2">
                 <Label htmlFor="sectors">Sector Programático *</Label>
                 <div className="grid grid-cols-2 gap-3 p-4 border rounded-lg">
-                  {[
-                    { value: 'SALUD', label: 'Salud' },
-                    { value: 'EDUCACION', label: 'Educación' },
-                    { value: 'MEDIOS_DE_VIDA', label: 'Medios de Vida' },
-                    { value: 'PROTECCION', label: 'Protección' },
-                    { value: 'SOSTENIBILIDAD', label: 'Sostenibilidad' },
-                    { value: 'DESARROLLO_INFANTIL_TEMPRANO', label: 'Desarrollo Infantil Temprano' },
-                    { value: 'NINEZ_EN_CRISIS', label: 'Niñez en Crisis' }
-                  ].map((sector) => (
+                  {([
+                    { value: 'SALUD' as const, label: 'Salud' },
+                    { value: 'EDUCACION' as const, label: 'Educación' },
+                    { value: 'MEDIOS_DE_VIDA' as const, label: 'Medios de Vida' },
+                    { value: 'PROTECCION' as const, label: 'Protección' },
+                    { value: 'SOSTENIBILIDAD' as const, label: 'Sostenibilidad' },
+                    { value: 'DESARROLLO_INFANTIL_TEMPRANO' as const, label: 'Desarrollo Infantil Temprano' },
+                    { value: 'NINEZ_EN_CRISIS' as const, label: 'Niñez en Crisis' }
+                  ] as const).map((sector) => (
                     <div key={sector.value} className="flex items-center space-x-2">
                       <Checkbox
                         id={sector.value}
-                        checked={formData.sectors.includes(sector.value as any)}
-                        onCheckedChange={(checked) => handleSectorChange(sector.value as any, checked as boolean)}
+                        checked={formData.sectors.includes(sector.value)}
+                        onCheckedChange={(checked) => handleSectorChange(sector.value, checked as boolean)}
                       />
                       <Label htmlFor={sector.value} className="text-sm font-normal">
                         {sector.label}

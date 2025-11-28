@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 
 interface NewsItem {
   id: string;
@@ -100,7 +100,7 @@ export const useNewsAndEvents = () => {
     }
   };
 
-  const loadData = async () => {
+  const loadData = useCallback(async () => {
     try {
       setLoading(true);
       setError(null);
@@ -119,7 +119,7 @@ export const useNewsAndEvents = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, []);
 
   const refreshNews = async () => {
     try {
@@ -132,7 +132,7 @@ export const useNewsAndEvents = () => {
 
   useEffect(() => {
     loadData();
-  }, []);
+  }, [loadData]);
 
   return {
     news,

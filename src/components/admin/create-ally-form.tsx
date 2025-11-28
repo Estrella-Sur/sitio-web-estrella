@@ -7,11 +7,18 @@ import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { useToast } from '@/components/ui/use-toast';
-import { Upload, ImageIcon } from 'lucide-react';
+import { ImageIcon } from 'lucide-react';
 import Image from 'next/image';
 
 interface CreateAllyFormProps {
-  onSubmit: (data: any) => void;
+  onSubmit: (data: {
+    name: string;
+    role: string;
+    description?: string;
+    imageUrl: string;
+    imageAlt: string;
+    status: 'ACTIVE' | 'INACTIVE';
+  }) => void;
   onCancel: () => void;
 }
 
@@ -23,6 +30,7 @@ export const CreateAllyForm: React.FC<CreateAllyFormProps> = ({ onSubmit, onCanc
     description: '',
     imageUrl: '',
     imageAlt: '',
+    status: 'ACTIVE' as 'ACTIVE' | 'INACTIVE',
   });
   const [uploading, setUploading] = useState(false);
   const [selectedImageFile, setSelectedImageFile] = useState<File | null>(null);
@@ -88,10 +96,22 @@ export const CreateAllyForm: React.FC<CreateAllyFormProps> = ({ onSubmit, onCanc
       }
     }
 
+    if (!finalImageUrl || !finalImageAlt) {
+      toast({
+        title: 'Error',
+        description: 'Debes subir una imagen para crear el aliado',
+        variant: 'destructive',
+      });
+      return;
+    }
+
     onSubmit({
-      ...formData,
-      imageUrl: finalImageUrl || null,
-      imageAlt: finalImageAlt || null,
+      name: formData.name,
+      role: formData.role,
+      description: formData.description,
+      imageUrl: finalImageUrl,
+      imageAlt: finalImageAlt,
+      status: formData.status,
     });
   };
 

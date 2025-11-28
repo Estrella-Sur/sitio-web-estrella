@@ -78,7 +78,7 @@ export const ToggleAllyStatusDialog: React.FC<ToggleAllyStatusDialogProps> = ({ 
         <DialogHeader>
           <DialogTitle>{actionCapitalized} Aliado</DialogTitle>
           <DialogDescription>
-            ¿Estás seguro de que quieres {action} el aliado "{ally.name}"?
+            ¿Estás seguro de que quieres {action} el aliado &quot;{ally.name}&quot;?
             {isActivating 
               ? ' El aliado será visible en la página pública.' 
               : ' El aliado ya no será visible en la página pública.'

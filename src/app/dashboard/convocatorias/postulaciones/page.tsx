@@ -27,7 +27,7 @@ interface Application {
 }
 
 export default function PostulacionesPage() {
-  const { data: session, status } = useSession();
+  const { status } = useSession();
   const [applications, setApplications] = useState<Application[]>([]);
   const [loading, setLoading] = useState(true);
   const [selectedStatus, setSelectedStatus] = useState<string>('all');
@@ -48,7 +48,7 @@ export default function PostulacionesPage() {
   useEffect(() => {
     fetchApplications();
     fetchConvocatorias();
-  }, [selectedStatus, selectedConvocatoria, selectedYear, selectedMonth]);
+  }, [selectedStatus, selectedConvocatoria, selectedYear, selectedMonth]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const fetchConvocatorias = async () => {
     try {
@@ -131,7 +131,7 @@ export default function PostulacionesPage() {
       case 'REVIEWING':
         return <Badge variant="outline" className="bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200">En Revisión</Badge>;
       case 'APPROVED':
-        return <Badge variant="outline" className="bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200">Aprobada</Badge>;
+        return <Badge variant="outline" className="bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200">Aprobada</Badge>;
       case 'REJECTED':
         return <Badge variant="outline" className="bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200">Rechazada</Badge>;
       default:
@@ -139,7 +139,7 @@ export default function PostulacionesPage() {
     }
   };
 
-  const getStatusIcon = (status: string) => {
+  const _getStatusIcon = (status: string) => {
     switch (status) {
       case 'PENDING':
         return <Clock className="h-4 w-4" />;
@@ -439,7 +439,7 @@ export default function PostulacionesPage() {
             <div className="py-4">
               <p className="text-sm text-gray-600">
                 ¿Estás seguro de que quieres cambiar el estado de la postulación de 
-                <strong> "{statusChangeDialog.application.fullName}"</strong>?
+                <strong> &quot;{statusChangeDialog.application.fullName}&quot;</strong>?
               </p>
               <p className="text-sm text-gray-500 mt-2">
                 Estado actual: <strong>{getStatusText(statusChangeDialog.application.status)}</strong>

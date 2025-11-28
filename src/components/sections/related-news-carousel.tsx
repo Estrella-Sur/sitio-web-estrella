@@ -1,10 +1,10 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import Image from 'next/image';
+import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import { Newspaper, Calendar, User, ArrowRight } from 'lucide-react';
+import { Newspaper, Calendar, ArrowRight } from 'lucide-react';
 import Link from 'next/link';
 
 interface RelatedNews {
@@ -139,11 +139,12 @@ export function RelatedNewsCarousel({
           <Card key={article.id} className="flex-shrink-0 w-80 overflow-hidden hover:shadow-lg transition-all duration-300 group">
             {/* Imagen */}
             {article.imageUrl ? (
-              <div className="aspect-video bg-gray-100 overflow-hidden">
-                <img
+              <div className="aspect-video bg-gray-100 overflow-hidden relative">
+                <Image
                   src={article.imageUrl}
                   alt={article.imageAlt || article.title}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                  fill
+                  className="object-cover group-hover:scale-105 transition-transform duration-300"
                 />
               </div>
             ) : (

@@ -38,7 +38,7 @@ export class MinIOService {
     return this.storageService.getPresignedUrl(bucket, filename, expiry)
   }
 
-  async listFiles(bucket: string, prefix?: string): Promise<any[]> {
+  async listFiles(bucket: string, prefix?: string): Promise<Array<{ Key?: string; Size?: number; LastModified?: Date }>> {
     return this.storageService.listFiles(bucket, prefix)
   }
 }

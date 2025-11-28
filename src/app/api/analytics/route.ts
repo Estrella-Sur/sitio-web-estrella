@@ -3,18 +3,18 @@ import { getServerSession } from 'next-auth'
 import { authOptions } from '@/lib/auth'
 import { prisma } from '@/lib/prisma'
 
-function calculateTrends(data: any[], dateField: string) {
+function calculateTrends(data: Array<Record<string, unknown>>, dateField: string) {
   const now = new Date()
   const lastMonth = new Date(now.getFullYear(), now.getMonth() - 1, now.getDate())
   const twoMonthsAgo = new Date(now.getFullYear(), now.getMonth() - 2, now.getDate())
   
   const lastMonthData = data.filter(item => {
-    const itemDate = new Date(item[dateField])
+    const itemDate = new Date(item[dateField] as string | number | Date)
     return itemDate >= lastMonth && itemDate < now
   })
   
   const previousMonthData = data.filter(item => {
-    const itemDate = new Date(item[dateField])
+    const itemDate = new Date(item[dateField] as string | number | Date)
     return itemDate >= twoMonthsAgo && itemDate < lastMonth
   })
   
@@ -27,12 +27,12 @@ function calculateTrends(data: any[], dateField: string) {
   return Math.round(change * 10) / 10
 }
 
-function getRecentActivity(data: any[], dateField: string, days: number = 7) {
+function getRecentActivity(data: Array<Record<string, unknown>>, dateField: string, days: number = 7) {
   const cutoffDate = new Date()
   cutoffDate.setDate(cutoffDate.getDate() - days)
   
   return data.filter(item => {
-    const itemDate = new Date(item[dateField])
+    const itemDate = new Date(item[dateField] as string | number | Date)
     return itemDate >= cutoffDate
   }).length
 }

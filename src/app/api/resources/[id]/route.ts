@@ -298,9 +298,9 @@ export async function DELETE(
       await prisma.resource.delete({
         where: { id },
       });
-    } catch (deleteError: any) {
+    } catch (deleteError: unknown) {
       // Si el recurso ya no existe (P2025), considerarlo como éxito idempotente
-      if (deleteError?.code === 'P2025') {
+      if ((deleteError as { code?: string })?.code === 'P2025') {
         console.log(`[Resources][DELETE] Recurso ${id} ya no existe, considerando eliminación exitosa`);
         return NextResponse.json({ message: 'Recurso eliminado exitosamente' }, { status: 200 });
       }

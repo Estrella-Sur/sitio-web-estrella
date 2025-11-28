@@ -76,7 +76,18 @@ export const AlliesManagementSystem: React.FC = () => {
         sortOrder,
       });
 
-      const response = await fetch(`/api/allies?${params}`);
+      const headers: HeadersInit = {
+        'Content-Type': 'application/json',
+      };
+
+      // Agregar token de autenticación si está disponible
+      if (session?.customToken) {
+        headers['Authorization'] = `Bearer ${session.customToken}`;
+      }
+
+      const response = await fetch(`/api/allies?${params}`, {
+        headers,
+      });
       
       if (!response.ok) {
         throw new Error('Error al cargar los aliados');
@@ -94,7 +105,7 @@ export const AlliesManagementSystem: React.FC = () => {
     } finally {
       setLoading(false);
     }
-  }, [searchTerm, statusFilter, sortBy, sortOrder]);
+  }, [searchTerm, statusFilter, sortBy, sortOrder, session?.customToken]);
 
   // Cargar aliados
   useEffect(() => {

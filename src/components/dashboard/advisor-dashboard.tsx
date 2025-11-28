@@ -7,7 +7,6 @@ import { Button } from '@/components/ui/button'
 import { 
   DollarSign, 
   Target, 
-  TrendingUp, 
   Users, 
   Calendar,
   Heart,
@@ -15,7 +14,6 @@ import {
   Clock,
   AlertCircle,
   Eye,
-  Plus,
   BarChart3
 } from 'lucide-react'
 import Link from 'next/link'
@@ -113,7 +111,7 @@ export function AdvisorDashboard() {
   const getStatusBadge = (status: string) => {
     switch (status) {
       case 'APPROVED':
-        return <Badge className="bg-green-100 text-green-800"><CheckCircle className="w-3 h-3 mr-1" />Aprobada</Badge>
+        return <Badge className="bg-blue-100 text-blue-800"><CheckCircle className="w-3 h-3 mr-1" />Aprobada</Badge>
       case 'PENDING':
         return <Badge className="bg-yellow-100 text-yellow-800"><Clock className="w-3 h-3 mr-1" />Pendiente</Badge>
       case 'REJECTED':
@@ -164,12 +162,12 @@ export function AdvisorDashboard() {
         <Card>
           <CardContent className="p-6">
             <div className="flex items-center">
-              <DollarSign className="h-8 w-8 text-green-600" />
+              <DollarSign className="h-8 w-8 text-blue-600" />
               <div className="ml-4">
                 <p className="text-sm font-medium text-gray-600 dark:text-gray-400">
                   Total Recaudado
                 </p>
-                <p className="text-2xl font-bold text-green-600">
+                <p className="text-2xl font-bold text-blue-600">
                   {formatCurrency(donationStats.totalAmount)}
                 </p>
                 <p className="text-xs text-gray-500 mt-1">
@@ -300,11 +298,11 @@ export function AdvisorDashboard() {
             </div>
             <div className="flex justify-between items-center">
               <span className="text-sm font-medium">Proyectos Completados</span>
-              <span className="text-lg font-bold text-green-600">{projectStats.completedProjects}</span>
+              <span className="text-lg font-bold text-blue-600">{projectStats.completedProjects}</span>
             </div>
             <div className="flex justify-between items-center">
               <span className="text-sm font-medium">Total Recaudado</span>
-              <span className="text-lg font-bold text-green-600">{formatCurrency(projectStats.totalRaised)}</span>
+              <span className="text-lg font-bold text-blue-600">{formatCurrency(projectStats.totalRaised)}</span>
             </div>
             <div className="pt-4">
               <Button asChild className="w-full">
@@ -360,7 +358,7 @@ export function AdvisorDashboard() {
                       </p>
                     </div>
                     <div className="text-right">
-                      <p className="font-bold text-lg text-green-600">{formatCurrency(donation.amount)}</p>
+                      <p className="font-bold text-lg text-blue-600">{formatCurrency(donation.amount)}</p>
                       <p className="text-xs text-gray-500">Bolivianos</p>
                     </div>
                   </div>

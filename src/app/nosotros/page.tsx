@@ -6,10 +6,9 @@ import { Button } from '@/components/ui/button';
 import { 
   Map,
   ArrowRight,
-  MapPin,
-  Users,
-  Heart
+  MapPin
 } from 'lucide-react';
+import Image from 'next/image';
 import Link from 'next/link';
 import { SiteHeader } from '@/components/layout/site-header';
 import { SiteFooter } from '@/components/layout/site-footer';
@@ -112,7 +111,7 @@ export default function AboutUsPage() {
       
       {/* Hero Section */}
       <div 
-        className="relative min-h-screen flex items-center"
+        className="relative min-h-screen flex items-start"
         style={{
           backgroundImage: "url('/static-images/heroes/nosotros_hero.jpg')",
           backgroundSize: 'cover',
@@ -120,15 +119,15 @@ export default function AboutUsPage() {
         }}
       >
         <div className="absolute inset-0 bg-black opacity-40 dark:opacity-60"></div>
-        <main className="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8 flex justify-center">
-          <div className="max-w-4xl text-white text-center">
+        <main className="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8 pt-8 md:pt-12 flex justify-center md:justify-start">
+          <div className="max-w-4xl text-white text-center md:text-left">
             <motion.div 
               className="mb-6"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 1.5, delay: 0.3 }}
             >
-              <span className="inline-block bg-orange-400 text-gray-900 text-sm font-bold uppercase px-4 py-2 tracking-wider rounded">
+              <span className="inline-block text-white text-xs font-bold uppercase px-3 py-1.5 tracking-wider rounded" style={{ backgroundColor: '#99b944' }}>
                 TRANSFORMANDO VIDAS
               </span>
             </motion.div>
@@ -143,7 +142,7 @@ export default function AboutUsPage() {
               FAMILIAS Y COMUNIDADES
             </motion.h1>
             <motion.p 
-              className="text-lg md:text-xl text-gray-200 max-w-3xl mx-auto mb-8"
+              className="text-lg md:text-xl text-gray-200 max-w-3xl mb-8"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 1.5, delay: 0.9 }}
@@ -168,10 +167,13 @@ export default function AboutUsPage() {
       </div>
 
       {/* Misión y Propósito Section */}
-      <section id="mision" className="py-6 bg-background-light dark:bg-background-dark overflow-hidden max-w-full">
-        <div className="container mx-auto px-4 py-4 max-w-full">
+      <section id="mision" className="py-6 bg-background-light dark:bg-background-dark overflow-hidden" style={{ contain: 'layout style paint' }}>
+        <div className="container mx-auto px-4 py-4 overflow-hidden">
           <div className="text-center mb-12">
-            <span className="inline-block bg-primary text-white text-xs font-semibold px-3 py-1 rounded mb-4">
+            <span
+              className="inline-block text-white text-xs font-semibold px-3 py-1 rounded mb-4"
+              style={{ backgroundColor: '#99b944' }}
+            >
               MISIÓN Y PROPÓSITO
             </span>
             <h1 className="text-4xl md:text-5xl font-bold text-text-light dark:text-text-dark leading-tight">
@@ -179,10 +181,18 @@ export default function AboutUsPage() {
             </h1>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8" style={{ overflow: 'hidden', maxWidth: '100%' }}>
-            <div className={`bg-card-light dark:bg-card-dark p-8 rounded-lg shadow-sm hover:shadow-lg transition-all duration-500 h-full flex flex-col ${isMissionVisible ? 'animate-fade-in-up' : 'opacity-0'}`} style={{ animationDelay: '0.1s' }}>
-              <div className={`flex items-center justify-center h-16 w-16 rounded-full bg-blue-100 dark:bg-blue-900 mb-6 ${isMissionVisible ? 'animate-scale-in' : 'opacity-0'}`} style={{ animationDelay: '0.3s' }}>
-                <span className={`material-symbols-outlined text-blue-500 text-3xl ${isMissionVisible ? 'animate-pulse-slow' : ''}`}>flag</span>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 overflow-hidden">
+            <div className={`bg-card-light dark:bg-card-dark p-8 rounded-lg shadow-sm hover:shadow-lg transition-all duration-500 h-full flex flex-col ${isMissionVisible ? 'animate-fade-in-up' : 'opacity-0'}`} style={{ animationDelay: '0.1s', contain: 'layout style paint' }}>
+              <div
+                className={`flex items-center justify-center h-16 w-16 rounded-full mb-6 ${isMissionVisible ? 'animate-scale-in' : 'opacity-0'}`}
+                style={{ animationDelay: '0.3s', backgroundColor: 'rgba(153, 185, 68, 0.18)' }}
+              >
+                <span
+                  className={`material-symbols-outlined text-3xl ${isMissionVisible ? 'animate-pulse-slow' : ''}`}
+                  style={{ color: '#99b944' }}
+                >
+                  flag
+                </span>
               </div>
               <h3 className={`text-xl font-bold mb-3 text-text-light dark:text-text-dark ${isMissionVisible ? 'animate-fade-in' : 'opacity-0'}`} style={{ animationDelay: '0.5s' }}>NUESTRA MISIÓN</h3>
               <p className={`text-gray-600 dark:text-gray-400 flex-grow ${isMissionVisible ? 'animate-fade-in' : 'opacity-0'}`} style={{ animationDelay: '0.7s' }}>
@@ -190,9 +200,17 @@ export default function AboutUsPage() {
               </p>
             </div>
             
-            <div className={`bg-card-light dark:bg-card-dark p-8 rounded-lg shadow-sm hover:shadow-lg transition-all duration-500 h-full flex flex-col ${isMissionVisible ? 'animate-fade-in-up' : 'opacity-0'}`} style={{ animationDelay: '0.2s' }}>
-              <div className={`flex items-center justify-center h-16 w-16 rounded-full bg-green-100 dark:bg-green-900 mb-6 ${isMissionVisible ? 'animate-scale-in' : 'opacity-0'}`} style={{ animationDelay: '0.4s' }}>
-                <span className={`material-symbols-outlined text-green-500 text-3xl ${isMissionVisible ? 'animate-pulse-slow' : ''}`}>visibility</span>
+            <div className={`bg-card-light dark:bg-card-dark p-8 rounded-lg shadow-sm hover:shadow-lg transition-all duration-500 h-full flex flex-col ${isMissionVisible ? 'animate-fade-in-up' : 'opacity-0'}`} style={{ animationDelay: '0.2s', contain: 'layout style paint' }}>
+              <div
+                className={`flex items-center justify-center h-16 w-16 rounded-full mb-6 ${isMissionVisible ? 'animate-scale-in' : 'opacity-0'}`}
+                style={{ animationDelay: '0.4s', backgroundColor: 'rgba(0, 106, 134, 0.18)' }}
+              >
+                <span
+                  className={`material-symbols-outlined text-3xl ${isMissionVisible ? 'animate-pulse-slow' : ''}`}
+                  style={{ color: '#006a86' }}
+                >
+                  visibility
+                </span>
               </div>
               <h3 className={`text-xl font-bold mb-3 text-text-light dark:text-text-dark ${isMissionVisible ? 'animate-fade-in' : 'opacity-0'}`} style={{ animationDelay: '0.6s' }}>NUESTRA VISIÓN</h3>
               <p className={`text-gray-600 dark:text-gray-400 flex-grow ${isMissionVisible ? 'animate-fade-in' : 'opacity-0'}`} style={{ animationDelay: '0.8s' }}>
@@ -207,18 +225,26 @@ export default function AboutUsPage() {
             </h2>
           </div>
           
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 overflow-hidden">
             {/* Primera fila - 4 tarjetas */}
             <motion.div 
-              className="bg-card-light dark:bg-card-dark p-8 rounded-lg shadow-sm hover:shadow-lg transition-shadow duration-300 h-full flex flex-col"
+              className="bg-card-light dark:bg-card-dark p-8 rounded-lg shadow-sm hover:shadow-lg transition-shadow duration-300 h-full flex flex-col overflow-hidden"
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
               transition={{ duration: 0.5, ease: "easeOut", delay: 0.1 }}
-              viewport={{ once: true, margin: "-100px" }}
-              style={{ willChange: 'opacity' }}
+              viewport={{ once: true, margin: "0px" }}
+              style={{ willChange: 'opacity', contain: 'layout style paint' }}
             >
-              <div className="flex items-center justify-center h-16 w-16 rounded-full bg-blue-100 dark:bg-blue-900 mb-6">
-                <span className="material-symbols-outlined text-blue-500 text-3xl">balance</span>
+              <div
+                className="flex items-center justify-center h-16 w-16 rounded-full mb-6"
+                style={{ backgroundColor: 'rgba(0, 106, 134, 0.18)' }}
+              >
+                <span
+                  className="material-symbols-outlined text-3xl"
+                  style={{ color: '#006a86' }}
+                >
+                  balance
+                </span>
               </div>
               <h3 className="text-xl font-bold mb-3 text-text-light dark:text-text-dark">IGUALDAD</h3>
               <p className="text-gray-600 dark:text-gray-400 flex-grow">
@@ -227,15 +253,23 @@ export default function AboutUsPage() {
             </motion.div>
             
             <motion.div 
-              className="bg-card-light dark:bg-card-dark p-8 rounded-lg shadow-sm hover:shadow-lg transition-shadow duration-300 h-full flex flex-col"
+              className="bg-card-light dark:bg-card-dark p-8 rounded-lg shadow-sm hover:shadow-lg transition-shadow duration-300 h-full flex flex-col overflow-hidden"
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
               transition={{ duration: 0.5, ease: "easeOut", delay: 0.2 }}
-              viewport={{ once: true, margin: "-100px" }}
-              style={{ willChange: 'opacity' }}
+              viewport={{ once: true, margin: "0px" }}
+              style={{ willChange: 'opacity', contain: 'layout style paint' }}
             >
-              <div className="flex items-center justify-center h-16 w-16 rounded-full bg-green-100 dark:bg-green-900 mb-6">
-                <span className="material-symbols-outlined text-green-500 text-3xl">verified</span>
+              <div
+                className="flex items-center justify-center h-16 w-16 rounded-full mb-6"
+                style={{ backgroundColor: 'rgba(153, 185, 68, 0.18)' }}
+              >
+                <span
+                  className="material-symbols-outlined text-3xl"
+                  style={{ color: '#99b944' }}
+                >
+                  verified
+                </span>
               </div>
               <h3 className="text-xl font-bold mb-3 text-text-light dark:text-text-dark">INTEGRIDAD</h3>
               <p className="text-gray-600 dark:text-gray-400 flex-grow">
@@ -244,15 +278,23 @@ export default function AboutUsPage() {
             </motion.div>
 
             <motion.div 
-              className="bg-card-light dark:bg-card-dark p-8 rounded-lg shadow-sm hover:shadow-lg transition-shadow duration-300 h-full flex flex-col"
+              className="bg-card-light dark:bg-card-dark p-8 rounded-lg shadow-sm hover:shadow-lg transition-shadow duration-300 h-full flex flex-col overflow-hidden"
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
               transition={{ duration: 0.5, ease: "easeOut", delay: 0.3 }}
-              viewport={{ once: true, margin: "-100px" }}
-              style={{ willChange: 'opacity' }}
+              viewport={{ once: true, margin: "0px" }}
+              style={{ willChange: 'opacity', contain: 'layout style paint' }}
             >
-              <div className="flex items-center justify-center h-16 w-16 rounded-full bg-purple-100 dark:bg-purple-900 mb-6">
-                <span className="material-symbols-outlined text-purple-500 text-3xl">psychology</span>
+              <div
+                className="flex items-center justify-center h-16 w-16 rounded-full mb-6"
+                style={{ backgroundColor: 'rgba(13, 111, 60, 0.18)' }}
+              >
+                <span
+                  className="material-symbols-outlined text-3xl"
+                  style={{ color: '#0d6f3c' }}
+                >
+                  psychology
+                </span>
               </div>
               <h3 className="text-xl font-bold mb-3 text-text-light dark:text-text-dark">EMPATÍA</h3>
               <p className="text-gray-600 dark:text-gray-400 flex-grow">
@@ -261,15 +303,23 @@ export default function AboutUsPage() {
             </motion.div>
             
             <motion.div 
-              className="bg-card-light dark:bg-card-dark p-8 rounded-lg shadow-sm hover:shadow-lg transition-shadow duration-300 h-full flex flex-col"
+              className="bg-card-light dark:bg-card-dark p-8 rounded-lg shadow-sm hover:shadow-lg transition-shadow duration-300 h-full flex flex-col overflow-hidden"
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
               transition={{ duration: 0.5, ease: "easeOut", delay: 0.4 }}
-              viewport={{ once: true, margin: "-100px" }}
-              style={{ willChange: 'opacity' }}
+              viewport={{ once: true, margin: "0px" }}
+              style={{ willChange: 'opacity', contain: 'layout style paint' }}
             >
-              <div className="flex items-center justify-center h-16 w-16 rounded-full bg-orange-100 dark:bg-orange-900 mb-6">
-                <span className="material-symbols-outlined text-orange-500 text-3xl">handshake</span>
+              <div
+                className="flex items-center justify-center h-16 w-16 rounded-full mb-6"
+                style={{ backgroundColor: 'rgba(241, 208, 45, 0.18)' }}
+              >
+                <span
+                  className="material-symbols-outlined text-3xl"
+                  style={{ color: '#f1d02d' }}
+                >
+                  handshake
+                </span>
               </div>
               <h3 className="text-xl font-bold mb-3 text-text-light dark:text-text-dark">RESPETO</h3>
               <p className="text-gray-600 dark:text-gray-400 flex-grow">
@@ -281,22 +331,31 @@ export default function AboutUsPage() {
           
           {/* Segunda fila - 3 tarjetas centradas */}
           <motion.div 
-            className="flex justify-center mt-8"
+            className="flex justify-center mt-8 overflow-hidden"
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             transition={{ duration: 1.5, delay: 0.8 }}
             viewport={{ once: true }}
           >
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-5xl">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-5xl overflow-hidden">
               <motion.div 
-                className="bg-card-light dark:bg-card-dark p-8 rounded-lg shadow-sm hover:shadow-lg transition-shadow duration-300 h-full flex flex-col"
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
+                className="bg-card-light dark:bg-card-dark p-8 rounded-lg shadow-sm hover:shadow-lg transition-shadow duration-300 h-full flex flex-col overflow-hidden"
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
                 transition={{ duration: 1.2, delay: 0.5 }}
                 viewport={{ once: true }}
+                style={{ contain: 'layout style paint' }}
               >
-                <div className="flex items-center justify-center h-16 w-16 rounded-full bg-red-100 dark:bg-red-900 mb-6">
-                  <span className="material-symbols-outlined text-red-500 text-3xl">star</span>
+                <div
+                  className="flex items-center justify-center h-16 w-16 rounded-full mb-6"
+                  style={{ backgroundColor: 'rgba(13, 111, 60, 0.18)' }}
+                >
+                  <span
+                    className="material-symbols-outlined text-3xl"
+                    style={{ color: '#0d6f3c' }}
+                  >
+                    star
+                  </span>
                 </div>
                 <h3 className="text-xl font-bold mb-3 text-text-light dark:text-text-dark">COMPROMISO</h3>
                 <p className="text-gray-600 dark:text-gray-400 flex-grow">
@@ -305,14 +364,23 @@ export default function AboutUsPage() {
               </motion.div>
 
               <motion.div 
-                className="bg-card-light dark:bg-card-dark p-8 rounded-lg shadow-sm hover:shadow-lg transition-shadow duration-300 h-full flex flex-col"
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
+                className="bg-card-light dark:bg-card-dark p-8 rounded-lg shadow-sm hover:shadow-lg transition-shadow duration-300 h-full flex flex-col overflow-hidden"
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
                 transition={{ duration: 1.2, delay: 0.6 }}
                 viewport={{ once: true }}
+                style={{ contain: 'layout style paint' }}
               >
-                <div className="flex items-center justify-center h-16 w-16 rounded-full bg-cyan-100 dark:bg-cyan-900 mb-6">
-                  <span className="material-symbols-outlined text-cyan-500 text-3xl">lightbulb</span>
+                <div
+                  className="flex items-center justify-center h-16 w-16 rounded-full mb-6"
+                  style={{ backgroundColor: 'rgba(0, 106, 134, 0.18)' }}
+                >
+                  <span
+                    className="material-symbols-outlined text-3xl"
+                    style={{ color: '#006a86' }}
+                  >
+                    lightbulb
+                  </span>
                 </div>
                 <h3 className="text-xl font-bold mb-3 text-text-light dark:text-text-dark">INNOVACIÓN</h3>
                 <p className="text-gray-600 dark:text-gray-400 flex-grow">
@@ -321,14 +389,23 @@ export default function AboutUsPage() {
               </motion.div>
 
               <motion.div 
-                className="bg-card-light dark:bg-card-dark p-8 rounded-lg shadow-sm hover:shadow-lg transition-shadow duration-300 h-full flex flex-col"
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
+                className="bg-card-light dark:bg-card-dark p-8 rounded-lg shadow-sm hover:shadow-lg transition-shadow duration-300 h-full flex flex-col overflow-hidden"
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
                 transition={{ duration: 1.2, delay: 0.7 }}
                 viewport={{ once: true }}
+                style={{ contain: 'layout style paint' }}
               >
-                <div className="flex items-center justify-center h-16 w-16 rounded-full bg-yellow-100 dark:bg-yellow-900 mb-6">
-                  <span className="material-symbols-outlined text-yellow-500 text-3xl">assignment</span>
+                <div
+                  className="flex items-center justify-center h-16 w-16 rounded-full mb-6"
+                  style={{ backgroundColor: 'rgba(153, 185, 68, 0.18)' }}
+                >
+                  <span
+                    className="material-symbols-outlined text-3xl"
+                    style={{ color: '#99b944' }}
+                  >
+                    assignment
+                  </span>
                 </div>
                 <h3 className="text-xl font-bold mb-3 text-text-light dark:text-text-dark">RESPONSABILIDAD</h3>
                 <p className="text-gray-600 dark:text-gray-400 flex-grow">
@@ -342,14 +419,14 @@ export default function AboutUsPage() {
 
       {/* Equipo Section */}
       <section className="bg-background-light dark:bg-background-dark">
-        <div className="relative min-h-screen">
+        <div className="relative min-h-0 lg:min-h-screen">
           <div className="absolute inset-0 bg-cover bg-center" style={{backgroundImage: "url('https://lh3.googleusercontent.com/aida-public/AB6AXuBC6gS_zQf7gG8r_5_UhrY7uXWjY7A6yqO1J0J9PjYvXb3mH3C1tV0b_0rQ6Z2nN1vR8gL2mX2gY7wS_9B8kF1kZ3zO2c3o4m5p6j7l8')"}}>
             <div className="absolute inset-0 bg-white/80 dark:bg-zinc-900/80 backdrop-blur-sm"></div>
           </div>
-          <div className="relative container mx-auto px-4 py-4">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+          <div className="relative container mx-auto px-4 py-2 sm:py-4 md:py-6 lg:py-8">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 md:gap-12 lg:gap-16 items-start lg:items-center">
               <motion.div 
-                className="space-y-8"
+                className="space-y-4 sm:space-y-6 md:space-y-8"
                 initial={{ opacity: 0, x: -50 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 transition={{ duration: 1.5 }}
@@ -361,80 +438,85 @@ export default function AboutUsPage() {
                   transition={{ duration: 1.2, delay: 0.3 }}
                   viewport={{ once: true }}
                 >
-                  <span className="inline-block bg-primary text-white text-xs font-semibold px-3 py-1 rounded">
+                  <span
+                    className="inline-block text-white text-xs font-semibold px-3 py-1 rounded"
+                    style={{ backgroundColor: '#99b944' }}
+                  >
                     NUESTRO EQUIPO
                   </span>
-                  <h1 className="text-6xl font-bold mt-4 text-zinc-900 dark:text-white">
-                    CONOCE A LAS PERSONAS DETRÁS DE LA MISIÓN
+                  <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mt-4 dark:text-white break-words" style={{ color: '#006a86' }}>
+                    CONOCE A LAS PERSONAS DETRÁS DE NUESTRA MISIÓN
                   </h1>
                 </motion.div>
                 <motion.div 
-                  className="space-y-6"
+                  className="space-y-4 sm:space-y-6"
                   initial={{ opacity: 0 }}
                   whileInView={{ opacity: 1 }}
                   transition={{ duration: 1.2, delay: 0.6 }}
                   viewport={{ once: true }}
                 >
                   <motion.div 
-                    className="flex items-center space-x-4 cursor-pointer hover:opacity-80 transition-all duration-300 hover:scale-105" 
+                    className="flex items-center space-x-2 sm:space-x-4 cursor-pointer hover:opacity-80 transition-all duration-300 hover:scale-105" 
                     onClick={() => setSelectedTeam(1)}
                     initial={{ opacity: 0, x: -20 }}
                     whileInView={{ opacity: 1, x: 0 }}
                     transition={{ duration: 1, delay: 0.2 }}
                     viewport={{ once: true }}
                   >
-                    <span className={`text-2xl font-bold transition-all duration-500 ${selectedTeam === 1 ? 'text-orange-500 scale-110' : 'text-zinc-400 dark:text-zinc-600'}`}>01.</span>
-                    <h2 className={`text-4xl font-bold transition-all duration-500 ${selectedTeam === 1 ? 'text-zinc-900 dark:text-white scale-105' : 'text-zinc-400 dark:text-zinc-500'}`}>COMPROMETIDOS</h2>
+                    <span className={`text-xl sm:text-2xl font-bold transition-all duration-500 ${selectedTeam === 1 ? 'scale-110' : 'text-zinc-400 dark:text-zinc-600'}`} style={selectedTeam === 1 ? { color: '#99b944' } : {}}>01.</span>
+                    <h2 className={`text-2xl sm:text-3xl md:text-4xl font-bold transition-all duration-500 break-words ${selectedTeam === 1 ? 'dark:text-white scale-105' : 'text-zinc-400 dark:text-zinc-500'}`} style={selectedTeam === 1 ? { color: '#006a86' } : {}}>COMPROMETIDOS</h2>
                   </motion.div>
                   <motion.div 
-                    className="flex items-center space-x-4 cursor-pointer hover:opacity-80 transition-all duration-300 hover:scale-105" 
+                    className="flex items-center space-x-2 sm:space-x-4 cursor-pointer hover:opacity-80 transition-all duration-300 hover:scale-105" 
                     onClick={() => setSelectedTeam(2)}
                     initial={{ opacity: 0, x: -20 }}
                     whileInView={{ opacity: 1, x: 0 }}
                     transition={{ duration: 1, delay: 0.4 }}
                     viewport={{ once: true }}
                   >
-                    <span className={`text-2xl font-bold transition-all duration-500 ${selectedTeam === 2 ? 'text-orange-500 scale-110' : 'text-zinc-400 dark:text-zinc-600'}`}>02.</span>
-                    <h2 className={`text-4xl font-bold transition-all duration-500 ${selectedTeam === 2 ? 'text-zinc-900 dark:text-white scale-105' : 'text-zinc-400 dark:text-zinc-500'}`}>APASIONADOS</h2>
+                    <span className={`text-xl sm:text-2xl font-bold transition-all duration-500 ${selectedTeam === 2 ? 'scale-110' : 'text-zinc-400 dark:text-zinc-600'}`} style={selectedTeam === 2 ? { color: '#99b944' } : {}}>02.</span>
+                    <h2 className={`text-2xl sm:text-3xl md:text-4xl font-bold transition-all duration-500 break-words ${selectedTeam === 2 ? 'dark:text-white scale-105' : 'text-zinc-400 dark:text-zinc-500'}`} style={selectedTeam === 2 ? { color: '#006a86' } : {}}>APASIONADOS</h2>
                   </motion.div>
                   <motion.div 
-                    className="flex items-center space-x-4 cursor-pointer hover:opacity-80 transition-all duration-300 hover:scale-105" 
+                    className="flex items-center space-x-2 sm:space-x-4 cursor-pointer hover:opacity-80 transition-all duration-300 hover:scale-105" 
                     onClick={() => setSelectedTeam(3)}
                     initial={{ opacity: 0, x: -20 }}
                     whileInView={{ opacity: 1, x: 0 }}
                     transition={{ duration: 1, delay: 0.6 }}
                     viewport={{ once: true }}
                   >
-                    <span className={`text-2xl font-bold transition-all duration-500 ${selectedTeam === 3 ? 'text-orange-500 scale-110' : 'text-zinc-400 dark:text-zinc-600'}`}>03.</span>
-                    <h2 className={`text-4xl font-bold transition-all duration-500 ${selectedTeam === 3 ? 'text-zinc-900 dark:text-white scale-105' : 'text-zinc-400 dark:text-zinc-500'}`}>EXPERIMENTADOS</h2>
+                    <span className={`text-xl sm:text-2xl font-bold transition-all duration-500 ${selectedTeam === 3 ? 'scale-110' : 'text-zinc-400 dark:text-zinc-600'}`} style={selectedTeam === 3 ? { color: '#99b944' } : {}}>03.</span>
+                    <h2 className={`text-2xl sm:text-3xl md:text-4xl font-bold transition-all duration-500 break-words ${selectedTeam === 3 ? 'dark:text-white scale-105' : 'text-zinc-400 dark:text-zinc-500'}`} style={selectedTeam === 3 ? { color: '#006a86' } : {}}>EXPERIMENTADOS</h2>
                   </motion.div>
                   <motion.div 
-                    className="flex items-center space-x-4 cursor-pointer hover:opacity-80 transition-all duration-300 hover:scale-105" 
+                    className="flex items-center space-x-2 sm:space-x-4 cursor-pointer hover:opacity-80 transition-all duration-300 hover:scale-105" 
                     onClick={() => setSelectedTeam(4)}
                     initial={{ opacity: 0, x: -20 }}
                     whileInView={{ opacity: 1, x: 0 }}
                     transition={{ duration: 1, delay: 0.8 }}
                     viewport={{ once: true }}
                   >
-                    <span className={`text-2xl font-bold transition-all duration-500 ${selectedTeam === 4 ? 'text-orange-500 scale-110' : 'text-zinc-400 dark:text-zinc-600'}`}>04.</span>
-                    <h2 className={`text-4xl font-bold transition-all duration-500 ${selectedTeam === 4 ? 'text-zinc-900 dark:text-white scale-105' : 'text-zinc-400 dark:text-zinc-500'}`}>GLOBALES</h2>
+                    <span className={`text-xl sm:text-2xl font-bold transition-all duration-500 ${selectedTeam === 4 ? 'scale-110' : 'text-zinc-400 dark:text-zinc-600'}`} style={selectedTeam === 4 ? { color: '#99b944' } : {}}>04.</span>
+                    <h2 className={`text-2xl sm:text-3xl md:text-4xl font-bold transition-all duration-500 break-words ${selectedTeam === 4 ? 'dark:text-white scale-105' : 'text-zinc-400 dark:text-zinc-500'}`} style={selectedTeam === 4 ? { color: '#006a86' } : {}}>ESTRATÉGICOS</h2>
                   </motion.div>
                 </motion.div>
               </motion.div>
               
-              <div className="flex flex-col justify-center pt-32">
+              <div className="flex flex-col justify-center pt-4 sm:pt-8 md:pt-16 lg:pt-32">
                 <div className="bg-white dark:bg-zinc-800/50 rounded-lg shadow-xl overflow-hidden transition-all duration-500 hover:shadow-2xl hover:scale-105">
-                  <img 
+                  <Image 
                     alt="Equipo trabajando juntos" 
                     className="w-full h-80 object-cover object-center transition-all duration-700 ease-in-out transform hover:scale-105" 
                     src={teamImages[selectedTeam]}
+                    width={800}
+                    height={320}
                   />
                   <div className="p-6">
-                  <p className="text-lg text-zinc-700 dark:text-zinc-300 text-center mb-6 transition-all duration-500 ease-in-out">
+                  <p className="text-lg dark:text-zinc-300 text-center mb-6 transition-all duration-500 ease-in-out" style={{ color: '#006a86' }}>
                     {teamDescriptions[selectedTeam]}
                   </p>
                   <div className="text-center">
-                    <Button size="lg" className="bg-zinc-800 text-white font-semibold px-6 py-3 rounded-md flex items-center space-x-2 mx-auto" asChild>
+                    <Button size="lg" className="text-white font-semibold px-6 py-3 rounded-md flex items-center space-x-2 mx-auto hover:opacity-90" style={{ backgroundColor: '#99b944' }} asChild>
                   <Link href="/equipo">
                     <span>CONOCER MÁS</span>
                     <span className="material-symbols-outlined">arrow_forward</span>
@@ -460,7 +542,8 @@ export default function AboutUsPage() {
               viewport={{ once: true }}
             >
               <motion.span 
-                className="inline-block bg-primary text-white text-xs font-semibold px-3 py-1 rounded mb-4"
+                className="inline-block text-white text-xs font-semibold px-3 py-1 rounded mb-4"
+                style={{ backgroundColor: '#99b944' }}
                 initial={{ opacity: 0 }}
                 whileInView={{ opacity: 1 }}
                 transition={{ duration: 0.6, delay: 0.2 }}
@@ -475,7 +558,7 @@ export default function AboutUsPage() {
                 transition={{ duration: 0.8, delay: 0.4 }}
                 viewport={{ once: true }}
               >
-                PARTE DE UNA RED GLOBAL DE IMPACTO
+                PARTE DE UNA RED NACIONAL DE IMPACTO
               </motion.h1>
             </motion.div>
             <motion.div
@@ -510,7 +593,7 @@ export default function AboutUsPage() {
                 transition={{ duration: 0.6, delay: 0.8 }}
                 viewport={{ once: true }}
               >
-                UNA RED GLOBAL DE TRANSFORMACIÓN
+                UNA RED NACIONAL DE TRANSFORMACIÓN
               </motion.h3>
               <motion.div 
                 className="text-lg text-text-secondary-light dark:text-text-secondary-dark mb-6"
@@ -564,7 +647,7 @@ export default function AboutUsPage() {
                   viewport={{ once: true }}
                 >
                   <div className="flex items-center justify-center mb-2">
-                    <span className="material-symbols-outlined text-green-500 text-2xl mr-2">location_on</span>
+                    <span className="material-symbols-outlined text-blue-500 text-2xl mr-2">location_on</span>
                     <h4 className="font-bold text-text-light dark:text-text-dark mb-1">20 Municipios de Intervención</h4>
                   </div>
                   <p className="text-sm text-text-secondary-light dark:text-text-secondary-dark">Cobertura Nacional</p>
@@ -604,7 +687,8 @@ export default function AboutUsPage() {
               viewport={{ once: true }}
             >
               <motion.span 
-                className="inline-block bg-primary text-white text-xs font-semibold px-3 py-1 rounded mb-4"
+                className="inline-block text-white text-xs font-semibold px-3 py-1 rounded mb-4"
+                style={{ backgroundColor: '#99b944' }}
                 initial={{ opacity: 0 }}
                 whileInView={{ opacity: 1 }}
                 transition={{ duration: 0.6, delay: 0.2 }}
@@ -646,63 +730,63 @@ export default function AboutUsPage() {
             </h3>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
               <div className="flex items-center gap-4">
-                <div className="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center text-white text-sm font-bold">1</div>
+                <div className="w-8 h-8 rounded-full flex items-center justify-center text-white text-sm font-bold" style={{ backgroundColor: '#006a86' }}>1</div>
                 <div>
                   <h4 className="font-semibold text-text-light dark:text-text-dark text-sm">Quirquincho</h4>
                   <p className="text-gray-600 dark:text-gray-400 text-xs">Barrio San Miguel</p>
                 </div>
               </div>
               <div className="flex items-center gap-4">
-                <div className="w-8 h-8 bg-red-500 rounded-full flex items-center justify-center text-white text-sm font-bold">2</div>
+                <div className="w-8 h-8 rounded-full flex items-center justify-center text-white text-sm font-bold" style={{ backgroundColor: '#99b944' }}>2</div>
                 <div>
                   <h4 className="font-semibold text-text-light dark:text-text-dark text-sm">CEPROK</h4>
                   <p className="text-gray-600 dark:text-gray-400 text-xs">Sector Kantuta</p>
                 </div>
               </div>
               <div className="flex items-center gap-4">
-                <div className="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center text-white text-sm font-bold">3</div>
+                <div className="w-8 h-8 rounded-full flex items-center justify-center text-white text-sm font-bold" style={{ backgroundColor: '#0d6f3c' }}>3</div>
                 <div>
                   <h4 className="font-semibold text-text-light dark:text-text-dark text-sm">Villa Challacollo</h4>
                   <p className="text-gray-600 dark:text-gray-400 text-xs">Villa Challacollo</p>
                 </div>
               </div>
               <div className="flex items-center gap-4">
-                <div className="w-8 h-8 bg-purple-500 rounded-full flex items-center justify-center text-white text-sm font-bold">4</div>
+                <div className="w-8 h-8 rounded-full flex items-center justify-center text-white text-sm font-bold" style={{ backgroundColor: '#f1d02d' }}>4</div>
                 <div>
                   <h4 className="font-semibold text-text-light dark:text-text-dark text-sm">San Benito - Pumas</h4>
                   <p className="text-gray-600 dark:text-gray-400 text-xs">Mercado Pumas Andinos</p>
                 </div>
               </div>
               <div className="flex items-center gap-4">
-                <div className="w-8 h-8 bg-orange-500 rounded-full flex items-center justify-center text-white text-sm font-bold">5</div>
+                <div className="w-8 h-8 rounded-full flex items-center justify-center text-white text-sm font-bold" style={{ backgroundColor: '#006a86' }}>5</div>
                 <div>
                   <h4 className="font-semibold text-text-light dark:text-text-dark text-sm">Vinto</h4>
                   <p className="text-gray-600 dark:text-gray-400 text-xs">A. Arce entre C. 6 de Agosto</p>
                 </div>
               </div>
               <div className="flex items-center gap-4">
-                <div className="w-8 h-8 bg-pink-500 rounded-full flex items-center justify-center text-white text-sm font-bold">6</div>
+                <div className="w-8 h-8 rounded-full flex items-center justify-center text-white text-sm font-bold" style={{ backgroundColor: '#99b944' }}>6</div>
                 <div>
                   <h4 className="font-semibold text-text-light dark:text-text-dark text-sm">Villa Dorina</h4>
                   <p className="text-gray-600 dark:text-gray-400 text-xs">Carretera Oruro-Cochabamba</p>
                 </div>
               </div>
               <div className="flex items-center gap-4">
-                <div className="w-8 h-8 bg-gray-400 rounded-full flex items-center justify-center text-white text-sm font-bold">7</div>
+                <div className="w-8 h-8 rounded-full flex items-center justify-center text-white text-sm font-bold" style={{ backgroundColor: '#0d6f3c' }}>7</div>
                 <div>
                   <h4 className="font-semibold text-text-light dark:text-text-dark text-sm">Cobija</h4>
                   <p className="text-gray-600 dark:text-gray-400 text-xs">Pando (Próximamente)</p>
                 </div>
               </div>
               <div className="flex items-center gap-4">
-                <div className="w-8 h-8 bg-gray-400 rounded-full flex items-center justify-center text-white text-sm font-bold">8</div>
+                <div className="w-8 h-8 rounded-full flex items-center justify-center text-white text-sm font-bold" style={{ backgroundColor: '#f1d02d' }}>8</div>
                 <div>
                   <h4 className="font-semibold text-text-light dark:text-text-dark text-sm">Guayaramerín</h4>
                   <p className="text-gray-600 dark:text-gray-400 text-xs">Pando (Próximamente)</p>
                 </div>
               </div>
               <div className="flex items-center gap-4">
-                <div className="w-8 h-8 bg-gray-400 rounded-full flex items-center justify-center text-white text-sm font-bold">9</div>
+                <div className="w-8 h-8 rounded-full flex items-center justify-center text-white text-sm font-bold" style={{ backgroundColor: '#006a86' }}>9</div>
                 <div>
                   <h4 className="font-semibold text-text-light dark:text-text-dark text-sm">El Alto</h4>
                   <p className="text-gray-600 dark:text-gray-400 text-xs">La Paz (Próximamente)</p>
@@ -726,11 +810,11 @@ export default function AboutUsPage() {
               transition={{ duration: 0.6, delay: 0.6 }}
               viewport={{ once: true }}
             >
-              <div className="flex items-center justify-center h-16 w-16 rounded-full bg-blue-100 dark:bg-blue-900 mb-6">
-                <MapPin className="h-8 w-8 text-blue-600 dark:text-blue-400" />
+              <div className="flex items-center justify-center h-16 w-16 rounded-full mb-6" style={{ backgroundColor: 'rgba(0, 106, 134, 0.2)' }}>
+                <MapPin className="h-8 w-8" stroke="#006a86" strokeWidth={2} />
               </div>
-              <h3 className="text-xl font-bold mb-3 text-text-light dark:text-text-dark">UBICACIONES</h3>
-              <div className="text-3xl font-bold text-blue-600 dark:text-blue-400 mb-2">{stats.activeOffices}</div>
+              <h3 className="text-xl font-bold mb-3" style={{ color: '#006a86' }}>UBICACIONES</h3>
+              <div className="text-3xl font-bold mb-2" style={{ color: '#006a86' }}>{stats.activeOffices}</div>
               <p className="text-gray-600 dark:text-gray-400 text-sm">
                 Oficinas activas estratégicamente ubicadas para brindar atención integral a nuestras comunidades.
               </p>
@@ -743,11 +827,11 @@ export default function AboutUsPage() {
               transition={{ duration: 0.6, delay: 1.0 }}
               viewport={{ once: true }}
             >
-              <div className="flex items-center justify-center h-16 w-16 rounded-full bg-purple-100 dark:bg-purple-900 mb-6">
-                <Map className="h-8 w-8 text-purple-600 dark:text-purple-400" />
+              <div className="flex items-center justify-center h-16 w-16 rounded-full mb-6" style={{ backgroundColor: 'rgba(153, 185, 68, 0.2)' }}>
+                <Map className="h-8 w-8" stroke="#99b944" strokeWidth={2} />
               </div>
-              <h3 className="text-xl font-bold mb-3 text-text-light dark:text-text-dark">COBERTURA</h3>
-              <div className="text-3xl font-bold text-purple-600 dark:text-purple-400 mb-2">{stats.departments}</div>
+              <h3 className="text-xl font-bold mb-3" style={{ color: '#99b944' }}>COBERTURA</h3>
+              <div className="text-3xl font-bold mb-2" style={{ color: '#99b944' }}>{stats.departments}</div>
               <p className="text-gray-600 dark:text-gray-400 text-sm">
                 Departamentos donde concentramos nuestros esfuerzos para maximizar el impacto en las comunidades locales.
               </p>
@@ -760,11 +844,11 @@ export default function AboutUsPage() {
               transition={{ duration: 0.6, delay: 1.2 }}
               viewport={{ once: true }}
             >
-              <div className="flex items-center justify-center h-16 w-16 rounded-full bg-yellow-100 dark:bg-yellow-900 mb-6">
-                <MapPin className="h-8 w-8 text-yellow-600 dark:text-yellow-400" />
+              <div className="flex items-center justify-center h-16 w-16 rounded-full mb-6" style={{ backgroundColor: 'rgba(241, 208, 45, 0.2)' }}>
+                <MapPin className="h-8 w-8" stroke="#f1d02d" strokeWidth={2} />
               </div>
-              <h3 className="text-xl font-bold mb-3 text-text-light dark:text-text-dark">EXPANSIÓN FUTURA</h3>
-              <div className="text-3xl font-bold text-yellow-600 dark:text-yellow-400 mb-2">3</div>
+              <h3 className="text-xl font-bold mb-3" style={{ color: '#f1d02d' }}>EXPANSIÓN FUTURA</h3>
+              <div className="text-3xl font-bold mb-2" style={{ color: '#f1d02d' }}>3</div>
               <p className="text-gray-600 dark:text-gray-400 text-sm">
                 Pronto tendremos sedes en Cobija, Guayaramerín y El Alto con población afiliada también.
               </p>
@@ -775,7 +859,7 @@ export default function AboutUsPage() {
       </section>
 
       {/* Call to Action Section */}
-      <section className="py-20 bg-orange-500 dark:bg-orange-600 text-white dark:text-white relative overflow-hidden">
+      <section className="py-20 text-white dark:text-white relative overflow-hidden" style={{ backgroundColor: '#0d6f3c' }}>
         {/* Fondo decorativo */}
         <div className="absolute inset-0 opacity-10">
           <div className="absolute top-20 left-10 w-32 h-32 bg-white rounded-full blur-3xl"></div>
@@ -785,7 +869,7 @@ export default function AboutUsPage() {
         
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="text-center mb-16">
-            <span className="inline-block bg-orange-200 text-orange-800 dark:bg-orange-300 dark:text-orange-900 text-xs font-semibold px-3 py-1 rounded-full mb-4 font-condensed">
+            <span className="inline-block bg-white/20 text-white text-xs font-semibold px-3 py-1 rounded-full mb-4 font-condensed">
               ÚNETE A NUESTRA MISIÓN
             </span>
             <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-white dark:text-white leading-tight font-condensed">
@@ -798,17 +882,17 @@ export default function AboutUsPage() {
           </div>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button size="lg" className="bg-white text-orange-600 hover:bg-orange-50 font-bold font-condensed" asChild>
-              <a href="/programas">
+            <Button size="lg" className="bg-white hover:bg-gray-100 font-bold font-condensed" style={{ color: '#0d6f3c' }} asChild>
+              <Link href="/programas">
                 CONOCE NUESTROS PROGRAMAS
                 <ArrowRight className="ml-2 h-5 w-5" />
-              </a>
+              </Link>
             </Button>
-            <Button size="lg" className="bg-black text-white hover:bg-gray-800 font-bold font-condensed" asChild>
-              <a href="/proyectos">
+            <Button size="lg" className="text-white hover:opacity-90 font-bold font-condensed border-2 border-white" style={{ backgroundColor: '#0d6f3c' }} asChild>
+              <Link href="/proyectos">
                 VER NUESTROS PROYECTOS
                 <ArrowRight className="ml-2 h-5 w-5" />
-              </a>
+              </Link>
             </Button>
           </div>
         </div>

@@ -9,6 +9,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Badge } from '@/components/ui/badge';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { useToast } from '@/components/ui/use-toast';
+import { useSession } from 'next-auth/react';
 import { usePermissions } from '@/hooks/use-permissions';
 import { Checkbox } from '@/components/ui/checkbox';
 import { 
@@ -25,13 +26,11 @@ import {
   File,
   FolderOpen,
   BarChart3,
-  Users,
   Upload,
   X,
   ImageIcon,
   CheckCircle
 } from 'lucide-react';
-import Image from 'next/image';
 
 interface TransparencyDocument {
   id: string;
@@ -55,7 +54,7 @@ const categoryInfo = {
   ACCOUNTABILITY: {
     title: 'Rendición de Cuentas',
     icon: BarChart3,
-    color: 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200 hover:bg-green-200 hover:text-green-900 dark:hover:bg-green-800 dark:hover:text-green-100 transition-colors duration-200 cursor-default'
+    color: 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200 hover:bg-blue-200 hover:text-blue-900 dark:hover:bg-blue-800 dark:hover:text-blue-100 transition-colors duration-200 cursor-default'
   },
   ANNUAL_REPORTS: {
     title: 'Informes Anuales',
@@ -82,6 +81,7 @@ export const TransparencyManagement: React.FC = () => {
   const [editingDocument, setEditingDocument] = useState<TransparencyDocument | null>(null);
   const [deletingDocument, setDeletingDocument] = useState<TransparencyDocument | null>(null);
   const { toast } = useToast();
+  const { data: session } = useSession();
   const { canManageContent } = usePermissions();
 
   const fetchData = useCallback(async () => {
@@ -101,7 +101,18 @@ export const TransparencyManagement: React.FC = () => {
       params.append('sortBy', sortBy);
       params.append('sortOrder', sortOrder);
 
-      const response = await fetch(`/api/transparency?${params.toString()}`);
+      const headers: HeadersInit = {
+        'Content-Type': 'application/json',
+      };
+
+      // Agregar token de autenticación si está disponible
+      if (session?.customToken) {
+        headers['Authorization'] = `Bearer ${session.customToken}`;
+      }
+
+      const response = await fetch(`/api/transparency?${params.toString()}`, {
+        headers,
+      });
       if (!response.ok) {
         throw new Error('Error al cargar documentos');
       }
@@ -117,7 +128,7 @@ export const TransparencyManagement: React.FC = () => {
     } finally {
       setLoading(false);
     }
-  }, [statusFilter, categoryFilter, searchTerm, sortBy, sortOrder, toast]);
+  }, [statusFilter, categoryFilter, searchTerm, sortBy, sortOrder, toast, session?.customToken]);
 
   useEffect(() => {
     const timeoutId = setTimeout(() => {
@@ -341,7 +352,7 @@ export const TransparencyManagement: React.FC = () => {
                   {activeDocuments.length}
                 </p>
               </div>
-              <Eye className="h-8 w-8 text-green-500" />
+              <Eye className="h-8 w-8 text-blue-500" />
             </div>
           </CardContent>
         </Card>
@@ -357,7 +368,7 @@ export const TransparencyManagement: React.FC = () => {
                   {featuredDocuments.length}
                 </p>
               </div>
-              <Star className="h-8 w-8 text-yellow-500" />
+              <Star className="h-8 w-8" style={{ color: '#f1d02d' }} />
             </div>
           </CardContent>
         </Card>
@@ -558,7 +569,7 @@ export const TransparencyManagement: React.FC = () => {
                             {document.isActive ? 'Activo' : 'Inactivo'}
                           </Badge>
                           {document.isFeatured && (
-                            <Star className="h-4 w-4 text-yellow-500 fill-current" />
+                            <Star className="h-4 w-4 fill-current" style={{ color: '#f1d02d' }} />
                           )}
                         </div>
                       </td>
@@ -1089,7 +1100,7 @@ const EditTransparencyDocumentForm: React.FC<{
           setUploading(false);
         }
       } else if (fileMarkedForDeletion) {
-        finalFileUrl = null as any;
+        finalFileUrl = '';
         finalFileName = '';
       }
 

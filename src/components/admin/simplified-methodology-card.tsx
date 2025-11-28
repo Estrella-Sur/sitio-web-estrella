@@ -41,14 +41,23 @@ const categoryLabels = {
   NINEZ_EN_CRISIS: 'Niñez en Crisis'
 };
 
-const categoryColors = {
-  EDUCACION: 'bg-blue-100 text-blue-800 dark:bg-blue-200 dark:text-blue-900',
-  SALUD: 'bg-red-100 text-red-800 dark:bg-red-200 dark:text-red-900',
-  MEDIOS_DE_VIDA: 'bg-purple-100 text-purple-800 dark:bg-purple-200 dark:text-purple-900',
-  PROTECCION: 'bg-orange-100 text-orange-800 dark:bg-orange-200 dark:text-orange-900',
-  SOSTENIBILIDAD: 'bg-green-100 text-green-800 dark:bg-green-200 dark:text-green-900',
-  DESARROLLO_INFANTIL_TEMPRANO: 'bg-pink-100 text-pink-800 dark:bg-pink-200 dark:text-pink-900',
-  NINEZ_EN_CRISIS: 'bg-yellow-100 text-yellow-800 dark:bg-yellow-200 dark:text-yellow-900'
+const categoryColors: Record<string, string> = {
+  EDUCACION: '#006a86',
+  SALUD: '#99b944',
+  MEDIOS_DE_VIDA: '#0d6f3c',
+  PROTECCION: '#f1d02d',
+  SOSTENIBILIDAD: '#006a86',
+  DESARROLLO_INFANTIL_TEMPRANO: '#99b944',
+  NINEZ_EN_CRISIS: '#f1d02d'
+};
+
+const getCategoryStyle = (sector: string) => {
+  const color = categoryColors[sector] || '#006a86';
+  return {
+    backgroundColor: `${color}20`,
+    color: color,
+    borderColor: color
+  };
 };
 
 export const SimplifiedMethodologyCard: React.FC<SimplifiedMethodologyCardProps> = ({
@@ -113,7 +122,7 @@ export const SimplifiedMethodologyCard: React.FC<SimplifiedMethodologyCardProps>
         <div className="flex justify-between items-center mb-3">
           <div className="flex flex-wrap gap-1">
             {sectors.map((sector) => (
-              <span key={sector} className={`${categoryColors[sector]} text-xs font-semibold px-2.5 py-0.5 rounded`}>
+              <span key={sector} className="text-xs font-semibold px-2.5 py-0.5 rounded border" style={getCategoryStyle(sector)}>
                 {categoryLabels[sector]}
               </span>
             ))}

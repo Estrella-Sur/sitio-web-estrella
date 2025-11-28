@@ -1,12 +1,12 @@
 'use client'
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
+import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { 
   AlertTriangle, 
@@ -21,7 +21,6 @@ import {
   Mail,
   ExternalLink,
   File,
-  Image as ImageIcon,
   Download
 } from 'lucide-react';
 import Image from 'next/image';
@@ -70,11 +69,7 @@ export function ComplaintsManagement() {
     return () => clearTimeout(timer);
   }, [searchInput]);
 
-  useEffect(() => {
-    fetchComplaints();
-  }, [statusFilter, month, year]);
-
-  const fetchComplaints = async () => {
+  const fetchComplaints = useCallback(async () => {
     try {
       setLoading(true);
       const params = new URLSearchParams();
@@ -96,7 +91,11 @@ export function ComplaintsManagement() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [statusFilter, month, year]);
+
+  useEffect(() => {
+    fetchComplaints();
+  }, [fetchComplaints]);
 
   const handleClearSearch = () => {
     setSearchInput('');
@@ -114,27 +113,6 @@ export function ComplaintsManagement() {
     setStatusFilter(statusMap[value] || 'all');
   };
 
-  const handleStatusChange = async (complaintId: string, newStatus: string) => {
-    try {
-      const response = await fetch(`/api/admin/complaints/${complaintId}`, {
-        method: 'PATCH',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ status: newStatus })
-      });
-
-      if (response.ok) {
-        toast.success('Estado de denuncia actualizado');
-        fetchComplaints();
-      } else {
-        throw new Error('Error al actualizar denuncia');
-      }
-    } catch (error) {
-      console.error('Error al actualizar denuncia:', error);
-      toast.error('Error al actualizar denuncia');
-    }
-  };
 
   const handleDeleteConfirm = async () => {
     if (!deletingComplaint) return;
@@ -196,7 +174,7 @@ export function ComplaintsManagement() {
     const statusConfig = {
       PENDING: { color: 'bg-yellow-100 text-yellow-800', icon: Clock, text: 'Pendiente' },
       UNDER_REVIEW: { color: 'bg-blue-100 text-blue-800', icon: Eye, text: 'En revisión' },
-      RESOLVED: { color: 'bg-green-100 text-green-800', icon: CheckCircle, text: 'Resuelta' },
+      RESOLVED: { color: 'bg-blue-100 text-blue-800', icon: CheckCircle, text: 'Resuelta' },
       CLOSED: { color: 'bg-gray-100 text-gray-800', icon: CheckCircle, text: 'Cerrada' }
     };
 
@@ -753,9 +731,9 @@ export function ComplaintsManagement() {
             <div className="py-4">
               <p className="text-sm text-gray-600">
                 ¿Estás seguro de que quieres eliminar la denuncia de tipo 
-                <strong> "{getComplaintTypeText(deletingComplaint.complaintType)}"</strong>?
+                <strong> &quot;{getComplaintTypeText(deletingComplaint.complaintType)}&quot;</strong>?
                 {deletingComplaint.contactName && (
-                  <> reportada por <strong> "{deletingComplaint.contactName}"</strong>?</>
+                  <> reportada por <strong> &quot;{deletingComplaint.contactName}&quot;</strong>?</>
                 )}
               </p>
               <p className="text-sm text-red-600 mt-2 font-medium">
@@ -786,7 +764,7 @@ export function ComplaintsManagement() {
             <div className="py-4">
               <p className="text-sm text-gray-600">
                 ¿Estás seguro de que quieres cambiar el estado de la denuncia de tipo 
-                <strong> "{getComplaintTypeText(changingStatus.complaint.complaintType)}"</strong>?
+                <strong> &quot;{getComplaintTypeText(changingStatus.complaint.complaintType)}&quot;</strong>?
               </p>
               <div className="text-sm text-gray-500 mt-2">
                 Estado actual: <strong>{getStatusBadge(changingStatus.complaint.status)}</strong>

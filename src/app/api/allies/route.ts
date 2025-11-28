@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { getServerSession } from 'next-auth'
 import { authOptions } from '@/lib/auth'
 import { prisma } from '@/lib/prisma'
+import { Prisma } from '@prisma/client'
 
 export async function GET(request: NextRequest) {
   try {
@@ -15,23 +16,16 @@ export async function GET(request: NextRequest) {
     const search = searchParams.get('search') || ''
     const status = searchParams.get('status') || 'ALL'
     const sortBy = searchParams.get('sortBy') || 'createdAt'
-    const sortOrder = searchParams.get('sortOrder') || 'desc'
+    const sortOrder = (searchParams.get('sortOrder') || 'desc') as 'asc' | 'desc'
 
     // Construir filtros
-    const where: {
-      OR?: Array<{
-        name?: { contains: string; mode: 'insensitive' };
-        role?: { contains: string; mode: 'insensitive' };
-        description?: { contains: string; mode: 'insensitive' };
-      }>;
-      isActive?: boolean;
-    } = {}
+    const where: Prisma.AllyWhereInput = {}
 
     if (search) {
       where.OR = [
-        { name: { contains: search, mode: 'insensitive' } },
-        { role: { contains: search, mode: 'insensitive' } },
-        { description: { contains: search, mode: 'insensitive' } }
+        { name: { contains: search, mode: 'insensitive' as const } },
+        { role: { contains: search, mode: 'insensitive' as const } },
+        { description: { contains: search, mode: 'insensitive' as const } }
       ]
     }
 
@@ -39,12 +33,18 @@ export async function GET(request: NextRequest) {
       where.isActive = status === 'ACTIVE'
     }
 
+    // Configurar ordenamiento
+    const orderBy: Prisma.AllyOrderByWithRelationInput = {}
+    if (sortBy === 'name' || sortBy === 'role' || sortBy === 'createdAt' || sortBy === 'updatedAt') {
+      orderBy[sortBy as 'name' | 'role' | 'createdAt' | 'updatedAt'] = sortOrder
+    } else {
+      orderBy.createdAt = sortOrder
+    }
+
     // Obtener aliados con información del creador
     const allies = await prisma.ally.findMany({
       where,
-      orderBy: {
-        [sortBy]: sortOrder,
-      },
+      orderBy,
       include: {
         creator: {
           select: {
@@ -57,7 +57,7 @@ export async function GET(request: NextRequest) {
       }
     })
 
-    const formattedAllies = allies.map((ally: any) => ({
+    const formattedAllies = allies.map((ally) => ({
       id: ally.id,
       name: ally.name,
       role: ally.role,

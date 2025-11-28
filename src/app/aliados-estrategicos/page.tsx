@@ -10,7 +10,6 @@ import {
   Globe,
   Handshake,
   ArrowRight,
-  ArrowLeft,
   Search
 } from 'lucide-react';
 import Image from 'next/image';
@@ -72,7 +71,7 @@ export default function AliadosEstrategicosPage() {
       
       {/* Hero Section */}
       <div 
-        className="relative min-h-screen flex items-center"
+        className="relative min-h-screen flex items-start"
         style={{
           backgroundImage: "url('/static-images/heroes/aliados_estrategicos_hero.jpg')",
           backgroundSize: 'cover',
@@ -80,18 +79,18 @@ export default function AliadosEstrategicosPage() {
         }}
       >
         <div className="absolute inset-0 bg-black opacity-40 dark:opacity-60"></div>
-        <main className="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8 flex justify-center">
-          <div className="max-w-4xl text-white text-center">
+        <main className="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8 pt-8 md:pt-12 flex justify-center md:justify-start">
+          <div className="max-w-4xl text-white text-center md:text-left">
             <div className="mb-6">
-              <span className="inline-block bg-orange-400 text-gray-900 text-sm font-bold uppercase px-4 py-2 tracking-wider rounded">
+              <span className="inline-block text-white text-xs font-bold uppercase px-3 py-1.5 tracking-wider rounded" style={{ backgroundColor: '#99b944' }}>
                 Nuestros aliados
               </span>
             </div>
-            <h1 className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-extrabold leading-tight text-white mb-6">
+            <h1 className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-7xl xl:text-8xl font-extrabold leading-tight text-white mb-6">
               ALIADOS<br/>
               ESTRATÉGICOS
             </h1>
-            <p className="text-lg md:text-xl text-gray-200 max-w-3xl mx-auto mb-8">
+            <p className="text-lg md:text-xl text-gray-200 max-w-3xl mb-8">
               Organizaciones, empresas y fundaciones que comparten nuestra visión de transformación social y trabajan junto a nosotros para crear un impacto positivo.
             </p>
             <div className="mt-8">
@@ -138,7 +137,7 @@ export default function AliadosEstrategicosPage() {
             </div>
           ) : allies.length > 0 ? (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {allies.map((ally, index) => (
+              {allies.map((ally) => (
                 <div 
                   key={ally.id} 
                   className="group bg-card-light dark:bg-card-dark rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden border border-border-light dark:border-border-dark hover:border-primary hover:-translate-y-1"
@@ -230,8 +229,8 @@ export default function AliadosEstrategicosPage() {
             </div>
             
             <div className="bg-card-light dark:bg-card-dark p-8 rounded-lg shadow-sm hover:shadow-lg transition-shadow duration-300">
-              <div className="flex items-center justify-center h-16 w-16 rounded-full bg-green-100 dark:bg-green-900 mb-6">
-                <Globe className="h-8 w-8 text-green-500" />
+              <div className="flex items-center justify-center h-16 w-16 rounded-full bg-blue-100 dark:bg-blue-900 mb-6">
+                <Globe className="h-8 w-8 text-blue-500" />
               </div>
               <h3 className="text-xl font-bold mb-3 text-text-light dark:text-text-dark">ALCANCE GLOBAL</h3>
               <p className="text-text-secondary-light dark:text-text-secondary-dark">
@@ -283,7 +282,7 @@ export default function AliadosEstrategicosPage() {
       </section>
 
       {/* Call to Action Section */}
-      <section className="py-20 bg-orange-500 dark:bg-orange-600 text-white dark:text-white relative overflow-hidden">
+      <section className="py-20 text-white dark:text-white relative overflow-hidden" style={{ backgroundColor: '#0d6f3c' }}>
         {/* Fondo decorativo */}
         <div className="absolute inset-0 opacity-10">
           <div className="absolute top-20 left-10 w-32 h-32 bg-white rounded-full blur-3xl"></div>
@@ -293,7 +292,7 @@ export default function AliadosEstrategicosPage() {
         
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="text-center mb-16">
-            <span className="inline-block bg-orange-200 text-orange-800 dark:bg-orange-300 dark:text-orange-900 text-xs font-semibold px-3 py-1 rounded-full mb-4 font-condensed">
+            <span className="inline-block bg-white/20 text-white text-xs font-semibold px-3 py-1 rounded-full mb-4 font-condensed">
               ÚNETE COMO ALIADO ESTRATÉGICO
             </span>
             <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-white dark:text-white leading-tight font-condensed">
@@ -306,13 +305,19 @@ export default function AliadosEstrategicosPage() {
           </div>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button size="lg" className="bg-white text-orange-600 hover:bg-orange-50 font-bold font-condensed" asChild>
+            <Button size="lg" className="bg-white hover:bg-gray-100 font-bold font-condensed" style={{ color: '#0d6f3c' }} asChild>
               <Link href="/participar">
                 CONVERTIRSE EN ALIADO
                 <ArrowRight className="ml-2 h-5 w-5" />
               </Link>
             </Button>
-            <Button size="lg" className="bg-transparent border-2 border-white text-white hover:bg-white hover:text-orange-600 font-bold font-condensed transition-all duration-300 hover:scale-105" asChild>
+            <Button 
+              size="lg" 
+              className="bg-transparent border-2 border-white text-white hover:bg-white font-bold font-condensed transition-all duration-300 hover:scale-105" 
+              onMouseEnter={(e) => { e.currentTarget.style.color = '#0d6f3c'; }} 
+              onMouseLeave={(e) => { e.currentTarget.style.color = 'white'; }}
+              asChild
+            >
               <Link href="/nosotros">
                 CONOCER MÁS SOBRE NOSOTROS
                 <ArrowRight className="ml-2 h-5 w-5" />

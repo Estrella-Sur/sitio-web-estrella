@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
+import { Prisma } from '@prisma/client';
 
 // GET - Obtener proyectos públicos (solo activos)
 export async function GET(request: NextRequest) {
@@ -9,9 +10,9 @@ export async function GET(request: NextRequest) {
     const limit = searchParams.get('limit') ? parseInt(searchParams.get('limit')!) : undefined;
     const search = searchParams.get('search');
     const sortBy = searchParams.get('sortBy') || 'executionStart';
-    const sortOrder = searchParams.get('sortOrder') || 'desc';
+    const sortOrder = (searchParams.get('sortOrder') || 'desc') as 'asc' | 'desc';
 
-    const where: any = {
+    const where: Prisma.ProjectWhereInput = {
       isActive: true, // Solo proyectos activos
     };
 
@@ -30,7 +31,7 @@ export async function GET(request: NextRequest) {
     }
 
     // Configurar ordenamiento
-    const orderBy: any = {};
+    const orderBy: Prisma.ProjectOrderByWithRelationInput = {};
     if (sortBy === 'title') {
       orderBy.title = sortOrder;
     } else if (sortBy === 'createdAt') {

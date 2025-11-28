@@ -66,9 +66,9 @@ export function StarButton({
       }
     >
       {isFeatured ? (
-        <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
+        <Star className="h-4 w-4 fill-current" style={{ color: '#f1d02d' }} />
       ) : (
-        <StarOff className="h-4 w-4 text-gray-400 hover:text-yellow-400" />
+        <StarOff className="h-4 w-4 text-gray-400" onMouseEnter={(e) => e.currentTarget.style.color = '#f1d02d'} onMouseLeave={(e) => e.currentTarget.style.color = '#9ca3af'} />
       )}
     </Button>
   );

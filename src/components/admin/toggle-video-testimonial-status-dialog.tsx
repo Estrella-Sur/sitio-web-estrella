@@ -5,13 +5,29 @@ import { Button } from '@/components/ui/button'
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, DialogFooter } from '@/components/ui/dialog'
 import { useToast } from '@/components/ui/use-toast'
 
-interface ToggleVideoTestimonialStatusDialogProps {
-  video: {
+interface VideoTestimonial {
+  id: string
+  title: string
+  description: string
+  youtubeUrl: string
+  thumbnailUrl?: string
+  duration?: number
+  isActive: boolean
+  isFeatured: boolean
+  createdAt: string
+  updatedAt: string
+  createdBy?: string
+  creator?: {
     id: string
-    title: string
-    isActive: boolean
+    name: string
+    email: string
+    role: string
   }
-  onVideoUpdated: (updatedVideo: any) => void
+}
+
+interface ToggleVideoTestimonialStatusDialogProps {
+  video: VideoTestimonial
+  onVideoUpdated: (updatedVideo: VideoTestimonial) => void
   children: React.ReactNode
 }
 
@@ -74,7 +90,7 @@ export function ToggleVideoTestimonialStatusDialog({ video, onVideoUpdated, chil
         <div className="py-4">
           <p className="text-sm text-gray-600">
             ¿Estás seguro de que quieres {video.isActive ? 'desactivar' : 'activar'} el video testimonial 
-            <strong> "{video.title}"</strong>?
+            <strong> &quot;{video.title}&quot;</strong>?
           </p>
           {video.isActive && (
             <p className="text-sm text-gray-500 mt-2">

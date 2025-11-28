@@ -60,7 +60,7 @@ function SignInForm() {
     <div className="min-h-screen bg-background-light dark:bg-background-dark relative overflow-hidden">
       {/* Fondo decorativo similar al Hero */}
       <div className="absolute top-0 left-0 w-full h-full z-0">
-        <div className="w-full h-full bg-gradient-to-br from-emerald-50 via-blue-50 to-purple-50 dark:from-emerald-900/20 dark:via-blue-900/20 dark:to-purple-900/20"></div>
+        <div className="w-full h-full bg-gradient-to-br from-blue-50 via-blue-100 to-purple-50 dark:from-blue-900/20 dark:via-blue-900/20 dark:to-purple-900/20"></div>
         {/* Patrón de fondo decorativo */}
         <div className="absolute inset-0 opacity-10">
           <div className="absolute top-20 left-10 w-32 h-32 bg-primary rounded-full blur-3xl"></div>
@@ -145,7 +145,7 @@ function SignInForm() {
               {error && (
                 <div className={`px-4 py-3 rounded-lg text-sm ${
                   error.includes('exitosamente') 
-                    ? 'bg-green-50 border border-green-200 text-green-600 dark:bg-green-900/20 dark:border-green-800 dark:text-green-300'
+                    ? 'bg-blue-50 border border-blue-200 text-blue-600 dark:bg-blue-900/20 dark:border-blue-800 dark:text-blue-300'
                     : 'bg-red-50 border border-red-200 text-red-600 dark:bg-red-900/20 dark:border-red-800 dark:text-red-300'
                 }`}>
                   {error}

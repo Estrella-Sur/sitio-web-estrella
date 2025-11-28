@@ -8,7 +8,7 @@ import { changePassword } from '@/lib/auth-service'
 export const POST = withAuth(async (request: NextRequest) => {
   try {
     const { currentPassword, newPassword } = await request.json()
-    const userId = (request as any).user?.id
+    const userId = (request as NextRequest & { user?: { id: string } }).user?.id
 
     if (!userId) {
       return NextResponse.json(

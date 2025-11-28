@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { getServerSession } from 'next-auth'
 import { authOptions } from '@/lib/auth'
 import { prisma } from '@/lib/prisma'
+import { Prisma } from '@prisma/client'
 
 export async function GET(request: NextRequest) {
   try {
@@ -15,15 +16,15 @@ export async function GET(request: NextRequest) {
     const search = searchParams.get('search') || ''
     const status = searchParams.get('status') || 'ALL'
     const sortBy = searchParams.get('sortBy') || 'createdAt'
-    const sortOrder = searchParams.get('sortOrder') || 'desc'
+    const sortOrder = (searchParams.get('sortOrder') || 'desc') as 'asc' | 'desc'
 
     // Construir filtros
-    const where: any = {}
+    const where: Prisma.StoryWhereInput = {}
 
     if (search) {
       where.OR = [
-        { title: { contains: search, mode: 'insensitive' } },
-        { content: { contains: search, mode: 'insensitive' } }
+        { title: { contains: search, mode: 'insensitive' as const } },
+        { content: { contains: search, mode: 'insensitive' as const } }
       ]
     }
 
@@ -32,11 +33,16 @@ export async function GET(request: NextRequest) {
     }
 
     // Obtener stories con información del creador
+    const orderBy: Prisma.StoryOrderByWithRelationInput = {}
+    if (sortBy === 'title' || sortBy === 'createdAt' || sortBy === 'updatedAt') {
+      orderBy[sortBy as 'title' | 'createdAt' | 'updatedAt'] = sortOrder
+    } else {
+      orderBy.createdAt = sortOrder
+    }
+    
     const stories = await prisma.story.findMany({
       where,
-      orderBy: {
-        [sortBy]: sortOrder,
-      },
+      orderBy,
       include: {
         creator: {
           select: {
@@ -57,7 +63,7 @@ export async function GET(request: NextRequest) {
       return url;
     };
 
-    const formattedStories = stories.map((story: any) => ({
+    const formattedStories = stories.map((story) => ({
       id: story.id,
       title: story.title,
       content: story.content,

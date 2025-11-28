@@ -74,13 +74,22 @@ export const UnifiedCard: React.FC<UnifiedCardProps> = ({
     story: 'Historia'
   };
 
-  const typeColors = {
-    project: 'bg-blue-100 text-blue-800 dark:bg-blue-200 dark:text-blue-900',
-    news: 'bg-green-100 text-green-800 dark:bg-green-200 dark:text-green-900',
-    program: 'bg-purple-100 text-purple-800 dark:bg-purple-200 dark:text-purple-900',
-    event: 'bg-orange-100 text-orange-800 dark:bg-orange-200 dark:text-orange-900',
-    ally: 'bg-pink-100 text-pink-800 dark:bg-pink-200 dark:text-pink-900',
-    story: 'bg-indigo-100 text-indigo-800 dark:bg-indigo-200 dark:text-indigo-900'
+  const typeColors: Record<string, string> = {
+    project: '#006a86',
+    news: '#99b944',
+    program: '#0d6f3c',
+    event: '#f1d02d',
+    ally: '#006a86',
+    story: '#99b944'
+  };
+
+  const getTypeStyle = (type: string) => {
+    const color = typeColors[type] || '#006a86';
+    return {
+      backgroundColor: `${color}20`,
+      color: color,
+      borderColor: color
+    };
   };
 
   return (
@@ -121,7 +130,7 @@ export const UnifiedCard: React.FC<UnifiedCardProps> = ({
       </div>
       <CardContent className="p-4 flex-1 flex flex-col">
         <div className="text-sm mb-2 flex justify-between items-center">
-          <span className={`${typeColors[type]} text-xs font-semibold px-2.5 py-0.5 rounded`}>
+          <span className="text-xs font-semibold px-2.5 py-0.5 rounded border" style={getTypeStyle(type)}>
             {typeLabels[type]}
           </span>
           <Badge variant={getStatusBadgeVariant(isActive)}>
@@ -181,9 +190,9 @@ export const UnifiedCard: React.FC<UnifiedCardProps> = ({
               onClick={onToggleFeatured}
             >
               {isFeatured ? (
-                <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
+                <Star className="h-4 w-4 fill-current" style={{ color: '#f1d02d' }} />
               ) : (
-                <StarOff className="h-4 w-4 text-gray-400 hover:text-yellow-400" />
+                <StarOff className="h-4 w-4 text-gray-400" onMouseEnter={(e) => e.currentTarget.style.color = '#f1d02d'} onMouseLeave={(e) => e.currentTarget.style.color = '#9ca3af'} />
               )}
             </Button>
           )}

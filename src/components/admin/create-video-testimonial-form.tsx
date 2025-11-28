@@ -378,7 +378,7 @@ export function CreateVideoTestimonialForm({ onVideoCreated }: CreateVideoTestim
       <Dialog open={showSuccessDialog} onOpenChange={setShowSuccessDialog}>
         <DialogContent className="max-w-md mx-auto">
           <DialogHeader>
-            <DialogTitle className="flex items-center gap-2 text-green-600">
+            <DialogTitle className="flex items-center gap-2 text-blue-600">
               <Video className="h-5 w-5" />
               ¡Video Testimonial Creado Exitosamente!
             </DialogTitle>
@@ -388,9 +388,9 @@ export function CreateVideoTestimonialForm({ onVideoCreated }: CreateVideoTestim
           </DialogHeader>
           
           <div className="space-y-4">
-            <div className="bg-green-50 border border-green-200 rounded-lg p-4">
+            <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
               <div className="flex items-center gap-2 mb-2">
-                <Badge variant="outline" className="text-green-700 border-green-300">
+                <Badge variant="outline" className="text-blue-700 border-blue-300">
                   <Calendar className="mr-1 h-3 w-3" />
                   {createdVideo?.createdAt}
                 </Badge>
@@ -398,7 +398,7 @@ export function CreateVideoTestimonialForm({ onVideoCreated }: CreateVideoTestim
                   {createdVideo?.isActive ? 'Activo' : 'Inactivo'}
                 </Badge>
               </div>
-              <div className="text-sm text-green-700">
+              <div className="text-sm text-blue-700">
                 <p><strong>Título:</strong> {createdVideo?.title}</p>
                 <p><strong>ID:</strong> {createdVideo?.id}</p>
               </div>

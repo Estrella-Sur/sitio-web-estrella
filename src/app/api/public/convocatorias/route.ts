@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
+import { Prisma, ConvocatoriaStatus } from '@prisma/client';
 
 export async function GET(request: NextRequest) {
   try {
@@ -11,17 +12,15 @@ export async function GET(request: NextRequest) {
     const sortBy = searchParams.get('sortBy') || 'createdAt';
     const sortOrder = (searchParams.get('sortOrder') || 'desc') as 'asc' | 'desc';
 
-    const where: any = {
+    const where: Prisma.ConvocatoriaWhereInput = {
       isActive: true, // Solo convocatorias activas públicamente
+      status: { not: 'DRAFT' }, // Solo mostrar convocatorias que no están en DRAFT públicamente
     };
 
     // Filtro por estado (ACTIVE, UPCOMING, CLOSED)
     if (status) {
-      where.status = status;
+      where.status = status as ConvocatoriaStatus;
     }
-
-    // Solo mostrar convocatorias que no están en DRAFT públicamente
-    where.status = { not: 'DRAFT' };
 
     if (featured === 'true') {
       where.isFeatured = true;
@@ -35,7 +34,7 @@ export async function GET(request: NextRequest) {
       ];
     }
 
-    const orderBy: any = {};
+    const orderBy: Prisma.ConvocatoriaOrderByWithRelationInput = {};
     if (sortBy === 'title') {
       orderBy.title = sortOrder;
     } else if (sortBy === 'startDate') {

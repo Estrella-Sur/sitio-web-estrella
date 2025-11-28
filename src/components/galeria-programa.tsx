@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -10,8 +10,6 @@ import {
   ArrowLeft, 
   Calendar, 
   Image as ImageIcon,
-  ExternalLink,
-  Download,
   X,
   ChevronLeft,
   ChevronRight
@@ -46,11 +44,7 @@ export function GaleriaPrograma({ programId }: GaleriaProgramaProps) {
   const [error, setError] = useState<string | null>(null);
   const [selectedImageIndex, setSelectedImageIndex] = useState<number | null>(null);
 
-  useEffect(() => {
-    fetchGaleria();
-  }, [programId]);
-
-  const fetchGaleria = async () => {
+  const fetchGaleria = useCallback(async () => {
     try {
       setLoading(true);
       const response = await fetch(`/api/programas/${programId}/galeria`);
@@ -73,7 +67,11 @@ export function GaleriaPrograma({ programId }: GaleriaProgramaProps) {
     } finally {
       setLoading(false);
     }
-  };
+  }, [programId]);
+
+  useEffect(() => {
+    fetchGaleria();
+  }, [fetchGaleria]);
 
   const openModal = (index: number) => {
     setSelectedImageIndex(index);

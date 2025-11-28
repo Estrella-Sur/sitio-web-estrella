@@ -1,7 +1,6 @@
 'use client'
 
-import React, { useState, useEffect, use } from 'react'
-import { Card, CardContent } from '@/components/ui/card'
+import React, { useState, useEffect, use, useCallback } from 'react'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { 
@@ -14,6 +13,7 @@ import { SiteHeader } from '@/components/layout/site-header'
 import { SiteFooter } from '@/components/layout/site-footer'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
+import Image from 'next/image'
 
 interface NewsDetail {
   id: string
@@ -47,11 +47,7 @@ export default function NewsDetailPage({ params }: NewsDetailPageProps) {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
 
-  useEffect(() => {
-    fetchNews()
-  }, [resolvedParams.id])
-
-  const fetchNews = async () => {
+  const fetchNews = useCallback(async () => {
     try {
       setLoading(true)
       const response = await fetch(`/api/public/news/${resolvedParams.id}`)
@@ -70,7 +66,11 @@ export default function NewsDetailPage({ params }: NewsDetailPageProps) {
     } finally {
       setLoading(false)
     }
-  }
+  }, [resolvedParams.id])
+
+  useEffect(() => {
+    fetchNews()
+  }, [fetchNews])
 
   const formatDate = (dateString: string) => {
     return new Date(dateString).toLocaleDateString('es-ES', {
@@ -206,12 +206,14 @@ export default function NewsDetailPage({ params }: NewsDetailPageProps) {
           {/* Imagen principal */}
           {news.imageUrl && (
             <div className="mb-8">
-              <div className="relative rounded-lg overflow-hidden shadow-lg">
-                <img
+              <div className="relative rounded-lg overflow-hidden shadow-lg" style={{ maxHeight: '400px' }}>
+                <Image
                   src={news.imageUrl}
                   alt={news.imageAlt || news.title}
+                  width={1200}
+                  height={400}
                   className="w-full h-auto object-cover"
-                  style={{ maxHeight: '400px' }}
+                  sizes="(max-width: 768px) 100vw, 1200px"
                   onError={(e) => {
                     console.error('Error cargando imagen:', news.imageUrl);
                     e.currentTarget.style.display = 'none';
@@ -256,7 +258,8 @@ export default function NewsDetailPage({ params }: NewsDetailPageProps) {
               <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
                 <Button 
                   asChild
-                  className="bg-black hover:bg-gray-800 text-white px-8 py-3 text-lg font-semibold"
+                  className="text-white px-8 py-3 text-lg font-semibold hover:opacity-90"
+                  style={{ backgroundColor: '#006a86' }}
                 >
                   <Link href="/news-events">
                     Ver todas las noticias

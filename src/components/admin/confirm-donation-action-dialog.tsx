@@ -43,8 +43,7 @@ export function ConfirmDonationActionDialog({
   const isUnapprove = action === 'unapprove'
   const actionText = isApprove ? 'aprobar' : (isDelete ? 'eliminar' : (isUnapprove ? 'desaprobar' : 'rechazar'))
   const actionTextCapitalized = isApprove ? 'Aprobar' : (isDelete ? 'Eliminar' : (isUnapprove ? 'Desaprobar' : 'Rechazar'))
-  const actionColor = isApprove ? 'text-green-600' : 'text-red-600'
-  const actionBgColor = isApprove ? 'bg-green-600 hover:bg-green-700' : 'bg-red-600 hover:bg-red-700'
+  const actionBgColor = isApprove ? 'bg-blue-600 hover:bg-blue-700' : 'bg-red-600 hover:bg-red-700'
 
   const handleFileUpload = async (file: File) => {
     try {
@@ -214,7 +213,7 @@ export function ConfirmDonationActionDialog({
         onActionConfirmed(donation.id)
         setOpen(false)
       }
-    } catch (error) {
+    } catch (_error) {
       toast({
         title: 'Error',
         description: 'Hubo un problema al procesar la solicitud',
@@ -235,7 +234,7 @@ export function ConfirmDonationActionDialog({
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2">
             {isApprove ? (
-              <CheckCircle className="h-5 w-5 text-green-600" />
+              <CheckCircle className="h-5 w-5 text-blue-600" />
             ) : isDelete ? (
               <Trash2 className="h-5 w-5 text-red-600" />
             ) : isUnapprove ? (
@@ -250,11 +249,11 @@ export function ConfirmDonationActionDialog({
         <div className="py-4">
           <p className="text-sm text-gray-600 dark:text-gray-300">
             ¿Estás seguro de que quieres {actionText} la donación de{' '}
-            <strong className="text-gray-900 dark:text-white">"{donation.donorName}"</strong>?
+            <strong className="text-gray-900 dark:text-white">&quot;{donation.donorName}&quot;</strong>?
           </p>
           {donation.donationProject && (
             <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
-              Proyecto: <strong>"{donation.donationProject.title}"</strong>
+              Proyecto: <strong>&quot;{donation.donationProject.title}&quot;</strong>
             </p>
           )}
           <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
@@ -324,7 +323,7 @@ export function ConfirmDonationActionDialog({
           )}
           
           {isApprove ? (
-            <p className="text-sm text-green-600 dark:text-green-400 mt-2">
+            <p className="text-sm text-blue-600 dark:text-blue-400 mt-2">
               La donación será marcada como aprobada y se sumará al total recaudado.
             </p>
           ) : isDelete ? (

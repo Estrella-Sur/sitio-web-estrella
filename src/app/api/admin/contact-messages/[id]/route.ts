@@ -24,7 +24,7 @@ export async function PATCH(
     const body = await request.json();
     const { isRead } = body;
 
-    const message = await (prisma as any).contactMessage.update({
+    const message = await prisma.contactMessage.update({
       where: { id },
       data: {
         isRead: isRead ?? true,
@@ -62,7 +62,7 @@ export async function DELETE(
 
     const { id } = await params;
 
-    await (prisma as any).contactMessage.delete({
+    await prisma.contactMessage.delete({
       where: { id }
     });
 

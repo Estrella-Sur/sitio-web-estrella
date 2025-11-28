@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { PrismaClient } from '@prisma/client';
+import { PrismaClient, Prisma } from '@prisma/client';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth';
 
@@ -135,7 +135,7 @@ export async function PUT(request: NextRequest) {
       );
     }
 
-    const updateData: any = {};
+    const updateData: Prisma.AnnualGoalUpdateInput = {};
     if (year !== undefined) updateData.year = parseInt(year);
     if (targetAmount !== undefined) updateData.targetAmount = parseFloat(targetAmount);
     if (currentAmount !== undefined) updateData.currentAmount = parseFloat(currentAmount);

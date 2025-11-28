@@ -11,12 +11,19 @@ export interface AuthenticatedRequest extends NextRequest {
   }
 }
 
+interface AuthUser {
+  id: string
+  email: string
+  name?: string
+  role: string
+}
+
 /**
  * Middleware para verificar autenticación con NextAuth.js
  */
-export async function verifyAuth(request: NextRequest): Promise<{
+export async function verifyAuth(_request: NextRequest): Promise<{
   isAuthenticated: boolean
-  user?: any
+  user?: AuthUser
   error?: string
 }> {
   try {

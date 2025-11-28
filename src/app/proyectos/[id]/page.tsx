@@ -1,13 +1,12 @@
 'use client'
 
-import React, { useState, useEffect, use } from 'react';
+import React, { useState, useEffect, use, useCallback } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { 
   Calendar, 
   CalendarDays, 
-  User, 
   Users, 
   DollarSign, 
   Share2, 
@@ -67,11 +66,7 @@ export default function ProjectDetailPage({ params }: ProjectDetailPageProps) {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  useEffect(() => {
-    fetchProject();
-  }, [resolvedParams.id]);
-
-  const fetchProject = async () => {
+  const fetchProject = useCallback(async () => {
     try {
       setLoading(true);
       const response = await fetch(`/api/public/projects/${resolvedParams.id}`);
@@ -90,7 +85,11 @@ export default function ProjectDetailPage({ params }: ProjectDetailPageProps) {
     } finally {
       setLoading(false);
     }
-  };
+  }, [resolvedParams.id]);
+
+  useEffect(() => {
+    fetchProject();
+  }, [fetchProject]);
 
   const formatDate = (dateString: string) => {
     return new Date(dateString).toLocaleDateString('es-ES', {

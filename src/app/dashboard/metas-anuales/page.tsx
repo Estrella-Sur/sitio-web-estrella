@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -10,7 +10,6 @@ import { Textarea } from '@/components/ui/textarea';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { 
   Target,
-  DollarSign,
   Calendar,
   Edit,
   Plus,
@@ -346,7 +345,7 @@ export default function AnnualGoalsPage() {
                         Meta {goal.year}
                       </h3>
                       {goal.isFeatured && (
-                        <Badge className="bg-yellow-500 text-white text-xs">
+                        <Badge className="text-white text-xs" style={{ backgroundColor: '#f1d02d' }}>
                           <Star className="w-3 h-3 mr-1 fill-current" />
                           Destacada
                         </Badge>

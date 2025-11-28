@@ -37,17 +37,17 @@ export async function GET(request: NextRequest) {
       const whereClause = conditions.length > 0 ? `WHERE ${conditions.join(' AND ')}` : '';
       const limitClause = limit ? `LIMIT ${parseInt(limit)}` : '';
       
-      messages = await (prisma as any).$queryRawUnsafe(
+      messages = await prisma.$queryRawUnsafe<unknown[]>(
         `SELECT * FROM contact_messages ${whereClause} ORDER BY created_at DESC ${limitClause}`
       );
     } else {
       // Usar Prisma normal para filtros simples
-      const where: any = {};
+      const where: { isRead?: boolean } = {};
       if (isRead !== null && isRead !== undefined) {
         where.isRead = isRead === 'true';
       }
 
-      messages = await (prisma as any).contactMessage.findMany({
+      messages = await prisma.contactMessage.findMany({
         where,
         take: limit ? parseInt(limit) : undefined,
         orderBy: {

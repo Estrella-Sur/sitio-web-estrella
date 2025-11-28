@@ -1,6 +1,15 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  eslint: {
+    // Los warnings no bloquean el build, solo los errores
+    // Si quieres ignorar completamente ESLint durante el build, cambia a true
+    ignoreDuringBuilds: false,
+  },
+  typescript: {
+    // Los warnings de TypeScript no bloquean el build
+    ignoreBuildErrors: false,
+  },
   images: {
     domains: [
       'estrelladelsur.nyc3.digitaloceanspaces.com',

@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { useSession } from 'next-auth/react';
 import { createPortal } from 'react-dom';
 
@@ -51,8 +52,9 @@ export const Navbar: React.FC = () => {
 
   // Limpiar timeouts al desmontar
   useEffect(() => {
+    const timeouts = closeTimeouts.current;
     return () => {
-      Object.values(closeTimeouts.current).forEach(timeout => clearTimeout(timeout));
+      Object.values(timeouts).forEach(timeout => clearTimeout(timeout));
     };
   }, []);
 
@@ -61,8 +63,14 @@ export const Navbar: React.FC = () => {
       <div className="container mx-auto px-4">
         <div className="flex justify-between items-center py-4">
           <div className="flex items-center">
-            <Link href="/" className="text-xl sm:text-2xl font-bold text-text-light dark:text-text-dark">
-              Estrella del Sur
+            <Link href="/" className="flex items-center">
+              <Image 
+                src="/static-images/logos/logo_estrella.png"
+                alt="Estrella del Sur Logo"
+                width={200}
+                height={60}
+                className="h-12 w-auto object-contain"
+              />
             </Link>
           </div>
           
@@ -124,6 +132,15 @@ export const Navbar: React.FC = () => {
                     >
                       Nuestro Equipo
                     </Link>
+                    <Link 
+                      href="/contacto"
+                      className="block w-full text-left px-4 py-2 text-xs hover:text-primary dark:hover:text-primary hover:bg-gray-100 dark:hover:bg-gray-800 font-bold uppercase transition-colors cursor-pointer"
+                      onClick={() => {
+                        setIsNosotrosOpen(false);
+                      }}
+                    >
+                      Contactanos
+                    </Link>
                   </div>
                 </div>,
                 document.body
@@ -174,7 +191,7 @@ export const Navbar: React.FC = () => {
                         setIsProgramasOpen(false);
                       }}
                     >
-                      Todo el Impacto
+                      Nuestro Trabajo
                     </Link>
                     <Link 
                       href="/programas"
@@ -253,7 +270,7 @@ export const Navbar: React.FC = () => {
                         setIsTransparenciaOpen(false);
                       }}
                     >
-                      Información Institucional
+                      Documentos Institucionales
                     </Link>
                   </div>
                 </div>,
@@ -315,6 +332,15 @@ export const Navbar: React.FC = () => {
                       }}
                     >
                       Videos Testimoniales
+                    </Link>
+                    <Link 
+                      href="/recursos"
+                      className="block w-full text-left px-4 py-2 text-xs hover:text-primary dark:hover:text-primary hover:bg-gray-100 dark:hover:bg-gray-800 font-bold uppercase transition-colors cursor-pointer"
+                      onClick={() => {
+                        setIsRecursosOpen(false);
+                      }}
+                    >
+                      Galeria de Fotografias
                     </Link>
                   </div>
                 </div>,
@@ -392,7 +418,7 @@ export const Navbar: React.FC = () => {
               )}
             </div>
             
-            {/* Menú desplegable de Historias (hover) */}
+            {/* Menú desplegable de Comunidad (hover) */}
             <div className="relative historias-dropdown">
               <div
                 ref={setHistoriasButtonRef}
@@ -410,7 +436,7 @@ export const Navbar: React.FC = () => {
                     }
                   }}
                 >
-                  Historias
+                  Comunidad
                   <span className={`ml-1 transition-transform duration-200 ${isHistoriasOpen ? 'rotate-45' : ''}`}>+</span>
                 </Link>
               </div>
@@ -439,13 +465,13 @@ export const Navbar: React.FC = () => {
                       Historias de Impacto
                     </Link>
                     <Link 
-                      href="/historias"
+                      href="/videos-testimoniales"
                       className="block w-full text-left px-4 py-2 text-xs hover:text-primary dark:hover:text-primary hover:bg-gray-100 dark:hover:bg-gray-800 font-bold uppercase transition-colors cursor-pointer"
                       onClick={() => {
                         setIsHistoriasOpen(false);
                       }}
                     >
-                      Todas las Historias
+                      Videos Testimoniales
                     </Link>
                   </div>
                 </div>,
@@ -497,7 +523,16 @@ export const Navbar: React.FC = () => {
                         setIsBlogOpen(false);
                       }}
                     >
-                      Noticias y Eventos
+                      Noticias
+                    </Link>
+                    <Link 
+                      href="/noticias-eventos"
+                      className="block w-full text-left px-4 py-2 text-xs hover:text-primary dark:hover:text-primary hover:bg-gray-100 dark:hover:bg-gray-800 font-bold uppercase transition-colors cursor-pointer"
+                      onClick={() => {
+                        setIsBlogOpen(false);
+                      }}
+                    >
+                      Eventos
                     </Link>
                   </div>
                 </div>,
@@ -539,10 +574,10 @@ export const Navbar: React.FC = () => {
                 Acceder
               </Link>
             )}
-            <a className="flex items-center bg-primary text-white px-4 py-2 rounded text-sm hover:bg-emerald-700 font-bold" href="/donar">
+            <Link className="flex items-center bg-primary text-white px-4 py-2 rounded text-sm hover:bg-primary/90 font-bold" href="/donar">
               Donar
               <span className="material-symbols-outlined ml-2 text-base">arrow_forward</span>
-            </a>
+            </Link>
           </div>
         </div>
         
@@ -556,7 +591,7 @@ export const Navbar: React.FC = () => {
                 <Link href="/nosotros" className="block hover:text-primary dark:hover:text-primary font-bold uppercase py-2" onClick={() => setIsMenuOpen(false)}>Nosotros</Link>
                 <Link href="/impacto" className="block hover:text-primary dark:hover:text-primary font-bold uppercase py-2" onClick={() => setIsMenuOpen(false)}>Impacto</Link>
                 <Link href="/participar" className="block hover:text-primary dark:hover:text-primary font-bold uppercase py-2" onClick={() => setIsMenuOpen(false)}>Participar</Link>
-                <Link href="/historias-impacto" className="block hover:text-primary dark:hover:text-primary font-bold uppercase py-2" onClick={() => setIsMenuOpen(false)}>Historias</Link>
+                <Link href="/historias-impacto" className="block hover:text-primary dark:hover:text-primary font-bold uppercase py-2" onClick={() => setIsMenuOpen(false)}>Comunidad</Link>
                 <Link href="/transparencia" className="block hover:text-primary dark:hover:text-primary font-bold uppercase py-2" onClick={() => setIsMenuOpen(false)}>Transparencia</Link>
                 <Link href="/recursos" className="block hover:text-primary dark:hover:text-primary font-bold uppercase py-2" onClick={() => setIsMenuOpen(false)}>Recursos</Link>
                 
@@ -620,14 +655,14 @@ export const Navbar: React.FC = () => {
                     Obtener Ayuda
                     <span className="material-symbols-outlined ml-2 text-base">arrow_forward</span>
                   </a>
-                  <a 
-                    className="flex items-center justify-center bg-primary text-white px-4 py-2 rounded text-sm hover:bg-emerald-700 font-bold" 
+                  <Link 
+                    className="flex items-center justify-center bg-primary text-white px-4 py-2 rounded text-sm hover:bg-primary/90 font-bold" 
                     href="/donar"
                     onClick={() => setIsMenuOpen(false)}
                   >
                     Donar
                     <span className="material-symbols-outlined ml-2 text-base">arrow_forward</span>
-                  </a>
+                  </Link>
                 </div>
               </div>
             </div>

@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 import { verifyAuth } from '@/lib/auth-middleware';
+import { Prisma } from '@prisma/client';
 
 // GET /api/public/methodologies - Obtener todas las metodologías activas
 export async function GET(request: NextRequest) {
@@ -11,7 +12,7 @@ export async function GET(request: NextRequest) {
     const search = searchParams.get('search');
     const limit = parseInt(searchParams.get('limit') || '100'); // Aumentado a 100 para no limitar resultados
 
-    const where: any = {
+    const where: Prisma.MethodologyWhereInput = {
       isActive: true,
     };
 
@@ -67,18 +68,18 @@ export async function GET(request: NextRequest) {
     if (ageGroup) {
       where.ageGroup = {
         contains: ageGroup,
-        mode: 'insensitive',
+        mode: 'insensitive' as const,
       };
     }
 
     // Filtrar por búsqueda de texto
     if (search) {
-      const searchConditions = [
-        { title: { contains: search, mode: 'insensitive' } },
-        { description: { contains: search, mode: 'insensitive' } },
-        { shortDescription: { contains: search, mode: 'insensitive' } },
-        { targetAudience: { contains: search, mode: 'insensitive' } },
-        { objectives: { contains: search, mode: 'insensitive' } },
+      const searchConditions: Prisma.MethodologyWhereInput[] = [
+        { title: { contains: search, mode: 'insensitive' as const } },
+        { description: { contains: search, mode: 'insensitive' as const } },
+        { shortDescription: { contains: search, mode: 'insensitive' as const } },
+        { targetAudience: { contains: search, mode: 'insensitive' as const } },
+        { objectives: { contains: search, mode: 'insensitive' as const } },
       ];
       
       // Si hay otros filtros además de isActive, usar AND para combinar
@@ -86,7 +87,7 @@ export async function GET(request: NextRequest) {
       
       if (hasOtherFilters) {
         // Construir condiciones AND
-        const andConditions: any[] = [
+        const andConditions: Prisma.MethodologyWhereInput[] = [
           { isActive: true }
         ];
         
@@ -95,7 +96,7 @@ export async function GET(request: NextRequest) {
         }
         
         if (ageGroup) {
-          andConditions.push({ ageGroup: { contains: ageGroup, mode: 'insensitive' } });
+          andConditions.push({ ageGroup: { contains: ageGroup, mode: 'insensitive' as const } });
         }
         
         andConditions.push({ OR: searchConditions });
@@ -140,7 +141,7 @@ export async function GET(request: NextRequest) {
 export async function POST(request: NextRequest) {
   try {
     const authResult = await verifyAuth(request);
-    if (!authResult.isAuthenticated) {
+    if (!authResult.isAuthenticated || !authResult.user) {
       return NextResponse.json({ error: 'No autorizado' }, { status: 401 });
     }
 

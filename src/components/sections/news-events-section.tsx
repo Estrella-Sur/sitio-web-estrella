@@ -3,11 +3,8 @@
 import React, { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { Card } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { MapPin, ArrowRight, Search, Star } from 'lucide-react';
+import { MapPin, ArrowRight, Search } from 'lucide-react';
 
 interface NewsItem {
   id: string;
@@ -38,7 +35,6 @@ interface NewsEventsSectionProps {
 }
 
 export const NewsEventsSection: React.FC<NewsEventsSectionProps> = ({
-  featuredNews,
   newsItems = [],
   eventItems = []
 }) => {
@@ -112,15 +108,28 @@ export const NewsEventsSection: React.FC<NewsEventsSectionProps> = ({
   return (
     <>
       {/* Hero Section - Estilo Convergente */}
-      <div className="container mx-auto px-4 py-8">
-        <div className="grid lg:grid-cols-2 gap-12 items-center mb-12">
-          <div className="flex flex-col gap-6">
+      <div className="container mx-auto px-4 py-4 sm:py-6 md:py-8">
+        <div className="grid lg:grid-cols-2 gap-4 sm:gap-6 md:gap-12 items-start lg:items-center mb-4 sm:mb-6 md:mb-8 lg:mb-12">
+          <div className="flex flex-col gap-6 order-1 lg:order-1">
             <div>
-              <h1 className="text-5xl md:text-6xl font-extrabold font-display uppercase tracking-tight text-gray-900 dark:text-white">
+              <span className="text-white text-xs font-bold px-3 py-1 rounded-md mb-4 inline-block" style={{ backgroundColor: '#99b944' }}>NOTICIAS Y EVENTOS</span>
+              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold font-display uppercase tracking-tight dark:text-white break-words" style={{ color: '#006a86' }}>
                 Mantente informado con nuestras noticias
               </h1>
             </div>
-            <p className="text-lg text-gray-600 dark:text-gray-400">
+            
+            {/* Hero Image - Mobile: debajo del título */}
+            <div className="relative h-[300px] lg:hidden mb-4">
+              <Image 
+                alt="Noticias e información actualizada" 
+                className="w-full h-full object-cover object-center rounded-xl shadow-lg" 
+                src="/static-images/heroes/hero-historias.jpg"
+                fill
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent rounded-xl"></div>
+            </div>
+            
+            <p className="text-base sm:text-lg dark:text-gray-400" style={{ color: '#006a86' }}>
               Mantente al día con las últimas noticias, eventos y actualizaciones de Estrella del Sur. Descubre cómo nuestras acciones están transformando comunidades y creando un impacto positivo.
             </p>
             {/* Estadísticas enfocadas en contenido */}
@@ -147,12 +156,13 @@ export const NewsEventsSection: React.FC<NewsEventsSectionProps> = ({
             </div>
           </div>
           
-          {/* Hero Image */}
-          <div className="relative h-[500px]">
-            <img 
+          {/* Hero Image - Desktop: lado derecho */}
+          <div className="relative h-[500px] hidden lg:block order-2 lg:order-2">
+            <Image 
               alt="Noticias e información actualizada" 
               className="w-full h-full object-cover object-center rounded-xl shadow-lg" 
               src="/static-images/heroes/hero-historias.jpg"
+              fill
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent rounded-xl"></div>
           </div>
@@ -160,10 +170,10 @@ export const NewsEventsSection: React.FC<NewsEventsSectionProps> = ({
       </div>
       
       {/* Grid Section */}
-      <section className="py-8 bg-background-light dark:bg-background-dark">
+      <section className="py-4 sm:py-6 md:py-8 bg-background-light dark:bg-background-dark">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col md:flex-row justify-between items-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-text-light dark:text-text-dark mb-6 md:mb-0">
+            <h2 className="text-3xl md:text-4xl font-bold tracking-tight dark:text-text-dark mb-6 md:mb-0" style={{ color: '#006a86' }}>
               {activeTab === 'news' ? 'ÚLTIMAS NOTICIAS' : 'PRÓXIMOS EVENTOS'}
             </h2>
             <div className="flex space-x-2 md:space-x-4">
@@ -251,7 +261,7 @@ export const NewsEventsSection: React.FC<NewsEventsSectionProps> = ({
               <div className="text-text-secondary-light dark:text-text-secondary-dark mb-4">
                 <Search className="h-16 w-16 mx-auto" />
               </div>
-              <h3 className="text-lg font-medium text-text-light dark:text-text-dark mb-2">
+              <h3 className="text-lg font-medium dark:text-text-dark mb-2" style={{ color: '#006a86' }}>
                 No se encontraron {activeTab === 'news' ? 'noticias' : 'eventos'}
               </h3>
               <p className="text-text-secondary-light dark:text-text-secondary-dark mb-4">
@@ -293,7 +303,7 @@ export const NewsEventsSection: React.FC<NewsEventsSectionProps> = ({
                           className="w-full h-48 object-cover"
                         />
                       ) : (
-                        <div className="w-full h-48 bg-gradient-to-br from-emerald-50 via-blue-50 to-purple-50 dark:from-emerald-900/20 dark:via-blue-900/20 dark:to-purple-900/20 flex items-center justify-center">
+                        <div className="w-full h-48 bg-gradient-to-br from-blue-50 via-blue-100 to-purple-50 dark:from-blue-900/20 dark:via-blue-900/20 dark:to-purple-900/20 flex items-center justify-center">
                           <span className="material-symbols-outlined text-4xl text-primary">
                             article
                           </span>
@@ -306,14 +316,14 @@ export const NewsEventsSection: React.FC<NewsEventsSectionProps> = ({
                           </span>
                           <span className="text-subtext-light dark:text-subtext-dark">{formatDate(newsItem.publishedAt)}</span>
                         </div>
-                        <h3 className="text-lg font-bold text-text-light dark:text-text-dark mb-2 line-clamp-2">
+                        <h3 className="text-lg font-bold dark:text-text-dark mb-2 line-clamp-2" style={{ color: '#006a86' }}>
                           {newsItem.title}
                         </h3>
                         <p className="text-sm text-subtext-light dark:text-subtext-dark line-clamp-3 flex-grow">
                           {newsItem.content.length > 150 ? newsItem.content.substring(0, 150) + '...' : newsItem.content}
                         </p>
                         <div className="mt-3 flex justify-end">
-                          <Button variant="ghost" size="sm" className="text-primary hover:opacity-80">
+                          <Button variant="ghost" size="sm" className="text-primary hover:bg-transparent hover:text-primary active:bg-transparent focus:bg-transparent">
                             Leer más
                             <ArrowRight className="ml-1 h-3 w-3" />
                           </Button>
@@ -339,7 +349,7 @@ export const NewsEventsSection: React.FC<NewsEventsSectionProps> = ({
                         className="w-full h-48 object-cover"
                       />
                     ) : (
-                      <div className="w-full h-48 bg-gradient-to-br from-emerald-50 via-blue-50 to-purple-50 dark:from-emerald-900/20 dark:via-blue-900/20 dark:to-purple-900/20 flex items-center justify-center">
+                      <div className="w-full h-48 bg-gradient-to-br from-blue-50 via-blue-100 to-purple-50 dark:from-blue-900/20 dark:via-blue-900/20 dark:to-purple-900/20 flex items-center justify-center">
                         <span className="material-symbols-outlined text-4xl text-primary">
                           event
                         </span>
@@ -356,20 +366,20 @@ export const NewsEventsSection: React.FC<NewsEventsSectionProps> = ({
                         <div className="mb-2">
                           <div className="flex items-center gap-1">
                             <MapPin className="h-3 w-3 text-text-secondary-light dark:text-text-secondary-dark" />
-                            <span className="text-sm text-text-light dark:text-text-dark">
+                            <span className="text-sm dark:text-text-dark" style={{ color: '#006a86' }}>
                               {eventItem.location}
                             </span>
                           </div>
                         </div>
                       )}
-                      <h3 className="text-lg font-bold text-text-light dark:text-text-dark mb-2 line-clamp-2">
+                      <h3 className="text-lg font-bold dark:text-text-dark mb-2 line-clamp-2" style={{ color: '#006a86' }}>
                         {eventItem.title}
                       </h3>
                       <p className="text-sm text-subtext-light dark:text-subtext-dark line-clamp-3 flex-grow">
                         {eventItem.content.length > 150 ? eventItem.content.substring(0, 150) + '...' : eventItem.content}
                       </p>
                       <div className="mt-3 flex justify-end">
-                        <Button variant="ghost" size="sm" className="text-primary hover:opacity-80">
+                        <Button variant="ghost" size="sm" className="text-primary hover:bg-transparent hover:text-primary active:bg-transparent focus:bg-transparent">
                           Leer más
                           <ArrowRight className="ml-1 h-3 w-3" />
                         </Button>

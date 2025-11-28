@@ -2,11 +2,11 @@
 
 import { useState, useEffect, use } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Play, Image as ImageIcon, Target, Users, BookOpen, Award, ArrowLeft } from 'lucide-react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { notFound } from 'next/navigation';
 import { SiteHeader } from '@/components/layout/site-header';
 import { SiteFooter } from '@/components/layout/site-footer';
@@ -207,9 +207,11 @@ export default function ProgramaDetailPage({ params }: { params: Promise<{ id: s
                           onClick={() => setIsVideoDialogOpen(true)}
                           className="block relative group w-full h-full cursor-pointer"
                         >
-                          <img
+                          <Image
                             src={`https://img.youtube.com/vi/${youtubeId}/maxresdefault.jpg`}
                             alt={`Video de ${programa.sectorName}`}
+                            width={800}
+                            height={450}
                             className="w-full h-full object-cover"
                           />
                           <div className="absolute inset-0 flex items-center justify-center bg-black/30 group-hover:bg-black/50 transition-colors">
@@ -263,9 +265,11 @@ export default function ProgramaDetailPage({ params }: { params: Promise<{ id: s
                       {programa.imageLibrary.slice(0, 6).map((image) => (
                         <div key={image.id} className="group cursor-pointer">
                           <div className="aspect-video bg-gray-100 dark:bg-gray-700 rounded-lg overflow-hidden relative">
-                            <img
+                            <Image
                               src={image.imageUrl}
                               alt={image.imageAlt || image.title || `Imagen del programa ${programa.sectorName}`}
+                              width={400}
+                              height={225}
                               className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-200"
                             />
                             {/* Overlay con título */}

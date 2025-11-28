@@ -9,7 +9,7 @@ export async function POST(req: Request) {
     }
     const url = await getUploadUrl(key, contentType, typeof expiresIn === "number" ? expiresIn : 60);
     return NextResponse.json({ url });
-  } catch (error) {
+  } catch {
     return NextResponse.json({ error: "Error generando URL de subida" }, { status: 500 });
   }
 }

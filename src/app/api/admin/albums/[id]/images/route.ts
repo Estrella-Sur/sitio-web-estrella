@@ -39,7 +39,7 @@ export async function POST(
 
     // Validar que todas las imágenes tengan imageUrl
     const invalidImages = images.filter(
-      (img: any) => !img.imageUrl || img.imageUrl.trim() === ''
+      (img: { imageUrl?: string; caption?: string; isActive?: boolean }) => !img.imageUrl || img.imageUrl.trim() === ''
     );
     if (invalidImages.length > 0) {
       return NextResponse.json(
@@ -50,7 +50,7 @@ export async function POST(
 
     // Crear todas las imágenes
     const createdImages = await prisma.galleryImage.createMany({
-      data: images.map((img: any) => ({
+      data: images.map((img: { imageUrl: string; caption?: string; isActive?: boolean }) => ({
         imageUrl: img.imageUrl.trim(),
         caption: img.caption?.trim() || null,
         albumId: id,

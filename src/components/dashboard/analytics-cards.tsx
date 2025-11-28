@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { Users, FileText, BookOpen, Calendar, TrendingUp, Eye, Briefcase, Settings, Images, Handshake, Shield, FolderOpen } from 'lucide-react'
+import { Users, FileText, BookOpen, Calendar, Images, Handshake } from 'lucide-react'
 
 interface AnalyticsData {
   // Métricas principales

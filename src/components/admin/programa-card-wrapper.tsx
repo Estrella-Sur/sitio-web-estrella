@@ -46,7 +46,7 @@ export const ProgramaCardWrapper: React.FC<ProgramaCardWrapperProps> = ({
   selectedProgramas,
   onSelectPrograma,
   onSuccess,
-  onViewPrograma
+  onViewPrograma: _onViewPrograma
 }) => {
   const editDialogRef = useRef<HTMLButtonElement>(null);
   const statusDialogRef = useRef<HTMLButtonElement>(null);

@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { Target, ExternalLink, Calendar } from 'lucide-react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { SiteHeader } from '@/components/layout/site-header';
 import { SiteFooter } from '@/components/layout/site-footer';
 
@@ -60,7 +61,7 @@ export default function ProjectsPage() {
       fetchProjects();
   }, []);
 
-  const formatPeriod = (start: string, end: string) => {
+  const _formatPeriod = (start: string, end: string) => {
     const startDate = new Date(start);
     const endDate = new Date(end);
     
@@ -89,7 +90,7 @@ export default function ProjectsPage() {
       
       {/* Hero Section */}
       <div 
-        className="relative min-h-screen flex items-center"
+        className="relative min-h-screen flex items-start"
         style={{
           backgroundImage: "url('/static-images/heroes/proyectos_hero.jpg')",
           backgroundSize: 'cover',
@@ -97,19 +98,19 @@ export default function ProjectsPage() {
         }}
       >
         <div className="absolute inset-0 bg-black opacity-40 dark:opacity-60"></div>
-        <main className="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8 flex justify-center">
-          <div className="max-w-4xl text-white text-center">
+        <main className="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8 pt-8 md:pt-12 flex justify-center md:justify-start">
+          <div className="max-w-4xl text-white text-center md:text-left">
             <div className="mb-6">
-              <span className="inline-block bg-orange-400 text-gray-900 text-sm font-bold uppercase px-4 py-2 tracking-wider rounded">
+              <span className="inline-block text-white text-xs font-bold uppercase px-3 py-1.5 tracking-wider rounded" style={{ backgroundColor: '#99b944' }}>
                 Nuestros Proyectos
               </span>
             </div>
-            <h1 className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-extrabold leading-tight text-white mb-6">
+            <h1 className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-7xl xl:text-8xl font-extrabold leading-tight text-white mb-6">
               PROYECTOS<br/>
               DE IMPACTO<br/>
               SOCIAL
             </h1>
-            <p className="text-lg md:text-xl text-gray-200 max-w-3xl mx-auto mb-8">
+            <p className="text-lg md:text-xl text-gray-200 max-w-3xl mb-8">
               Cada proyecto representa un paso hacia un futuro más justo y sostenible, trabajando directamente con las comunidades para generar un impacto real y duradero.
             </p>
             <div className="mt-8">
@@ -158,10 +159,12 @@ export default function ProjectsPage() {
                 <div key={project.id} className="bg-white/80 dark:bg-gray-700/80 backdrop-blur-sm shadow-lg overflow-hidden hover:shadow-2xl hover:scale-105 transition-all duration-300 border border-white/20 dark:border-gray-600/20 flex flex-col h-full">
                   {/* Imagen del proyecto */}
                   <div className="relative h-48 sm:h-56 flex-shrink-0">
-                    <img
+                    <Image
                       src={currentImage}
                       alt={imageAlt}
                       className="w-full h-full object-cover"
+                      width={400}
+                      height={224}
                     />
                     {/* Overlay con gradiente sutil */}
                     <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent"></div>

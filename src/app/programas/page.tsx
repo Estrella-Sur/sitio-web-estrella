@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { Play, Newspaper, Image as ImageIcon, Target } from 'lucide-react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { SiteHeader } from '@/components/layout/site-header';
 import { SiteFooter } from '@/components/layout/site-footer';
 
@@ -81,7 +82,7 @@ export default function ProgramasPage() {
       
       {/* Hero Section */}
       <div 
-        className="relative min-h-screen flex items-center"
+        className="relative min-h-screen flex items-start"
         style={{
           backgroundImage: "url('/static-images/heroes/programas_hero.jpg')",
           backgroundSize: 'cover',
@@ -89,18 +90,18 @@ export default function ProgramasPage() {
         }}
       >
         <div className="absolute inset-0 bg-black opacity-40 dark:opacity-60"></div>
-        <main className="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8 flex justify-center">
-          <div className="max-w-4xl text-white text-center">
+        <main className="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8 pt-8 md:pt-12 flex justify-center md:justify-start">
+          <div className="max-w-4xl text-white text-center md:text-left">
             <div className="mb-6">
-              <span className="inline-block bg-orange-400 text-gray-900 text-sm font-bold uppercase px-4 py-2 tracking-wider rounded">
+              <span className="inline-block text-white text-xs font-bold uppercase px-3 py-1.5 tracking-wider rounded" style={{ backgroundColor: '#99b944' }}>
                 Nuestros Programas
               </span>
             </div>
-            <h1 className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-extrabold leading-tight text-white mb-6">
+            <h1 className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-7xl xl:text-8xl font-extrabold leading-tight text-white mb-6">
               PROGRAMAS<br/>
               DE IMPACTO
             </h1>
-            <p className="text-lg md:text-xl text-gray-200 max-w-3xl mx-auto mb-8">
+            <p className="text-lg md:text-xl text-gray-200 max-w-3xl mb-8">
               Encaminamos programas de desarrollo integral que abordan las causas raíz de los problemas sociales, creando soluciones sostenibles y transformadoras.
             </p>
             <div className="mt-8">
@@ -155,8 +156,10 @@ export default function ProgramasPage() {
                 <div key={programa.id} className="bg-white/80 dark:bg-gray-700/80 backdrop-blur-sm shadow-lg overflow-hidden hover:shadow-2xl hover:scale-105 transition-all duration-300 border border-white/20 dark:border-gray-600/20">
                   {/* Imagen del programa */}
                   <div className="relative h-48 sm:h-56">
-                    <img
+                    <Image
                       src={currentImage}
+                      width={400}
+                      height={224}
                       alt={imageAlt}
                       className="w-full h-full object-cover"
                     />

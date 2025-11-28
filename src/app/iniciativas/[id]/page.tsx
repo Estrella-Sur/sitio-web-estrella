@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState, useEffect, use } from 'react';
+import React, { useState, useEffect, use, useCallback } from 'react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent } from '@/components/ui/card';
@@ -51,7 +51,7 @@ export default function InitiativeDetailPage({ params }: InitiativeDetailPagePro
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  const fetchInitiative = async () => {
+  const fetchInitiative = useCallback(async () => {
     try {
       setLoading(true);
       console.log('🔍 Buscando iniciativa con ID:', resolvedParams.id);
@@ -73,11 +73,11 @@ export default function InitiativeDetailPage({ params }: InitiativeDetailPagePro
     } finally {
       setLoading(false);
     }
-  };
+  }, [resolvedParams.id]);
 
   useEffect(() => {
     fetchInitiative();
-  }, [resolvedParams.id]);
+  }, [fetchInitiative]);
 
   const handleShare = async () => {
     if (navigator.share && initiative) {
@@ -101,9 +101,9 @@ export default function InitiativeDetailPage({ params }: InitiativeDetailPagePro
       case 'HEALTH':
         return 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200 hover:bg-red-200 hover:text-red-900 dark:hover:bg-red-800 dark:hover:text-red-100';
       case 'PROTECTION':
-        return 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200 hover:bg-green-200 hover:text-green-900 dark:hover:bg-green-800 dark:hover:text-green-100';
+        return 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200 hover:bg-blue-200 hover:text-blue-900 dark:hover:bg-blue-800 dark:hover:text-blue-100';
       case 'SUSTAINABILITY':
-        return 'bg-emerald-100 text-emerald-800 dark:bg-emerald-900 dark:text-emerald-200 hover:bg-emerald-200 hover:text-emerald-900 dark:hover:bg-emerald-800 dark:hover:text-emerald-100';
+        return 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200 hover:bg-blue-200 hover:text-blue-900 dark:hover:bg-blue-800 dark:hover:text-blue-100';
       case 'LIVELIHOODS':
         return 'bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-200 hover:bg-purple-200 hover:text-purple-900 dark:hover:bg-purple-800 dark:hover:text-purple-100';
       case 'EARLY_CHILD_DEVELOPMENT':
@@ -359,9 +359,11 @@ export default function InitiativeDetailPage({ params }: InitiativeDetailPagePro
                 {initiative.imageLibrary.slice(0, 6).map((image) => (
                   <div key={image.id} className="flex-shrink-0 hover:shadow-lg transition-all duration-300 group rounded-lg" style={{ width: '390px' }}>
                     <div className="bg-gray-100 dark:bg-gray-800 overflow-hidden rounded-t-lg" style={{ width: '390px', height: '260px' }}>
-                      <img
+                      <Image
                         src={image.imageUrl}
                         alt={image.imageAlt || image.title || `Imagen de la iniciativa ${initiative.title}`}
+                        width={390}
+                        height={260}
                         style={{ 
                           width: '390px', 
                           height: '260px', 

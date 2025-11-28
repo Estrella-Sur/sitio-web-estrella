@@ -3,7 +3,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
 import { 
   Play, 
   Download, 
@@ -14,11 +13,9 @@ import {
   BookOpen,
   Video,
   Music,
-  Monitor,
   Library,
   FileDown,
   Book,
-  ArrowRight,
   Star,
   Clock,
   PlayCircle,
@@ -66,7 +63,7 @@ const categoryInfo = {
     bgColor: 'bg-blue-50 dark:bg-blue-950',
     subcategories: {
       VIDEOS: { title: 'Videos', icon: Video, color: 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200 hover:bg-red-200 hover:text-red-900 dark:hover:bg-red-800 dark:hover:text-red-100 transition-colors duration-200 cursor-default' },
-      AUDIOS: { title: 'Audios', icon: Music, color: 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200 hover:bg-green-200 hover:text-green-900 dark:hover:bg-green-800 dark:hover:text-green-100 transition-colors duration-200 cursor-default' }
+      AUDIOS: { title: 'Audios', icon: Music, color: 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200 hover:bg-blue-200 hover:text-blue-900 dark:hover:bg-blue-800 dark:hover:text-blue-100 transition-colors duration-200 cursor-default' }
     }
   },
   PUBLICATIONS: {
@@ -124,7 +121,7 @@ export default function ResourcesPage() {
   const [selectedSubcategory, setSelectedSubcategory] = useState<string>('');
   const [searchTerm, setSearchTerm] = useState('');
 
-  const fetchResources = async () => {
+  const fetchResources = useCallback(async () => {
     try {
       setLoading(true);
       
@@ -157,7 +154,11 @@ export default function ResourcesPage() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [activeTab, selectedSubcategory, searchTerm]);
+
+  useEffect(() => {
+    fetchResources();
+  }, [fetchResources]);
 
   const fetchAlbums = async () => {
     try {
@@ -205,9 +206,6 @@ export default function ResourcesPage() {
     }
   }, [selectedImageIndex, selectedAlbum]);
 
-  useEffect(() => {
-    fetchResources();
-  }, [activeTab, selectedSubcategory, searchTerm]);
 
   useEffect(() => {
     if (activeTab === 'gallery') {
@@ -238,7 +236,7 @@ export default function ResourcesPage() {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [isImageViewerOpen, navigateImage]);
 
-  const formatFileSize = (bytes?: number) => {
+  const _formatFileSize = (bytes?: number) => {
     if (!bytes) return '';
     const sizes = ['Bytes', 'KB', 'MB', 'GB'];
     const i = Math.floor(Math.log(bytes) / Math.log(1024));
@@ -331,7 +329,7 @@ export default function ResourcesPage() {
     return FileText;
   };
 
-  const groupedResources = resources.reduce((acc, resource) => {
+  const _groupedResources = resources.reduce((acc, resource) => {
     if (!acc[resource.category]) {
       acc[resource.category] = [];
     }
@@ -345,7 +343,7 @@ export default function ResourcesPage() {
       
       {/* Hero Section */}
       <div 
-        className="relative min-h-screen flex items-center"
+        className="relative min-h-screen flex items-start"
         style={{
           backgroundImage: "url('/static-images/heroes/centro_multimedia_hero.jpg')",
           backgroundSize: 'cover',
@@ -353,19 +351,19 @@ export default function ResourcesPage() {
         }}
       >
         <div className="absolute inset-0 bg-black opacity-40 dark:opacity-60"></div>
-        <main className="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8 flex justify-center">
-          <div className="max-w-4xl text-white text-center">
+        <main className="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8 pt-8 md:pt-12 flex justify-center md:justify-start">
+          <div className="max-w-4xl text-white text-center md:text-left">
             <div className="mb-6">
-              <span className="inline-block bg-orange-400 text-gray-900 text-sm font-bold uppercase px-4 py-2 tracking-wider rounded">
+              <span className="inline-block text-white text-xs font-bold uppercase px-3 py-1.5 tracking-wider rounded" style={{ backgroundColor: '#99b944' }}>
                 Centro de Recursos Multimedia
               </span>
             </div>
-            <h1 className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-extrabold leading-tight text-white mb-6">
+            <h1 className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-7xl xl:text-8xl font-extrabold leading-tight text-white mb-6">
               CENTRO DE<br/>
               RECURSOS<br/>
               MULTIMEDIA
             </h1>
-            <p className="text-lg md:text-xl text-gray-200 max-w-3xl mx-auto mb-8">
+            <p className="text-lg md:text-xl text-gray-200 max-w-3xl mb-8">
               Accede a nuestro centro multimedia con videos educativos, audios, biblioteca digital 
               y recursos descargables que enriquecen el aprendizaje y la formación comunitaria.
             </p>
@@ -393,9 +391,10 @@ export default function ResourcesPage() {
               <button 
                 className={`px-4 py-2 text-sm font-medium rounded-md transition-all ${
                   activeTab === 'multimedia' 
-                    ? 'bg-blue-600 text-white shadow-lg' 
+                    ? 'text-white shadow-lg' 
                     : 'text-text-light dark:text-text-dark hover:bg-card-light dark:hover:bg-card-dark'
                 }`}
+                style={activeTab === 'multimedia' ? { backgroundColor: '#f1d02d' } : {}}
                 onClick={() => setActiveTab('multimedia')}
               >
                 CENTRO MULTIMEDIA
@@ -403,9 +402,10 @@ export default function ResourcesPage() {
               <button 
                 className={`px-4 py-2 text-sm font-medium rounded-md transition-all ${
                   activeTab === 'publications' 
-                    ? 'bg-orange-600 text-white shadow-lg' 
+                    ? 'text-white shadow-lg' 
                     : 'text-text-light dark:text-text-dark hover:bg-card-light dark:hover:bg-card-dark'
                 }`}
+                style={activeTab === 'publications' ? { backgroundColor: '#006a86' } : {}}
                 onClick={() => setActiveTab('publications')}
               >
                 PUBLICACIONES
@@ -413,9 +413,10 @@ export default function ResourcesPage() {
               <button 
                 className={`px-4 py-2 text-sm font-medium rounded-md transition-all ${
                   activeTab === 'gallery' 
-                    ? 'bg-purple-600 text-white shadow-lg' 
+                    ? 'text-white shadow-lg' 
                     : 'text-text-light dark:text-text-dark hover:bg-card-light dark:hover:bg-card-dark'
                 }`}
+                style={activeTab === 'gallery' ? { backgroundColor: '#0d6f3c' } : {}}
                 onClick={() => setActiveTab('gallery')}
               >
                 GALERÍA
@@ -612,9 +613,11 @@ export default function ResourcesPage() {
                     <Card key={resource.id} className="bg-card-light dark:bg-card-dark hover:shadow-lg transition-shadow overflow-hidden">
                       {resource.thumbnailUrl ? (
                         <div className="relative w-full h-48 bg-gradient-to-br from-blue-50 to-purple-50 dark:from-blue-950 dark:to-purple-950">
-                          <img
+                          <Image
                             src={resource.thumbnailUrl}
                             alt={resource.title}
+                            width={400}
+                            height={192}
                             className="w-full h-full object-cover"
                             loading="lazy"
                           />
@@ -729,10 +732,12 @@ export default function ResourcesPage() {
                           <Card key={resource.id} className="bg-card-light dark:bg-card-dark hover:shadow-lg transition-shadow overflow-hidden">
                             {resource.thumbnailUrl ? (
                               <div className="relative w-full h-48 bg-gradient-to-br from-orange-50 to-amber-50 dark:from-orange-950 dark:to-amber-950">
-                                <img
+                                <Image
                                   src={resource.thumbnailUrl}
                                   alt={resource.title}
                                   className="w-full h-full object-cover"
+                                  width={400}
+                                  height={192}
                                   loading="lazy"
                                 />
                                 <div className="absolute top-2 right-2">
@@ -824,7 +829,7 @@ export default function ResourcesPage() {
       </section>
 
       {/* Compromiso con los Recursos */}
-      <section className="py-20 bg-orange-500 dark:bg-orange-600 text-white dark:text-white relative overflow-hidden">
+      <section className="py-20 text-white dark:text-white relative overflow-hidden" style={{ backgroundColor: '#0d6f3c' }}>
         <div className="absolute inset-0 opacity-10">
           <div className="absolute top-20 left-10 w-32 h-32 bg-white rounded-full blur-3xl"></div>
           <div className="absolute top-40 right-20 w-24 h-24 bg-yellow-200 rounded-full blur-2xl"></div>
@@ -833,7 +838,7 @@ export default function ResourcesPage() {
         
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="text-center mb-16">
-            <span className="inline-block bg-orange-200 text-orange-800 dark:bg-orange-300 dark:text-orange-900 text-xs font-semibold px-3 py-1 rounded-full mb-4 font-condensed">
+            <span className="inline-block bg-white/20 text-white text-xs font-semibold px-3 py-1 rounded-full mb-4 font-condensed">
               RECURSOS EDUCATIVOS
             </span>
             <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-white dark:text-white leading-tight font-condensed">

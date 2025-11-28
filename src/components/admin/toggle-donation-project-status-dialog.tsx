@@ -76,7 +76,7 @@ export function ToggleDonationProjectStatusDialog({
             {isCurrentlyActive ? (
               <PowerOff className="h-5 w-5 text-orange-600" />
             ) : (
-              <Power className="h-5 w-5 text-green-600" />
+              <Power className="h-5 w-5 text-blue-600" />
             )}
             {isCurrentlyActive ? 'Desactivar Proyecto' : 'Activar Proyecto'}
           </DialogTitle>
@@ -85,14 +85,14 @@ export function ToggleDonationProjectStatusDialog({
         <div className="py-4">
           <p className="text-sm text-gray-600 dark:text-gray-300">
             ¿Estás seguro de que quieres {actionText} el proyecto de donación{' '}
-            <strong className="text-gray-900 dark:text-white">"{project.title}"</strong>?
+            <strong className="text-gray-900 dark:text-white">&quot;{project.title}&quot;</strong>?
           </p>
           {isCurrentlyActive ? (
             <p className="text-sm text-orange-600 dark:text-orange-400 mt-2">
               El proyecto ya no será visible en la página pública.
             </p>
           ) : (
-            <p className="text-sm text-green-600 dark:text-green-400 mt-2">
+            <p className="text-sm text-blue-600 dark:text-blue-400 mt-2">
               El proyecto será visible en la página pública.
             </p>
           )}

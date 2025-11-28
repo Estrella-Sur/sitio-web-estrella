@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 import { verifyAuth } from '@/lib/auth-middleware';
 import { storageService } from '@/lib/storage-service';
+import { Prisma } from '@prisma/client';
 
 // GET - Obtener proyecto por ID
 export async function GET(
@@ -161,7 +162,7 @@ export async function PUT(
       return url;
     };
 
-    const updateData: any = {};
+    const updateData: Prisma.ProjectUpdateInput = {};
     
     if (title !== undefined) updateData.title = title;
     if (executionStart !== undefined) updateData.executionStart = new Date(executionStart);

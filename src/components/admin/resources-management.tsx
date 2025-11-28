@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -31,8 +31,6 @@ import {
   Library,
   FileDown,
   Book,
-  Monitor,
-  Upload,
   ImageIcon,
   X
 } from 'lucide-react';
@@ -63,7 +61,7 @@ const categoryInfo = {
   MULTIMEDIA_CENTER: {
     title: 'Centro Multimedia',
     icon: PlayCircle,
-    color: 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200 hover:bg-blue-200 hover:text-blue-900 dark:hover:bg-blue-800 dark:hover:text-blue-100 transition-colors duration-200 cursor-default',
+    color: '#006a86',
     subcategories: {
       VIDEOS: { title: 'Videos', icon: Video },
       AUDIOS: { title: 'Audios', icon: Music }
@@ -72,13 +70,22 @@ const categoryInfo = {
   PUBLICATIONS: {
     title: 'Publicaciones',
     icon: BookOpen,
-    color: 'bg-orange-100 text-orange-800 dark:bg-orange-900 dark:text-orange-200 hover:bg-orange-200 hover:text-orange-900 dark:hover:bg-orange-800 dark:hover:text-orange-100 transition-colors duration-200 cursor-default',
+    color: '#99b944',
     subcategories: {
       INVESTIGATIONS: { title: 'Investigaciones', icon: Library },
       METHODOLOGICAL_RESOURCES: { title: 'Recursos Metodológicos', icon: FileDown },
       SYSTEMATIZATION_DOCUMENTS: { title: 'Documentos de Sistematización', icon: Book }
     }
   }
+};
+
+const getCategoryBadgeStyle = (category: string) => {
+  const color = categoryInfo[category as keyof typeof categoryInfo]?.color || '#006a86';
+  return {
+    backgroundColor: `${color}20`,
+    color: color,
+    borderColor: color
+  };
 };
 
 export const ResourcesManagement: React.FC = () => {
@@ -98,7 +105,7 @@ export const ResourcesManagement: React.FC = () => {
   const { data: session } = useSession();
   const { canManageContent } = usePermissions();
 
-  const fetchData = async () => {
+  const fetchData = useCallback(async () => {
     try {
       setLoading(true);
       const params = new URLSearchParams();
@@ -118,7 +125,18 @@ export const ResourcesManagement: React.FC = () => {
       params.append('sortBy', sortBy);
       params.append('sortOrder', sortOrder);
 
-      const response = await fetch(`/api/resources?${params.toString()}`);
+      const headers: HeadersInit = {
+        'Content-Type': 'application/json',
+      };
+
+      // Agregar token de autenticación si está disponible
+      if (session?.customToken) {
+        headers['Authorization'] = `Bearer ${session.customToken}`;
+      }
+
+      const response = await fetch(`/api/resources?${params.toString()}`, {
+        headers,
+      });
       if (!response.ok) {
         throw new Error('Error al cargar recursos');
       }
@@ -134,14 +152,14 @@ export const ResourcesManagement: React.FC = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [session?.customToken, statusFilter, categoryFilter, subcategoryFilter, searchTerm, sortBy, sortOrder, toast]);
 
   useEffect(() => {
     const timeoutId = setTimeout(() => {
       fetchData();
     }, 300);
     return () => clearTimeout(timeoutId);
-  }, [statusFilter, categoryFilter, subcategoryFilter, searchTerm, sortBy, sortOrder]);
+  }, [fetchData]);
 
   const filteredResources = resources;
   const activeResources = resources.filter(item => item.isActive);
@@ -358,7 +376,7 @@ export const ResourcesManagement: React.FC = () => {
                   {activeResources.length}
                 </p>
               </div>
-              <Eye className="h-8 w-8 text-green-500" />
+              <Eye className="h-8 w-8 text-blue-500" />
             </div>
           </CardContent>
         </Card>
@@ -374,7 +392,7 @@ export const ResourcesManagement: React.FC = () => {
                   {featuredResources.length}
                 </p>
               </div>
-              <Star className="h-8 w-8 text-yellow-500" />
+              <Star className="h-8 w-8" style={{ color: '#f1d02d' }} />
             </div>
           </CardContent>
         </Card>
@@ -450,7 +468,7 @@ export const ResourcesManagement: React.FC = () => {
               </SelectContent>
             </Select>
 
-            <Select value={sortBy} onValueChange={(value: any) => setSortBy(value)}>
+            <Select value={sortBy} onValueChange={(value: string) => setSortBy(value as 'title' | 'category' | 'downloadCount' | 'createdAt')}>
               <SelectTrigger className="w-full lg:w-48">
                 <SelectValue placeholder="Ordenar por" />
               </SelectTrigger>
@@ -591,13 +609,15 @@ export const ResourcesManagement: React.FC = () => {
                       </td>
                       <td className="p-4">
                         <div className="space-y-1">
-                          <Badge className={categoryInfo[resource.category].color}>
-                            {categoryInfo[resource.category].title}
+                          <Badge className="border transition-colors duration-200 cursor-default" style={getCategoryBadgeStyle(resource.category)}>
+                            {categoryInfo[resource.category as keyof typeof categoryInfo]?.title || resource.category}
                           </Badge>
                           {resource.subcategory && resource.subcategory !== 'none' && (() => {
                             const category = categoryInfo[resource.category as keyof typeof categoryInfo];
                             if (category?.subcategories) {
-                              const subcategory = (category.subcategories as any)[resource.subcategory];
+                              const subcategoryKey = resource.subcategory;
+                              const subcategories = category.subcategories as Record<string, { title: string; icon: React.ComponentType }>;
+                              const subcategory = subcategories[subcategoryKey];
                               if (subcategory) {
                                 return (
                                   <div className="text-xs text-text-secondary-light dark:text-text-secondary-dark">
@@ -616,7 +636,7 @@ export const ResourcesManagement: React.FC = () => {
                             {resource.isActive ? 'Activo' : 'Inactivo'}
                           </Badge>
                           {resource.isFeatured && (
-                            <Star className="h-4 w-4 text-yellow-500 fill-current" />
+                            <Star className="h-4 w-4 fill-current" style={{ color: '#f1d02d' }} />
                           )}
                         </div>
                       </td>
@@ -701,7 +721,7 @@ export const ResourcesManagement: React.FC = () => {
               <DialogTitle>Eliminar Recurso</DialogTitle>
             </DialogHeader>
             <div className="space-y-4">
-              <p>¿Estás seguro de que quieres eliminar el recurso "{deletingResource.title}"?</p>
+              <p>¿Estás seguro de que quieres eliminar el recurso &quot;{deletingResource.title}&quot;?</p>
               <p className="text-sm text-text-secondary-light dark:text-text-secondary-dark">
                 Esta acción no se puede deshacer.
               </p>
@@ -1036,7 +1056,7 @@ const CreateResourceForm: React.FC<{ onSuccess: () => void }> = ({ onSuccess }) 
 
         <div>
           <label className="block text-sm font-medium mb-2">Subcategoría</label>
-          <Select value={formData.subcategory} onValueChange={(value) => setFormData({ ...formData, subcategory: value as any })}>
+          <Select value={formData.subcategory} onValueChange={(value) => setFormData({ ...formData, subcategory: value as 'VIDEOS' | 'AUDIOS' | 'INVESTIGATIONS' | 'METHODOLOGICAL_RESOURCES' | 'SYSTEMATIZATION_DOCUMENTS' | 'none' })}>
             <SelectTrigger>
               <SelectValue placeholder="Seleccionar subcategoría" />
             </SelectTrigger>
@@ -1494,7 +1514,7 @@ const EditResourceForm: React.FC<{
       }
 
       // Solo actualizar fileUrl si hay cambios
-      const updateData: any = {
+      const updateData: Partial<Resource> & { fileUrl?: string; thumbnailUrl?: string } = {
         ...formData,
         thumbnailUrl: finalThumbnailUrl || undefined,
         subcategory: formData.subcategory === 'none' ? undefined : formData.subcategory,
@@ -1502,7 +1522,7 @@ const EditResourceForm: React.FC<{
 
       // Solo incluir fileUrl si hay un cambio (nuevo archivo, nueva URL, o se marcó para eliminar)
       if (selectedFile || (fileMarkedForDeletion && formData.fileUrl) || (formData.fileUrl && formData.fileUrl !== resource.fileUrl)) {
-        updateData.fileUrl = finalFileUrl;
+        updateData.fileUrl = finalFileUrl || undefined;
       }
 
       const response = await fetch(`/api/resources/${resource.id}`, {
@@ -1580,7 +1600,7 @@ const EditResourceForm: React.FC<{
 
         <div>
           <label className="block text-sm font-medium mb-2">Subcategoría</label>
-          <Select value={formData.subcategory} onValueChange={(value) => setFormData({ ...formData, subcategory: value as any })}>
+          <Select value={formData.subcategory} onValueChange={(value) => setFormData({ ...formData, subcategory: value as 'VIDEOS' | 'AUDIOS' | 'INVESTIGATIONS' | 'METHODOLOGICAL_RESOURCES' | 'SYSTEMATIZATION_DOCUMENTS' | 'none' })}>
             <SelectTrigger>
               <SelectValue placeholder="Seleccionar subcategoría" />
             </SelectTrigger>

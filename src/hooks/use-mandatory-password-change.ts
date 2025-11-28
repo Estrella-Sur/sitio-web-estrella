@@ -34,7 +34,7 @@ export function useMandatoryPasswordChange(): MandatoryPasswordChangeState {
 
     if (session?.user) {
       // Verificar si el usuario necesita cambiar su contraseña
-      const needsChange = (session.user as any)?.mustChangePassword === true
+      const needsChange = (session.user as { mustChangePassword?: boolean })?.mustChangePassword === true
       
       setState({
         needsPasswordChange: needsChange,

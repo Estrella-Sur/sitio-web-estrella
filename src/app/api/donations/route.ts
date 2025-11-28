@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { PrismaClient } from '@prisma/client';
+import { PrismaClient, Prisma, DonationStatus, DonationType } from '@prisma/client';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth';
 
@@ -84,15 +84,15 @@ export async function GET(request: NextRequest) {
     const limit = parseInt(searchParams.get('limit') || '10');
     const skip = (page - 1) * limit;
 
-    const where: any = {};
+    const where: Prisma.DonationWhereInput = {};
     if (status) {
-      where.status = status.toUpperCase();
+      where.status = status.toUpperCase() as DonationStatus;
     }
     if (donationProjectId) {
       where.donationProjectId = donationProjectId;
     }
     if (donationType) {
-      where.donationType = donationType.toUpperCase();
+      where.donationType = donationType.toUpperCase() as DonationType;
     }
 
     const [donations, total] = await Promise.all([

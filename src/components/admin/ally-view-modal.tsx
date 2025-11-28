@@ -4,9 +4,8 @@ import React from 'react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
 import Image from 'next/image';
-import { Calendar, User, ExternalLink } from 'lucide-react';
+import { Calendar, User } from 'lucide-react';
 
 interface Ally {
   id: string;
@@ -57,7 +56,7 @@ export function AllyViewModal({ ally, isOpen, onClose }: AllyViewModalProps) {
               {ally.status === 'ACTIVE' ? 'Activo' : 'Inactivo'}
             </Badge>
             {ally.isFeatured && (
-              <Badge variant="outline" className="text-yellow-600 border-yellow-600">
+              <Badge variant="outline" style={{ color: '#f1d02d', borderColor: '#f1d02d' }}>
                 Destacado
               </Badge>
             )}

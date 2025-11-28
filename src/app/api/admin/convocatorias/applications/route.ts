@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth';
+import { Prisma, ApplicationStatus } from '@prisma/client';
 
 export async function GET(request: NextRequest) {
   try {
@@ -21,19 +22,19 @@ export async function GET(request: NextRequest) {
 
     const skip = (page - 1) * limit;
 
-    const where: any = {};
+    const where: Prisma.ConvocatoriaApplicationWhereInput = {};
 
     if (convocatoriaId) {
       where.convocatoriaId = convocatoriaId;
     }
 
     if (status) {
-      where.status = status;
+      where.status = status as ApplicationStatus;
     }
 
     // Filtro por año y mes
     if (year || month) {
-      const dateFilter: any = {};
+      const dateFilter: Prisma.DateTimeFilter = {};
       
       if (year) {
         const yearInt = parseInt(year);

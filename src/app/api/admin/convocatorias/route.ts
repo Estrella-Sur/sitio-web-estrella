@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth';
+import { Prisma, ConvocatoriaStatus } from '@prisma/client';
 
 export async function GET(request: NextRequest) {
   try {
@@ -22,11 +23,11 @@ export async function GET(request: NextRequest) {
 
     const skip = (page - 1) * limit;
 
-    const where: any = {};
+    const where: Prisma.ConvocatoriaWhereInput = {};
 
     // Filtro por estado
     if (status && status !== 'ALL') {
-      where.status = status;
+      where.status = status as ConvocatoriaStatus;
     }
 
     // Filtro por activo/inactivo
@@ -36,14 +37,14 @@ export async function GET(request: NextRequest) {
 
     if (search) {
       where.OR = [
-        { title: { contains: search, mode: 'insensitive' } },
-        { description: { contains: search, mode: 'insensitive' } },
-        { fullDescription: { contains: search, mode: 'insensitive' } },
+        { title: { contains: search, mode: 'insensitive' as const } },
+        { description: { contains: search, mode: 'insensitive' as const } },
+        { fullDescription: { contains: search, mode: 'insensitive' as const } },
       ];
     }
 
     // Configurar ordenamiento
-    const orderBy: any = {};
+    const orderBy: Prisma.ConvocatoriaOrderByWithRelationInput = {};
     if (sortBy === 'title') {
       orderBy.title = sortOrder;
     } else if (sortBy === 'startDate') {
@@ -107,7 +108,6 @@ export async function POST(request: NextRequest) {
       title,
       description,
       fullDescription,
-      content,
       requirements,
       imageUrl,
       imageAlt,

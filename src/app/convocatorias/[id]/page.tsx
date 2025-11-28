@@ -19,7 +19,7 @@ interface Convocatoria {
   startDate: string;
   endDate: string;
   status: 'active' | 'upcoming' | 'closed';
-  requirements: any; // JSON field
+  requirements: unknown; // JSON field
   documents: Array<string | { url: string; originalName: string }>; // Puede ser string (formato antiguo) o objeto (formato nuevo)
   createdAt: string;
   fullDescription: string;
@@ -113,7 +113,7 @@ export default function ConvocatoriaDetailPage({ params }: { params: Promise<{ i
   const getStatusBadge = (status: string) => {
     switch (status) {
       case 'active':
-        return <Badge className="bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200">Activa</Badge>;
+        return <Badge className="bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200">Activa</Badge>;
       case 'upcoming':
         return <Badge className="bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200">Próxima</Badge>;
       case 'closed':
@@ -388,14 +388,19 @@ export default function ConvocatoriaDetailPage({ params }: { params: Promise<{ i
               </CardHeader>
               <CardContent>
                 <ul className="space-y-2">
-                    {convocatoria.requirements.map((requirement: any, index: number) => (
-                    <li key={index} className="flex items-start gap-3">
-                      <div className="w-2 h-2 bg-primary rounded-full mt-2 flex-shrink-0"></div>
-                      <span className="text-text-secondary-light dark:text-text-secondary-dark">
-                          {typeof requirement === 'object' ? requirement.text : requirement}
-                      </span>
-                    </li>
-                  ))}
+                    {Array.isArray(convocatoria.requirements) && convocatoria.requirements.map((requirement: unknown, index: number) => {
+                      if (!requirement) return null;
+                      return (
+                        <li key={index} className="flex items-start gap-3">
+                          <div className="w-2 h-2 bg-primary rounded-full mt-2 flex-shrink-0"></div>
+                          <span className="text-text-secondary-light dark:text-text-secondary-dark">
+                            {typeof requirement === 'object' && requirement !== null && 'text' in requirement 
+                              ? (requirement as { text: string }).text 
+                              : String(requirement)}
+                          </span>
+                        </li>
+                      );
+                    })}
                 </ul>
               </CardContent>
             </Card>
@@ -409,11 +414,15 @@ export default function ConvocatoriaDetailPage({ params }: { params: Promise<{ i
               </CardHeader>
               <CardContent>
                 <div className="space-y-3">
-                  {convocatoria.documents.map((doc: any, index: number) => {
+                  {convocatoria.documents.map((doc: unknown, index: number) => {
                     // Manejar tanto formato antiguo (string) como nuevo (objeto)
-                    const docUrl = typeof doc === 'string' ? doc : (doc.url || doc);
-                    const fileName = typeof doc === 'object' && doc.originalName 
-                      ? doc.originalName 
+                    const docUrl = typeof doc === 'string' 
+                      ? doc 
+                      : (typeof doc === 'object' && doc !== null && 'url' in doc 
+                          ? (doc as { url: string }).url 
+                          : String(doc));
+                    const fileName = typeof doc === 'object' && doc !== null && 'originalName' in doc
+                      ? (doc as { originalName: string }).originalName 
                       : (typeof doc === 'string' ? doc.split('/').pop() : docUrl.split('/').pop() || `Documento ${index + 1}`);
                     const isPdf = docUrl.toLowerCase().includes('.pdf');
                     const isImage = docUrl.toLowerCase().match(/\.(jpg|jpeg|png|gif|webp)$/);

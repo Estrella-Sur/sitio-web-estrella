@@ -8,7 +8,7 @@ import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog';
-import { Plus, Search, Edit, Trash2, Eye, EyeOff, Calendar, Clock } from 'lucide-react';
+import { Plus, Search, Edit, Trash2, Calendar, Clock } from 'lucide-react';
 import { toast } from 'sonner';
 import { CreateConvocatoriaDialog } from './create-convocatoria-dialog';
 import { EditConvocatoriaDialog } from './edit-convocatoria-dialog';
@@ -23,8 +23,8 @@ interface Convocatoria {
   imageAlt?: string;
   startDate: string;
   endDate: string;
-  requirements: any[];
-  documents: any[];
+  requirements: Array<{ id?: string; title: string; description?: string }>;
+  documents: Array<{ id?: string; name: string; url: string }>;
   status: 'DRAFT' | 'ACTIVE' | 'UPCOMING' | 'CLOSED';
   isActive: boolean;
   isFeatured: boolean;
@@ -46,8 +46,8 @@ export function ConvocatoriasManagement() {
   const [searchInput, setSearchInput] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
   const [statusFilter, setStatusFilter] = useState('ALL');
-  const [sortBy, setSortBy] = useState('createdAt');
-  const [sortOrder, setSortOrder] = useState('desc');
+  const [sortBy] = useState('createdAt');
+  const [sortOrder] = useState('desc');
   const [selectedConvocatorias, setSelectedConvocatorias] = useState<string[]>([]);
   const [isCreateOpen, setIsCreateOpen] = useState(false);
   const [editingConvocatoria, setEditingConvocatoria] = useState<Convocatoria | null>(null);
@@ -140,13 +140,13 @@ export function ConvocatoriasManagement() {
   const getStatusBadge = (status: string) => {
     switch (status) {
       case 'ACTIVE':
-        return <Badge className="bg-green-500 text-white">Activa</Badge>;
+        return <Badge className="text-white" style={{ backgroundColor: '#006a86' }}>Activa</Badge>;
       case 'UPCOMING':
-        return <Badge className="bg-blue-500 text-white">Próxima</Badge>;
+        return <Badge className="text-white" style={{ backgroundColor: '#99b944' }}>Próxima</Badge>;
       case 'CLOSED':
-        return <Badge className="bg-gray-500 text-white">Cerrada</Badge>;
+        return <Badge className="text-white" style={{ backgroundColor: '#0d6f3c' }}>Cerrada</Badge>;
       case 'DRAFT':
-        return <Badge className="bg-yellow-500 text-white">Borrador</Badge>;
+        return <Badge className="text-white" style={{ backgroundColor: '#f1d02d' }}>Borrador</Badge>;
       default:
         return <Badge>{status}</Badge>;
     }
@@ -841,7 +841,7 @@ export function ConvocatoriasManagement() {
             <div className="py-4">
               <p className="text-sm text-gray-600">
                 ¿Estás seguro de que quieres cambiar el estado de 
-                <strong> "{changingStatus.convocatoria.title}"</strong>?
+                <strong> &quot;{changingStatus.convocatoria.title}&quot;</strong>?
               </p>
               <p className="text-sm text-gray-500 mt-2">
                 Estado actual: <strong>{getStatusText(changingStatus.convocatoria.status)}</strong>

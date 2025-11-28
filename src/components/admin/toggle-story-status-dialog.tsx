@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { Button } from '@/components/ui/button'
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger, DialogFooter } from '@/components/ui/dialog'
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, DialogFooter } from '@/components/ui/dialog'
 import { useToast } from '@/components/ui/use-toast'
 
 interface ToggleStoryStatusDialogProps {
@@ -78,7 +78,7 @@ export function ToggleStoryStatusDialog({ story, onStatusChanged, children }: To
         <div className="py-4">
           <p className="text-sm text-gray-600">
             ¿Estás seguro de que quieres {actionText} la historia 
-            <strong> "{story.title}"</strong>?
+            <strong> &quot;{story.title}&quot;</strong>?
           </p>
           {isCurrentlyActive && (
             <p className="text-sm text-gray-500 mt-2">

@@ -27,7 +27,7 @@ export const Hero: React.FC = () => {
             <div className="max-w-4xl text-center">
               {/* Título principal */}
               <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-white leading-tight mb-6 font-condensed">
-                <span className="font-black text-blue-400">ESTRELLA DEL SUR</span><br/>
+                <span className="font-black text-white">ESTRELLA DEL SUR</span><br/>
                 <span className="font-black">ILUMINANDO</span> vidas,<br/>
                 <span className="font-black">PROTEGIENDO</span> sueños.
               </h1>

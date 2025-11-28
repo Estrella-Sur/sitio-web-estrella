@@ -9,7 +9,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Switch } from '@/components/ui/switch';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Badge } from '@/components/ui/badge';
-import { X, Save, Plus, FileText, Calendar, Target, Users, BookOpen, Award, Globe, Edit, Upload, ImageIcon } from 'lucide-react';
+import { Save, Plus, FileText, Calendar, Target, Award, Edit, ImageIcon } from 'lucide-react';
 import { useToast } from '@/components/ui/use-toast';
 import Image from 'next/image';
 
@@ -33,7 +33,7 @@ interface Programa {
 interface ProgramasFormProps {
   programa?: Programa | null;
   onClose: () => void;
-  onProgramaCreated?: (programa: any) => void;
+  onProgramaCreated?: (programa: Programa) => void;
 }
 
 export function ProgramasForm({ programa, onClose, onProgramaCreated }: ProgramasFormProps) {
@@ -55,7 +55,7 @@ export function ProgramasForm({ programa, onClose, onProgramaCreated }: Programa
   const [loading, setLoading] = useState(false);
   const [uploading, setUploading] = useState(false);
   const [showSuccessDialog, setShowSuccessDialog] = useState(false);
-  const [createdPrograma, setCreatedPrograma] = useState<any>(null);
+  const [createdPrograma, setCreatedPrograma] = useState<Programa | null>(null);
   const [imageMarkedForDeletion, setImageMarkedForDeletion] = useState(false);
   const [selectedImageFile, setSelectedImageFile] = useState<File | null>(null);
   const [imagePreviewUrl, setImagePreviewUrl] = useState<string>('');
@@ -291,7 +291,7 @@ export function ProgramasForm({ programa, onClose, onProgramaCreated }: Programa
       const maxMb = Number(process.env.NEXT_PUBLIC_MAX_UPLOAD_MB || process.env.MAX_UPLOAD_MB || 20);
       const maxBytes = maxMb * 1024 * 1024;
       const allowed = ['image/jpeg', 'image/png', 'image/webp', 'image/gif'];
-      if (!allowed.includes((file as any).type)) {
+      if (!allowed.includes(file.type)) {
         toast({
           title: "Error",
           description: "Formato no permitido. Usa JPG, PNG, WEBP o GIF",
@@ -299,7 +299,7 @@ export function ProgramasForm({ programa, onClose, onProgramaCreated }: Programa
         });
         return;
       }
-      if ((file as any).size > maxBytes) {
+      if (file.size > maxBytes) {
         toast({
           title: "Error",
           description: `El archivo es demasiado grande. Máximo ${maxMb}MB`,
@@ -316,7 +316,7 @@ export function ProgramasForm({ programa, onClose, onProgramaCreated }: Programa
         setSelectedImageFile(file);
         setFormData(prev => ({
           ...prev,
-          imageAlt: (file as any).name,
+          imageAlt: file.name,
         }));
         setImageMarkedForDeletion(false); // Si se selecciona una nueva imagen, ya no está marcada para eliminar
       };
@@ -597,7 +597,7 @@ export function ProgramasForm({ programa, onClose, onProgramaCreated }: Programa
       <Dialog open={showSuccessDialog} onOpenChange={setShowSuccessDialog}>
         <DialogContent className="max-w-md">
           <DialogHeader>
-            <DialogTitle className="flex items-center gap-2 text-green-600">
+            <DialogTitle className="flex items-center gap-2 text-blue-600">
               <Award className="h-5 w-5" />
               ¡Programa Creado Exitosamente!
             </DialogTitle>
@@ -607,19 +607,15 @@ export function ProgramasForm({ programa, onClose, onProgramaCreated }: Programa
           </DialogHeader>
           
           <div className="space-y-4">
-            <div className="bg-green-50 border border-green-200 rounded-lg p-4">
+            <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
               <div className="flex items-center gap-2 mb-2">
-                <Badge variant="outline" className="text-green-700 border-green-300">
-                  <Calendar className="mr-1 h-3 w-3" />
-                  {createdPrograma?.createdAt}
-                </Badge>
                 {createdPrograma?.isFeatured && (
                   <Badge variant="secondary" className="bg-yellow-100 text-yellow-800">
                     Destacado
                   </Badge>
                 )}
               </div>
-              <div className="text-sm text-green-700">
+              <div className="text-sm text-blue-700">
                 <p><strong>Nombre:</strong> {createdPrograma?.sectorName}</p>
                 <p><strong>ID:</strong> {createdPrograma?.id}</p>
                 <p><strong>Estado:</strong> {createdPrograma?.isActive ? 'Activo' : 'Inactivo'}</p>

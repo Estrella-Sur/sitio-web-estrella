@@ -1,12 +1,11 @@
 'use client'
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
@@ -15,13 +14,7 @@ import {
   XCircle, 
   Clock, 
   DollarSign, 
-  User, 
-  Mail, 
-  Phone, 
-  MapPin, 
-  MessageSquare,
   Eye,
-  Upload,
   Calendar,
   Target,
   TrendingUp,
@@ -83,23 +76,15 @@ interface DonationProject {
 export default function DonationsAdminPage() {
   const [donations, setDonations] = useState<Donation[]>([]);
   const [donationProjects, setDonationProjects] = useState<DonationProject[]>([]);
-  const [loading, setLoading] = useState(true);
   const [selectedDonation, setSelectedDonation] = useState<Donation | null>(null);
-  const [selectedProject, setSelectedProject] = useState<DonationProject | null>(null);
   const [statusFilter, setStatusFilter] = useState('all');
   const [isApprovalDialogOpen, setIsApprovalDialogOpen] = useState(false);
-  const [isProjectDialogOpen, setIsProjectDialogOpen] = useState(false);
   const [uploading, setUploading] = useState(false);
   const [selectedImageFile, setSelectedImageFile] = useState<File | null>(null);
   const [imagePreviewUrl, setImagePreviewUrl] = useState<string>('');
   const { toast } = useToast();
 
-  useEffect(() => {
-    fetchDonations();
-    fetchDonationProjects();
-  }, [statusFilter]);
-
-  const fetchDonations = async () => {
+  const fetchDonations = useCallback(async () => {
     try {
       const params = new URLSearchParams();
       if (statusFilter !== 'all') {
@@ -119,9 +104,9 @@ export default function DonationsAdminPage() {
         variant: 'destructive',
       });
     }
-  };
+  }, [statusFilter, toast]);
 
-  const fetchDonationProjects = async () => {
+  const fetchDonationProjects = useCallback(async () => {
     try {
       const response = await fetch('/api/donation-projects');
       if (response.ok) {
@@ -136,7 +121,12 @@ export default function DonationsAdminPage() {
         variant: 'destructive',
       });
     }
-  };
+  }, [toast]);
+
+  useEffect(() => {
+    fetchDonations();
+    fetchDonationProjects();
+  }, [fetchDonations, fetchDonationProjects]);
 
   const handleFileUpload = async (file: File) => {
     try {
@@ -260,7 +250,7 @@ export default function DonationsAdminPage() {
   const getStatusBadge = (status: string) => {
     const statusConfig = {
       PENDING: { color: 'bg-yellow-100 text-yellow-800', icon: Clock, text: 'Pendiente' },
-      APPROVED: { color: 'bg-green-100 text-green-800', icon: CheckCircle, text: 'Aprobada' },
+      APPROVED: { color: 'bg-blue-100 text-blue-800', icon: CheckCircle, text: 'Aprobada' },
       REJECTED: { color: 'bg-red-100 text-red-800', icon: XCircle, text: 'Rechazada' },
       CANCELLED: { color: 'bg-gray-100 text-gray-800', icon: XCircle, text: 'Cancelada' }
     };
@@ -372,7 +362,7 @@ export default function DonationsAdminPage() {
                               setSelectedDonation(donation);
                               setIsApprovalDialogOpen(true);
                             }}
-                            className="bg-green-600 hover:bg-green-700"
+                            className="bg-blue-600 hover:bg-blue-700"
                             size="sm"
                           >
                             <CheckCircle className="w-4 h-4 mr-2" />
@@ -627,7 +617,7 @@ export default function DonationsAdminPage() {
             <div className="flex gap-2 pt-4">
               <Button
                 onClick={() => handleDonationStatusChange(selectedDonation?.id || '', 'APPROVED')}
-                className="bg-green-600 hover:bg-green-700"
+                className="bg-blue-600 hover:bg-blue-700"
                 disabled={!selectedImageFile || uploading}
               >
                 <CheckCircle className="w-4 h-4 mr-2" />

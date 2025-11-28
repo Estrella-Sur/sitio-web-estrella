@@ -9,11 +9,11 @@ import { hashPassword } from '@/lib/security'
 export const POST = withSimpleAuth(async (request: NextRequest) => {
   try {
     const { newPassword } = await request.json()
-    const userId = (request as any).user?.id
+    const userId = (request as NextRequest & { user?: { id: string; email?: string } }).user?.id
 
     console.log('🔐 Cambio de contraseña obligatorio iniciado')
     console.log('   User ID:', userId)
-    console.log('   User Email:', (request as any).user?.email)
+    console.log('   User Email:', (request as NextRequest & { user?: { id: string; email?: string } }).user?.email)
 
     if (!userId) {
       console.log('❌ No hay userId en la request')

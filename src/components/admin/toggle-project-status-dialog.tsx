@@ -5,7 +5,6 @@ import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, DialogFooter } from '@/components/ui/dialog';
 import { useToast } from '@/components/ui/use-toast';
 import { useSession } from 'next-auth/react';
-import { Eye, EyeOff } from 'lucide-react';
 
 interface Project {
   id: string;
@@ -99,7 +98,7 @@ export const ToggleProjectStatusDialog: React.FC<ToggleProjectStatusDialogProps>
         <div className="py-4">
           <p className="text-sm text-gray-600">
             ¿Estás seguro de que quieres {project.isActive ? 'desactivar' : 'activar'} el proyecto 
-            <strong> "{project.title}"</strong>?
+            <strong> &quot;{project.title}&quot;</strong>?
           </p>
           {project.isActive && (
             <p className="text-sm text-gray-500 mt-2">

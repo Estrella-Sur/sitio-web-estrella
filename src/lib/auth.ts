@@ -24,7 +24,7 @@ export const authOptions: NextAuthOptions = {
           // Buscar usuario
           const user = await prisma.user.findUnique({
             where: { email: credentials.email.toLowerCase() }
-          }) as any
+          })
 
           if (!user) {
             return null
@@ -47,7 +47,7 @@ export const authOptions: NextAuthOptions = {
           // Actualizar último login
           await prisma.user.update({
             where: { id: user.id },
-            data: { lastLoginAt: new Date() } as any
+            data: { lastLoginAt: new Date() }
           })
 
           return {

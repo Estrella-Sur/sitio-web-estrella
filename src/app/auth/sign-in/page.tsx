@@ -46,7 +46,7 @@ function SignInForm() {
       } else if (result?.ok) {
         router.push('/dashboard')
       }
-    } catch (error) {
+    } catch (_error) {
       setError('Error de conexión. Inténtalo de nuevo.')
     } finally {
       setIsLoading(false)
@@ -131,7 +131,7 @@ function SignInForm() {
           {error && (
             <div className={`px-4 py-3 rounded-md text-sm ${
               error.includes('exitosamente') 
-                ? 'bg-green-50 border border-green-200 text-green-600'
+                ? 'bg-blue-50 border border-blue-200 text-blue-600'
                 : 'bg-red-50 border border-red-200 text-red-600'
             }`}>
               {error}

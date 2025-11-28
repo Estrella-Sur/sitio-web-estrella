@@ -7,13 +7,29 @@ import { Badge } from '@/components/ui/badge'
 import { Star, StarOff, Video } from 'lucide-react'
 import { useToast } from '@/components/ui/use-toast'
 
-interface ToggleVideoTestimonialFeaturedDialogProps {
-  video: {
+interface VideoTestimonial {
+  id: string
+  title: string
+  description: string
+  youtubeUrl: string
+  thumbnailUrl?: string
+  duration?: number
+  isActive: boolean
+  isFeatured: boolean
+  createdAt: string
+  updatedAt: string
+  createdBy?: string
+  creator?: {
     id: string
-    title: string
-    isFeatured: boolean
+    name: string
+    email: string
+    role: string
   }
-  onVideoUpdated: (updatedVideo: any) => void
+}
+
+interface ToggleVideoTestimonialFeaturedDialogProps {
+  video: VideoTestimonial
+  onVideoUpdated: (updatedVideo: VideoTestimonial) => void
   children: React.ReactNode
 }
 
@@ -77,7 +93,7 @@ export function ToggleVideoTestimonialFeaturedDialog({ video, onVideoUpdated, ch
             {video.isFeatured ? 'Quitar Destacado' : 'Destacar'} Video Testimonial
           </DialogTitle>
           <DialogDescription>
-            ¿Estás seguro de que quieres {video.isFeatured ? 'quitar el destacado de' : 'destacar'} el video testimonial <strong>"{video.title}"</strong>?
+            ¿Estás seguro de que quieres {video.isFeatured ? 'quitar el destacado de' : 'destacar'} el video testimonial <strong>&quot;{video.title}&quot;</strong>?
           </DialogDescription>
         </DialogHeader>
 

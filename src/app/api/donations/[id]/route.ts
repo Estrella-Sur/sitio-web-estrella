@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { PrismaClient } from '@prisma/client';
+import { PrismaClient, Prisma } from '@prisma/client';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth';
 import { checkAndUpdateProjectCompletion } from '@/lib/donation-utils';
@@ -180,10 +180,10 @@ export async function PATCH(request: NextRequest) {
     }
 
     // Preparar datos para actualizar la donación
-    const updateData: any = {
+    const updateData: Prisma.DonationUpdateInput = {
       status,
-      approvedBy: status === 'APPROVED' ? session.user.id : existingDonation.approvedBy,
-      approvedAt: status === 'APPROVED' ? new Date() : existingDonation.approvedAt,
+      ...(status === 'APPROVED' && { approvedBy: session.user.id }),
+      ...(status === 'APPROVED' && { approvedAt: new Date() }),
     };
 
     // Si se está aprobando, usar la nueva imagen o mantener la existente
@@ -292,7 +292,7 @@ export async function DELETE(request: NextRequest, { params }: { params: Promise
 
     // Si la donación está aprobada y está asociada a un proyecto, revertir el monto
     if (existingDonation.status === 'APPROVED' && existingDonation.donationProject) {
-      const updatedProject = await prisma.donationProject.update({
+      await prisma.donationProject.update({
         where: { id: existingDonation.donationProject.id },
         data: {
           currentAmount: {
@@ -302,7 +302,7 @@ export async function DELETE(request: NextRequest, { params }: { params: Promise
       });
 
       // Verificar si el proyecto sigue completado
-      const wasCompleted = await checkAndUpdateProjectCompletion(existingDonation.donationProject.id);
+      await checkAndUpdateProjectCompletion(existingDonation.donationProject.id);
       
       // Actualizar la meta anual
       await updateAnnualGoalAmount();

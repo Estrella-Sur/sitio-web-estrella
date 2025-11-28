@@ -1,8 +1,7 @@
 "use client"
 
 import React, { useState } from 'react'
-import { useRouter } from 'next/navigation'
-import { getSession, signIn, signOut } from 'next-auth/react'
+import { getSession } from 'next-auth/react'
 import { MandatoryPasswordChangeModal } from './mandatory-password-change-modal'
 import { useMandatoryPasswordChange } from '@/hooks/use-mandatory-password-change'
 
@@ -13,7 +12,6 @@ interface MandatoryPasswordChangeWrapperProps {
 export function MandatoryPasswordChangeWrapper({ children }: MandatoryPasswordChangeWrapperProps) {
   const { needsPasswordChange, isLoading, userName } = useMandatoryPasswordChange()
   const [showModal, setShowModal] = useState(false)
-  const router = useRouter()
 
   // Mostrar el modal cuando el usuario necesita cambiar su contraseña
   React.useEffect(() => {
@@ -35,7 +33,7 @@ export function MandatoryPasswordChangeWrapper({ children }: MandatoryPasswordCh
       if (refreshResponse.ok) {
         await getSession()
       }
-    } catch (error) {
+    } catch (_error) {
       // Error silencioso - el usuario puede continuar
     }
     

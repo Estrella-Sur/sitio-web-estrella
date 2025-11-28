@@ -11,12 +11,12 @@ export function SiteFooter() {
   const [termsOpen, setTermsOpen] = useState(false);
 
   return (
-    <footer className="bg-gray-900 text-white py-12">
+    <footer className="bg-[hsl(var(--color-dark))] text-white py-12">
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {/* Información de la organización */}
           <div className="space-y-4">
-            <h3 className="text-xl font-bold">Estrella del Sur</h3>
+            <h3 className="text-xl font-heading font-bold">Estrella del Sur</h3>
             <p className="text-gray-300 text-sm">
               Trabajamos para cambiar vidas y crear un futuro mejor para los niños y sus comunidades.
             </p>
@@ -32,7 +32,7 @@ export function SiteFooter() {
 
           {/* Enlaces principales */}
           <div className="space-y-4">
-            <h4 className="text-lg font-semibold">Navegación</h4>
+            <h4 className="text-lg font-heading font-semibold">Navegación</h4>
             <div className="space-y-2">
               <Link href="/" className="block text-gray-300 hover:text-white transition-colors">
                 Inicio
@@ -54,7 +54,7 @@ export function SiteFooter() {
 
           {/* Impacto destacado */}
           <div className="space-y-4">
-            <h4 className="text-lg font-semibold">Nuestro Impacto</h4>
+            <h4 className="text-lg font-heading font-semibold">Nuestro Impacto</h4>
             <div className="space-y-2">
               <Link href="/programas" className="block text-gray-300 hover:text-white transition-colors">
                 Programas
@@ -70,7 +70,7 @@ export function SiteFooter() {
 
           {/* Información de contacto */}
           <div className="space-y-4">
-            <h4 className="text-lg font-semibold">Contacto</h4>
+            <h4 className="text-lg font-heading font-semibold">Contacto</h4>
             <div className="space-y-2 text-gray-300 text-sm">
               <p className="flex items-center gap-2">
                 <Mail className="h-4 w-4" />
@@ -78,11 +78,11 @@ export function SiteFooter() {
               </p>
             </div>
             <div className="space-y-2">
-              <Link href="/contacto" className="block text-gray-300 hover:text-white transition-colors">
+              <Link href="/contacto" className="block text-gray-300 hover:text-[hsl(var(--color-accent))] transition-colors">
                 <MessageCircle className="inline h-4 w-4 mr-2" />
                 Escríbenos
               </Link>
-              <Link href="/convocatorias" className="block text-gray-300 hover:text-white transition-colors">
+              <Link href="/convocatorias" className="block text-gray-300 hover:text-[hsl(var(--color-accent))] transition-colors">
                 <Users className="inline h-4 w-4 mr-2" />
                 Únete a nuestro equipo
               </Link>
@@ -91,7 +91,7 @@ export function SiteFooter() {
         </div>
 
         {/* Línea divisoria y copyright */}
-        <div className="border-t border-gray-700 mt-8 pt-8">
+        <div className="border-t border-white/20 mt-8 pt-8">
           <div className="flex flex-col md:flex-row justify-between items-center">
             <p className="text-gray-400 text-sm">
               © 2025 Estrella del Sur. Todos los derechos reservados.
@@ -99,13 +99,13 @@ export function SiteFooter() {
             <div className="flex space-x-6 mt-4 md:mt-0">
               <button
                 onClick={() => setPrivacyOpen(true)}
-                className="text-gray-400 hover:text-white text-sm transition-colors cursor-pointer"
+                className="text-gray-400 hover:text-[hsl(var(--color-accent))] text-sm transition-colors cursor-pointer"
               >
                 Política de Privacidad
               </button>
               <button
                 onClick={() => setTermsOpen(true)}
-                className="text-gray-400 hover:text-white text-sm transition-colors cursor-pointer"
+                className="text-gray-400 hover:text-[hsl(var(--color-accent))] text-sm transition-colors cursor-pointer"
               >
                 Términos de Uso
               </button>
@@ -118,7 +118,7 @@ export function SiteFooter() {
       <Dialog open={privacyOpen} onOpenChange={setPrivacyOpen}>
         <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
           <DialogHeader>
-            <DialogTitle className="text-2xl font-bold">Política de Privacidad</DialogTitle>
+            <DialogTitle className="text-2xl font-heading font-bold">Política de Privacidad</DialogTitle>
           </DialogHeader>
           <div className="space-y-4 text-gray-700 dark:text-gray-300">
             <p className="text-sm leading-relaxed">
@@ -156,7 +156,7 @@ export function SiteFooter() {
       <Dialog open={termsOpen} onOpenChange={setTermsOpen}>
         <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
           <DialogHeader>
-            <DialogTitle className="text-2xl font-bold">Términos de Uso</DialogTitle>
+            <DialogTitle className="text-2xl font-heading font-bold">Términos de Uso</DialogTitle>
           </DialogHeader>
           <div className="space-y-6 text-gray-700 dark:text-gray-300">
             <p className="text-sm leading-relaxed">

@@ -3,9 +3,8 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
-import { Mail, MapPin, Phone, Clock, AlertTriangle, Send, ArrowRight, Check, Users, Shield, Heart, Upload, X, File, ImageIcon } from 'lucide-react';
+import { Mail, MapPin, Phone, Clock, AlertTriangle, Send, ArrowRight, Check, Upload, X, File, ImageIcon } from 'lucide-react';
 import Image from 'next/image';
-import Link from 'next/link';
 import { SiteHeader } from '@/components/layout/site-header';
 import { SiteFooter } from '@/components/layout/site-footer';
 import InteractiveMap from '@/components/maps/interactive-map';
@@ -265,38 +264,35 @@ export default function ContactoPage() {
       <SiteHeader />
       
       {/* Hero Section */}
-      <div className="relative min-h-screen flex items-center bg-hero">
+      <div className="relative min-h-screen flex items-start bg-hero">
         <div className="absolute inset-0 bg-black opacity-40 dark:opacity-60"></div>
-        <main className="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8 flex justify-center">
-          <div className="max-w-4xl text-white text-center">
+        <main className="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8 pt-8 md:pt-12 flex justify-center md:justify-start">
+          <div className="max-w-4xl text-white text-center md:text-left">
             <motion.div 
               className="mb-6"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 1.5, delay: 0.3 }}
             >
-              <span className="inline-block bg-orange-400 text-gray-900 text-sm font-bold uppercase px-4 py-2 tracking-wider rounded">
+              <span className="inline-block text-white text-xs font-bold uppercase px-3 py-1.5 tracking-wider rounded" style={{ backgroundColor: '#99b944' }}>
                 CONTACTO DIRECTO
               </span>
             </motion.div>
             <motion.h1 
-              className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-extrabold leading-tight text-white mb-6"
+              className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-7xl xl:text-8xl font-extrabold leading-tight text-white mb-6"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 2, delay: 0.6 }}
             >
-              ESTAMOS AQUÍ<br/>
-              PARA ESCUCHARTE<br/>
-              Y AYUDARTE
+              CONECTA CON NOSOTROS
             </motion.h1>
             <motion.p 
-              className="text-lg md:text-xl text-gray-200 max-w-3xl mx-auto mb-8"
+              className="text-lg md:text-xl text-gray-200 max-w-3xl mb-8"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 1.5, delay: 0.9 }}
             >
-              Tu voz es importante para nosotros. Ponte en contacto con nosotros a través de nuestras oficinas, 
-              formularios de contacto o nuestro canal de denuncias seguro.
+              Escríbenos o Visítanos si te interesa conocer más sobre Estrella del Sur, nuestros objetivos y explorar formas de colaborar o compartir tus ideas con nosotros.
             </motion.p>
             <motion.div 
               className="mt-8"
@@ -429,7 +425,7 @@ export default function ContactoPage() {
               viewport={{ once: true }}
             >
             <div className="flex items-center mb-4">
-              <div className="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center text-white text-sm font-bold mr-3">3</div>
+              <div className="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center text-white text-sm font-bold mr-3">3</div>
               <h2 className="text-lg font-semibold text-text-light dark:text-text-dark">Oficina de Villa Challacollo</h2>
             </div>
             <div className="space-y-2 text-sm">
@@ -748,8 +744,8 @@ export default function ContactoPage() {
                   {/* Botón de Envío - Ancho Completo */}
                   <div className="mt-8">
                     {submitStatus === 'idle' ? null : (
-                      <div className={`mb-4 p-4 rounded-md ${submitStatus === 'success' ? 'bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800' : 'bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800'}`}>
-                        <p className={`text-sm ${submitStatus === 'success' ? 'text-green-700 dark:text-green-300' : 'text-red-700 dark:text-red-300'}`}>
+                      <div className={`mb-4 p-4 rounded-md ${submitStatus === 'success' ? 'bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800' : 'bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800'}`}>
+                        <p className={`text-sm ${submitStatus === 'success' ? 'text-blue-700 dark:text-blue-300' : 'text-red-700 dark:text-red-300'}`}>
                           {submitMessage}
                         </p>
                       </div>
@@ -1045,8 +1041,8 @@ export default function ContactoPage() {
                   {/* Botón de Envío - Ancho Completo */}
                   <div className="mt-8">
                     {submitStatus === 'idle' ? null : (
-                      <div className={`mb-4 p-4 rounded-md ${submitStatus === 'success' ? 'bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800' : 'bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800'}`}>
-                        <p className={`text-sm ${submitStatus === 'success' ? 'text-green-700 dark:text-green-300' : 'text-red-700 dark:text-red-300'}`}>
+                      <div className={`mb-4 p-4 rounded-md ${submitStatus === 'success' ? 'bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800' : 'bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800'}`}>
+                        <p className={`text-sm ${submitStatus === 'success' ? 'text-blue-700 dark:text-blue-300' : 'text-red-700 dark:text-red-300'}`}>
                           {submitMessage}
                         </p>
                       </div>
@@ -1081,19 +1077,20 @@ export default function ContactoPage() {
                     </h3>
                     
                       {/* Imagen de la sección */}
-                      <div className="mb-6">
-                        <img 
+                      <div className="mb-6 relative w-full h-64">
+                        <Image 
                           src="/static-images/heroes/transparencia_hero.jpg" 
                           alt="Importancia de reportar irregularidades"
-                          className="w-full h-64 object-cover rounded-lg shadow-md"
+                          fill
+                          className="object-cover rounded-lg shadow-md"
                         />
                       </div>
                       
                       {/* Texto motivacional */}
                     <div className="mb-8">
                       <p className="text-text-light dark:text-text-dark italic text-center text-lg">
-                          "Tu voz es fundamental para mantener la integración y transparencia en nuestra organización. 
-                          Cada denuncia nos ayuda a mejorar y proteger a quienes más lo necesitan."
+                          &quot;Tu voz es fundamental para mantener la integración y transparencia en nuestra organización. 
+                          Cada denuncia nos ayuda a mejorar y proteger a quienes más lo necesitan.&quot;
                         </p>
                       </div>
                       
@@ -1140,7 +1137,7 @@ export default function ContactoPage() {
       </section>
 
       {/* Call to Action Section */}
-      <section className="py-20 bg-orange-500 dark:bg-orange-600 text-white dark:text-white relative overflow-hidden">
+      <section className="py-20 text-white dark:text-white relative overflow-hidden" style={{ backgroundColor: '#0d6f3c' }}>
         {/* Fondo decorativo */}
         <div className="absolute inset-0 opacity-10">
           <div className="absolute top-20 left-10 w-32 h-32 bg-white rounded-full blur-3xl"></div>
@@ -1151,7 +1148,7 @@ export default function ContactoPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="text-center mb-16">
             <motion.span 
-              className="inline-block bg-orange-200 text-orange-800 dark:bg-orange-300 dark:text-orange-900 text-xs font-semibold px-3 py-1 rounded-full mb-4 font-condensed"
+              className="inline-block bg-white/20 text-white text-xs font-semibold px-3 py-1 rounded-full mb-4 font-condensed"
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
               transition={{ duration: 0.6, delay: 0.2 }}
@@ -1186,7 +1183,7 @@ export default function ContactoPage() {
             transition={{ duration: 0.8, delay: 0.8 }}
             viewport={{ once: true }}
           >
-            <Button size="lg" className="bg-white text-orange-600 hover:bg-orange-50 font-bold font-condensed" asChild>
+            <Button size="lg" className="bg-white hover:bg-gray-100 font-bold font-condensed" style={{ color: '#0d6f3c' }} asChild>
               <a href="#oficinas">
                 VISITA NUESTRAS OFICINAS
                 <MapPin className="ml-2 h-5 w-5" />

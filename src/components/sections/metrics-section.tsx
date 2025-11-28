@@ -28,10 +28,11 @@ export default function MetricsSection() {
 
         {/* Número principal */}
         <div className="my-10">
-          <p className="text-6xl sm:text-7xl lg:text-8xl font-extrabold text-yellow-500 tracking-tighter">
+          <p className="text-6xl sm:text-7xl lg:text-8xl font-extrabold tracking-tighter" style={{ color: '#f1d02d' }}>
             <NumberTicker 
               value={7263} 
-              className="text-6xl sm:text-7xl lg:text-8xl font-extrabold text-yellow-500 tracking-tighter"
+              className="text-6xl sm:text-7xl lg:text-8xl font-extrabold tracking-tighter"
+              style={{ color: '#f1d02d' }}
               delay={0.5}
             />
           </p>

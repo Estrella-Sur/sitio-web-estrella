@@ -6,6 +6,7 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Play, ExternalLink, Newspaper, Image as ImageIcon, ArrowRight } from 'lucide-react';
 import Link from 'next/link';
+import Image from 'next/image';
 
 interface Programa {
   id: string;
@@ -102,10 +103,12 @@ export function ProgramasDestacadosSection() {
                     {/* Video Thumbnail */}
                     {youtubeId && (
                       <div className="aspect-video bg-gray-100 dark:bg-gray-800 rounded-lg overflow-hidden relative">
-                        <img
+                        <Image
                           src={`https://img.youtube.com/vi/${youtubeId}/maxresdefault.jpg`}
                           alt={`Video de ${programa.sectorName}`}
-                          className="w-full h-full object-cover"
+                          fill
+                          className="object-cover"
+                          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                         />
                         <div className="absolute inset-0 flex items-center justify-center">
                           <div className="bg-red-600 text-white rounded-full p-3 hover:bg-red-700 transition-colors cursor-pointer">

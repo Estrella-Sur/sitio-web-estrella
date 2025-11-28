@@ -274,10 +274,10 @@ export default function UsersPage() {
         <Card>
           <CardContent className="p-6">
             <div className="flex items-center">
-              <UserCheck className="h-4 w-4 text-green-600" />
+              <UserCheck className="h-4 w-4 text-blue-600" />
               <div className="ml-2">
                 <p className="text-sm font-medium text-muted-foreground">Activos</p>
-                <p className="text-2xl font-bold text-green-600">{activeUsers.length}</p>
+                <p className="text-2xl font-bold text-blue-600">{activeUsers.length}</p>
               </div>
             </div>
           </CardContent>
@@ -517,7 +517,7 @@ function UserList({
   onSelectAll,
   onToggleStatus,
   onDeleteUser,
-  onEditUser,
+  onEditUser: _onEditUser,
   onOpenEditModal,
   canEditUsers,
   canDeleteUsers,

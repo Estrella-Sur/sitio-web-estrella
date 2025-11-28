@@ -30,7 +30,7 @@ interface SelectedFile {
   uploadUrl?: string;
 }
 
-const areasOfInterest = [
+const _areasOfInterest = [
   {
     name: 'Educación y Desarrollo Infantil',
     description: 'Contribuye al desarrollo educativo de niños y niñas en comunidades vulnerables. Incluye apoyo escolar, actividades recreativas, desarrollo de habilidades y acompañamiento pedagógico.',
@@ -58,7 +58,7 @@ const interventionAreas = [
       'Simplificación de procesos manuales',
       'Gestión de información en sistemas digitales'
     ],
-    image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
+    image: '/static-images/sections/tarjeta_patrocinio.jpg'
   },
   {
     name: 'Protección Infantil',
@@ -70,7 +70,7 @@ const interventionAreas = [
       'Aplicar protocolos de salvaguarda',
       'Realizar diagnósticos socioeconómicos'
     ],
-    image: 'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
+    image: '/static-images/sections/tarjeta_proteccion.jpg'
   },
   {
     name: 'Medios de Vida',
@@ -82,7 +82,7 @@ const interventionAreas = [
       'Fortalecer educación financiera comunitaria',
       'Promover emprendimientos sostenibles'
     ],
-    image: 'https://images.unsplash.com/photo-1559757148-5c350d0d3c56?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
+    image: '/static-images/sections/tarjeta_medios_de_vida.jpg'
   },
   {
     name: 'Sostenibilidad Ambiental',
@@ -94,7 +94,7 @@ const interventionAreas = [
       'Desarrollar huertos y compostas',
       'Gestión ambiental y medios de vida sostenibles'
     ],
-    image: 'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
+    image: '/static-images/sections/tarjeta_sostenibilidad.jpg'
   },
   {
     name: 'Área de Tecnologías',
@@ -106,7 +106,7 @@ const interventionAreas = [
       'Brindar soporte técnico a equipos operativos',
       'Crear o sugerir nuevas herramientas digitales para optimizar procesos'
     ],
-    image: 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
+    image: '/static-images/sections/tarjeta_tecnologias.jpg'
   },
   {
     name: 'Área de Comunicaciones',
@@ -118,7 +118,7 @@ const interventionAreas = [
       'Gestionar campañas de comunicación interna y externa',
       'Redactar notas de prensa y reportes de impacto'
     ],
-    image: 'https://images.unsplash.com/photo-1552664730-d307ca884978?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
+    image: '/static-images/sections/tarjeta_comunicaciones.jpg'
   }
 ];
 
@@ -317,24 +317,32 @@ export default function VoluntariadosPage() {
       <SiteHeader />
       
       {/* Hero Section */}
-      <div className="relative min-h-screen flex items-center bg-hero">
+      <div className="relative min-h-screen flex items-start bg-hero">
         <div className="absolute inset-0 bg-black opacity-40 dark:opacity-60"></div>
-        <main className="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8 flex justify-center">
-          <div className="max-w-4xl text-white text-center">
+        <main className="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8 pt-8 md:pt-12 flex justify-center md:justify-start">
+          <div className="max-w-4xl text-white text-center md:text-left">
             <div className="mb-6">
-              <span className="inline-block bg-orange-400 text-gray-900 text-sm font-bold uppercase px-4 py-2 tracking-wider rounded">
+              <span className="inline-block text-white text-xs font-bold uppercase px-3 py-1.5 tracking-wider rounded" style={{ backgroundColor: '#99b944' }}>
                 Voluntariado/Pasantía
               </span>
             </div>
-            <h1 className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-extrabold leading-tight text-white mb-6">
+            <h1 className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-7xl xl:text-8xl font-extrabold leading-tight text-white mb-6">
               ÚNETE COMO<br/>
               VOLUNTARIO<br/>
               O PASANTE
             </h1>
-            <p className="text-lg md:text-xl text-gray-200 max-w-3xl mx-auto mb-8">
+            <p className="text-lg md:text-xl text-gray-200 max-w-3xl mb-8">
               Forma parte de nuestro equipo de voluntarios y pasantes que contribuye al desarrollo social de Bolivia. 
               Tu tiempo y dedicación pueden marcar la diferencia en las vidas de muchas personas.
             </p>
+            <div className="mt-8">
+              <a className="inline-flex items-center bg-primary text-white px-6 py-3 rounded-lg text-base font-bold hover:bg-primary/90 transition-all duration-300 shadow-lg hover:shadow-xl font-condensed" href="#formulario">
+                APLICA AHORA
+                <svg className="h-5 w-5 ml-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                  <path clipRule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" fillRule="evenodd"></path>
+                </svg>
+              </a>
+            </div>
           </div>
         </main>
       </div>
@@ -442,8 +450,8 @@ export default function VoluntariadosPage() {
           
             <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
               <div className="bg-card-light dark:bg-card-dark p-8 rounded-lg shadow-sm hover:shadow-lg transition-shadow duration-300">
-                <div className="flex items-center justify-center h-16 w-16 rounded-full bg-orange-100 dark:bg-orange-900 mb-6">
-                  <Users className="h-8 w-8 text-orange-500" />
+                <div className="flex items-center justify-center h-16 w-16 rounded-full mb-6" style={{ backgroundColor: 'rgba(0, 106, 134, 0.2)' }}>
+                  <Users className="h-8 w-8" style={{ color: '#006a86' }} />
                 </div>
                 <h3 className="text-xl font-bold mb-3 text-text-light dark:text-text-dark">SUPERVISIÓN</h3>
                 <p className="text-gray-600 dark:text-gray-400">
@@ -452,8 +460,8 @@ export default function VoluntariadosPage() {
               </div>
               
               <div className="bg-card-light dark:bg-card-dark p-8 rounded-lg shadow-sm hover:shadow-lg transition-shadow duration-300">
-                <div className="flex items-center justify-center h-16 w-16 rounded-full bg-green-100 dark:bg-green-900 mb-6">
-                  <Calendar className="h-8 w-8 text-green-500" />
+                <div className="flex items-center justify-center h-16 w-16 rounded-full mb-6" style={{ backgroundColor: 'rgba(153, 185, 68, 0.2)' }}>
+                  <Calendar className="h-8 w-8" style={{ color: '#99b944' }} />
                 </div>
                 <h3 className="text-xl font-bold mb-3 text-text-light dark:text-text-dark">CAPACITACIÓN</h3>
                 <p className="text-gray-600 dark:text-gray-400">
@@ -462,8 +470,8 @@ export default function VoluntariadosPage() {
               </div>
               
               <div className="bg-card-light dark:bg-card-dark p-8 rounded-lg shadow-sm hover:shadow-lg transition-shadow duration-300">
-                <div className="flex items-center justify-center h-16 w-16 rounded-full bg-blue-100 dark:bg-blue-900 mb-6">
-                  <Heart className="h-8 w-8 text-blue-500" />
+                <div className="flex items-center justify-center h-16 w-16 rounded-full mb-6" style={{ backgroundColor: 'rgba(13, 111, 60, 0.2)' }}>
+                  <Heart className="h-8 w-8" style={{ color: '#0d6f3c' }} />
                 </div>
                 <h3 className="text-xl font-bold mb-3 text-text-light dark:text-text-dark">FORMACIÓN</h3>
                 <p className="text-gray-600 dark:text-gray-400">
@@ -472,8 +480,8 @@ export default function VoluntariadosPage() {
               </div>
               
               <div className="bg-card-light dark:bg-card-dark p-8 rounded-lg shadow-sm hover:shadow-lg transition-shadow duration-300">
-                <div className="flex items-center justify-center h-16 w-16 rounded-full bg-purple-100 dark:bg-purple-900 mb-6">
-                  <Clock className="h-8 w-8 text-purple-500" />
+                <div className="flex items-center justify-center h-16 w-16 rounded-full mb-6" style={{ backgroundColor: 'rgba(241, 208, 45, 0.2)' }}>
+                  <Clock className="h-8 w-8" style={{ color: '#f1d02d' }} />
                 </div>
                 <h3 className="text-xl font-bold mb-3 text-text-light dark:text-text-dark">OPORTUNIDADES</h3>
                 <p className="text-gray-600 dark:text-gray-400">
@@ -482,8 +490,8 @@ export default function VoluntariadosPage() {
               </div>
               
               <div className="bg-card-light dark:bg-card-dark p-8 rounded-lg shadow-sm hover:shadow-lg transition-shadow duration-300">
-                <div className="flex items-center justify-center h-16 w-16 rounded-full bg-red-100 dark:bg-red-900 mb-6">
-                  <Users className="h-8 w-8 text-red-500" />
+                <div className="flex items-center justify-center h-16 w-16 rounded-full mb-6" style={{ backgroundColor: 'rgba(0, 106, 134, 0.2)' }}>
+                  <Users className="h-8 w-8" style={{ color: '#006a86' }} />
                 </div>
                 <h3 className="text-xl font-bold mb-3 text-text-light dark:text-text-dark">COLABORACIÓN</h3>
                 <p className="text-gray-600 dark:text-gray-400">
@@ -492,8 +500,8 @@ export default function VoluntariadosPage() {
               </div>
               
               <div className="bg-card-light dark:bg-card-dark p-8 rounded-lg shadow-sm hover:shadow-lg transition-shadow duration-300">
-                <div className="flex items-center justify-center h-16 w-16 rounded-full bg-yellow-100 dark:bg-yellow-900 mb-6">
-                  <Heart className="h-8 w-8 text-yellow-500" />
+                <div className="flex items-center justify-center h-16 w-16 rounded-full mb-6" style={{ backgroundColor: 'rgba(153, 185, 68, 0.2)' }}>
+                  <Heart className="h-8 w-8" style={{ color: '#99b944' }} />
                 </div>
                 <h3 className="text-xl font-bold mb-3 text-text-light dark:text-text-dark">CERTIFICACIÓN</h3>
                 <p className="text-gray-600 dark:text-gray-400">
@@ -522,8 +530,8 @@ export default function VoluntariadosPage() {
 
               <div className="mt-8 grid grid-cols-1 sm:grid-cols-3 gap-8">
                 <div className="bg-card-light dark:bg-card-dark p-8 rounded-lg shadow-sm hover:shadow-lg transition-shadow duration-300 text-center">
-                  <div className="flex items-center justify-center h-16 w-16 rounded-full bg-orange-100 dark:bg-orange-900 mb-6 mx-auto">
-                    <Calendar className="h-8 w-8 text-orange-500" />
+                  <div className="flex items-center justify-center h-16 w-16 rounded-full mb-6 mx-auto" style={{ backgroundColor: 'rgba(153, 185, 68, 0.2)' }}>
+                    <Calendar className="h-8 w-8" style={{ color: '#99b944' }} />
                   </div>
                   <h3 className="text-2xl font-bold mb-3 text-text-light dark:text-text-dark">6 MESES</h3>
                   <p className="text-gray-600 dark:text-gray-400">
@@ -532,8 +540,8 @@ export default function VoluntariadosPage() {
                 </div>
                 
                 <div className="bg-card-light dark:bg-card-dark p-8 rounded-lg shadow-sm hover:shadow-lg transition-shadow duration-300 text-center">
-                  <div className="flex items-center justify-center h-16 w-16 rounded-full bg-green-100 dark:bg-green-900 mb-6 mx-auto">
-                    <Clock className="h-8 w-8 text-green-500" />
+                  <div className="flex items-center justify-center h-16 w-16 rounded-full mb-6 mx-auto" style={{ backgroundColor: 'rgba(0, 106, 134, 0.2)' }}>
+                    <Clock className="h-8 w-8" style={{ color: '#006a86' }} />
                   </div>
                   <h3 className="text-2xl font-bold mb-3 text-text-light dark:text-text-dark">20-30 HORAS</h3>
                   <p className="text-gray-600 dark:text-gray-400">
@@ -542,8 +550,8 @@ export default function VoluntariadosPage() {
                 </div>
                 
                 <div className="bg-card-light dark:bg-card-dark p-8 rounded-lg shadow-sm hover:shadow-lg transition-shadow duration-300 text-center">
-                  <div className="flex items-center justify-center h-16 w-16 rounded-full bg-blue-100 dark:bg-blue-900 mb-6 mx-auto">
-                    <Users className="h-8 w-8 text-blue-500" />
+                  <div className="flex items-center justify-center h-16 w-16 rounded-full mb-6 mx-auto" style={{ backgroundColor: 'rgba(241, 208, 45, 0.2)' }}>
+                    <Users className="h-8 w-8" style={{ color: '#f1d02d' }} />
                   </div>
                   <h3 className="text-2xl font-bold mb-3 text-text-light dark:text-text-dark">PRESENCIAL</h3>
                   <p className="text-gray-600 dark:text-gray-400">
@@ -593,7 +601,7 @@ export default function VoluntariadosPage() {
         </section>
 
         {/* Formulario de Solicitud */}
-        <section className="py-6 bg-background-light dark:bg-background-dark">
+        <section id="formulario" className="py-6 bg-background-light dark:bg-background-dark">
           <div className="container mx-auto px-4 py-4">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center mb-8">
               <div>
@@ -951,19 +959,19 @@ export default function VoluntariadosPage() {
 
             <div className="grid md:grid-cols-3 gap-6 items-center">
               <div className="bg-card-light dark:bg-card-dark p-6 rounded-lg shadow-sm text-center">
-                <div className="w-8 h-8 bg-primary text-white rounded-full flex items-center justify-center font-bold mx-auto mb-4">1</div>
+                <div className="w-8 h-8 text-white rounded-full flex items-center justify-center font-bold mx-auto mb-4" style={{ backgroundColor: '#99b944' }}>1</div>
                 <h4 className="font-medium text-text-light dark:text-text-dark mb-2">Revisión de tu solicitud</h4>
                 <p className="text-sm text-text-secondary-light dark:text-text-secondary-dark">Evaluaremos tu perfil y motivación</p>
               </div>
               
               <div className="bg-card-light dark:bg-card-dark p-6 rounded-lg shadow-sm text-center">
-                <div className="w-8 h-8 bg-primary text-white rounded-full flex items-center justify-center font-bold mx-auto mb-4">2</div>
+                <div className="w-8 h-8 text-white rounded-full flex items-center justify-center font-bold mx-auto mb-4" style={{ backgroundColor: '#006a86' }}>2</div>
                 <h4 className="font-medium text-text-light dark:text-text-dark mb-2">Entrevista personal</h4>
                 <p className="text-sm text-text-secondary-light dark:text-text-secondary-dark">Conoceremos mejor tus expectativas</p>
               </div>
               
               <div className="bg-card-light dark:bg-card-dark p-6 rounded-lg shadow-sm text-center">
-                <div className="w-8 h-8 bg-primary text-white rounded-full flex items-center justify-center font-bold mx-auto mb-4">3</div>
+                <div className="w-8 h-8 text-white rounded-full flex items-center justify-center font-bold mx-auto mb-4" style={{ backgroundColor: '#f1d02d' }}>3</div>
                 <h4 className="font-medium text-text-light dark:text-text-dark mb-2">Inicio de actividades</h4>
                 <p className="text-sm text-text-secondary-light dark:text-text-secondary-dark">Te integraremos a nuestros proyectos</p>
               </div>
@@ -977,8 +985,8 @@ export default function VoluntariadosPage() {
         <DialogContent className="sm:max-w-[500px]">
           <DialogHeader>
             <div className="flex items-center gap-3 mb-2">
-              <div className="flex h-12 w-12 items-center justify-center rounded-full bg-green-100 dark:bg-green-900">
-                <CheckCircle className="h-6 w-6 text-green-600 dark:text-green-400" />
+              <div className="flex h-12 w-12 items-center justify-center rounded-full bg-blue-100 dark:bg-blue-900">
+                <CheckCircle className="h-6 w-6 text-blue-600 dark:text-blue-400" />
               </div>
               <DialogTitle className="text-2xl">¡Solicitud Enviada!</DialogTitle>
             </div>

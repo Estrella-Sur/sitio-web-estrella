@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState, useEffect, use } from 'react'
+import React, { useState, useEffect, use, useCallback } from 'react'
 import { Card, CardContent } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
@@ -9,7 +9,6 @@ import {
   Share2,
   MapPin,
   CalendarDays,
-  ArrowRight,
   PartyPopper,
   Clock
 } from 'lucide-react'
@@ -51,30 +50,33 @@ export default function EventDetailPage({ params }: EventDetailPageProps) {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
 
-  useEffect(() => {
-    fetchEvent()
-  }, [resolvedParams.id])
-
-  const fetchEvent = async () => {
+  const fetchEvent = useCallback(async () => {
     try {
       setLoading(true)
       const response = await fetch(`/api/public/events/${resolvedParams.id}`)
       
       if (!response.ok) {
         if (response.status === 404) {
-          throw new Error('Evento no encontrado')
+          setError('Evento no encontrado')
+          return
         }
         throw new Error('Error al cargar el evento')
       }
       
       const data = await response.json()
       setEvent(data)
+      setError(null)
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Error desconocido al cargar el evento.')
+      console.error('Error fetching event:', err)
+      setError('Error al cargar el evento')
     } finally {
       setLoading(false)
     }
-  }
+  }, [resolvedParams.id])
+
+  useEffect(() => {
+    fetchEvent()
+  }, [fetchEvent])
 
   const formatDate = (dateString: string) => {
     return new Date(dateString).toLocaleDateString('es-ES', {
@@ -316,7 +318,8 @@ export default function EventDetailPage({ params }: EventDetailPageProps) {
               <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
                 <Button 
                   asChild
-                  className="bg-black hover:bg-gray-800 text-white px-8 py-3 text-lg font-semibold"
+                  className="text-white px-8 py-3 text-lg font-semibold hover:opacity-90"
+                  style={{ backgroundColor: '#006a86' }}
                 >
                   <Link href="/news-events">
                     Ver todos los eventos

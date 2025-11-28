@@ -16,7 +16,7 @@ import { AdvancedEditUserModal } from './advanced-edit-user-modal'
 import { AdvancedChangePasswordModal } from './advanced-change-password-modal'
 import { DeleteUserDialog, DeactivateUserDialog } from '@/components/ui/confirmation-dialog'
 import {
-  Crown, Briefcase, Wrench, Users, UserCheck, UserX, Calendar, UserPlus, 
+  Crown, Briefcase, Users, UserCheck, UserX, Calendar, UserPlus, 
   Edit, Key, Trash2, Search, Loader2, CheckCircle, XCircle,
   Eye, EyeOff, RefreshCw
 } from 'lucide-react'
@@ -53,7 +53,6 @@ export function AdvancedUserManagementSystem() {
   const [viewMode, setViewMode] = useState<'grid' | 'table'>('grid')
 
   const isAdmin = session?.user?.role === UserRole.ADMINISTRATOR
-  const isContentManager = session?.user?.role === UserRole.MANAGER
 
   const fetchUsers = useCallback(async (page = 1) => {
     setIsLoading(true)
@@ -239,7 +238,7 @@ export function AdvancedUserManagementSystem() {
   const getRoleColor = (role: UserRole) => {
     switch (role) {
       case UserRole.ADMINISTRATOR: return 'bg-red-100 text-red-800 dark:bg-red-900/20 dark:text-red-300'
-      case UserRole.MANAGER: return 'bg-green-100 text-green-800 dark:bg-green-900/20 dark:text-green-300'
+      case UserRole.MANAGER: return 'bg-blue-100 text-blue-800 dark:bg-blue-900/20 dark:text-blue-300'
       case UserRole.CONSULTANT: return 'bg-blue-100 text-blue-800 dark:bg-blue-900/20 dark:text-blue-300'
       default: return 'bg-gray-100 text-gray-800 dark:bg-gray-900/20 dark:text-gray-300'
     }
@@ -248,7 +247,7 @@ export function AdvancedUserManagementSystem() {
   const getRoleIcon = (role: UserRole) => {
     switch (role) {
       case UserRole.ADMINISTRATOR: return <Crown className="h-4 w-4 text-red-500" />
-      case UserRole.MANAGER: return <Briefcase className="h-4 w-4 text-green-500" />
+      case UserRole.MANAGER: return <Briefcase className="h-4 w-4 text-blue-500" />
       case UserRole.CONSULTANT: return <Users className="h-4 w-4 text-blue-500" />
       default: return <Users className="h-4 w-4 text-gray-500" />
     }
@@ -312,9 +311,9 @@ export function AdvancedUserManagementSystem() {
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-sm text-muted-foreground">Usuarios Activos</p>
-                  <p className="text-2xl font-bold text-green-600">{users.filter(u => u.isActive).length}</p>
+                  <p className="text-2xl font-bold text-blue-600">{users.filter(u => u.isActive).length}</p>
                 </div>
-                <UserCheck className="h-8 w-8 text-green-500" />
+                <UserCheck className="h-8 w-8 text-blue-500" />
               </div>
             </Card>
             <Card className="p-4">

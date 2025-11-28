@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { Button } from '@/components/ui/button';
-import { ArrowRight, ArrowLeft, Phone, Mail } from 'lucide-react';
+import { ArrowRight, Phone, Mail } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { SiteHeader } from '@/components/layout/site-header';
@@ -538,7 +538,7 @@ export default function EquipoPage() {
             <div className="text-center mb-6">
               <h3 className="text-4xl font-bold text-text-light dark:text-text-dark mb-4">ÁREA DE FINANZAS</h3>
             </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 justify-items-center">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 justify-items-center">
               <div className="text-center">
                 <Image 
                   alt="Portrait of Lic. Pablo Abner Tejada Calizaya" 
@@ -564,7 +564,7 @@ export default function EquipoPage() {
                 <Image 
                   alt="Portrait of Lic. Erica Tito Caceres" 
                   className="w-64 h-80 object-cover mx-auto" 
-                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuDmllxdqHroC9H4k4RihMW73lARdeDqC2SHN-Pe9mJVZn0ns3qNbLracfSfHLnoEstAEtodMiXv0sLxKbaPDRlRzuMSZGkfykcVW-es8Wk2JK9j_BTfaT9KcY4mKUMeIQC9pL31OFxqHVDeUSCQis77l2Z5jq2xKue8vxvut6b4uLPWh4Pr1CTQe8YUnqn5cXC-a2JapQ2r8kqrbJk2I4w3GJNhyd0RnqJ-frXgGfjUg9yjYCGaCjub7w9STC-jvYdUJb_ntBN_rn6d"
+                  src="/static-images/team/ERICKA_TITO.jpg"
                   width={256}
                   height={320}
                 />
@@ -583,9 +583,30 @@ export default function EquipoPage() {
               </div>
               <div className="text-center">
                 <Image 
+                  alt="Portrait of Roxanita" 
+                  className="w-64 h-80 object-cover mx-auto" 
+                  src="/static-images/team/ROXANITA.jpg"
+                  width={256}
+                  height={320}
+                />
+                <p className="text-xs text-gray-600 dark:text-gray-400 mt-4">Área de Finanzas</p>
+                <h4 className="text-lg font-bold text-text-light dark:text-text-dark">ROXANITA</h4>
+                <div className="mt-1 space-y-1">
+                  <div className="flex items-center justify-center gap-2 text-xs text-gray-500 dark:text-gray-500">
+                    <Phone className="h-3 w-3" />
+                    <span>N/A</span>
+                  </div>
+                  <div className="flex items-center justify-center gap-2 text-xs text-gray-500 dark:text-gray-500">
+                    <Mail className="h-3 w-3" />
+                    <span>N/A</span>
+                  </div>
+                </div>
+              </div>
+              <div className="text-center">
+                <Image 
                   alt="Portrait of Roxana Luz Rosales Diego" 
                   className="w-64 h-80 object-cover mx-auto" 
-                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuCUf6KXUC1osomswpkFcKdj5fgURRL8XXtQidCu3vOccrR1QVBmWQE5wYtuxqKC3qvD1lNF7p1RFr3pz-yuS7TtPpfiULYnOivG0U1GiA_37un2J2LH5SD8HEGi-ixc11iUK8JqrYl2laODkHHyvmbDQU9CHmttxVMw5m6JyqrnRJuSE4o9nBjE6IPNvXcG6fMzDE5FszxV5DV6pf_Vi090uRLCP9wkh25FF5-THe_GrJaXDJZMoXRS0hloUquZxbOXRmr5DkSh_dFa"
+                  src="/static-images/sections/user_default.png"
                   width={256}
                   height={320}
                 />
@@ -608,7 +629,7 @@ export default function EquipoPage() {
       </section>
 
       {/* Call to Action Section */}
-      <section className="py-12 bg-orange-500 dark:bg-orange-600 text-white dark:text-white relative overflow-hidden">
+      <section className="py-12 text-white dark:text-white relative overflow-hidden" style={{ backgroundColor: '#0d6f3c' }}>
         <div className="absolute inset-0 opacity-10">
           <div className="absolute top-20 left-10 w-32 h-32 bg-white rounded-full blur-3xl"></div>
           <div className="absolute top-40 right-20 w-24 h-24 bg-yellow-200 rounded-full blur-2xl"></div>
@@ -617,7 +638,7 @@ export default function EquipoPage() {
 
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="text-center mb-8">
-            <span className="inline-block bg-orange-200 text-orange-800 dark:bg-orange-300 dark:text-orange-900 text-xs font-semibold px-3 py-1 rounded-full mb-4 font-condensed">
+            <span className="inline-block bg-white/20 text-white text-xs font-semibold px-3 py-1 rounded-full mb-4 font-condensed">
               ÚNETE A NUESTRO EQUIPO
             </span>
             <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-white dark:text-white leading-tight font-condensed">
@@ -630,13 +651,13 @@ export default function EquipoPage() {
           </div>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button size="lg" className="bg-white text-orange-600 hover:bg-orange-50 font-bold font-condensed" asChild>
+            <Button size="lg" className="bg-white hover:bg-gray-100 font-bold font-condensed" style={{ color: '#0d6f3c' }} asChild>
               <Link href="/participar">
                 VER OPORTUNIDADES
                 <ArrowRight className="ml-2 h-5 w-5" />
               </Link>
             </Button>
-            <Button size="lg" className="bg-black text-white hover:bg-gray-800 font-bold font-condensed" asChild>
+            <Button size="lg" className="text-white hover:opacity-90 font-bold font-condensed border-2 border-white" style={{ backgroundColor: '#0d6f3c' }} asChild>
               <Link href="/nosotros">
                 CONOCER MÁS SOBRE NOSOTROS
               </Link>

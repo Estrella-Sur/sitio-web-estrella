@@ -6,10 +6,10 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
-import { Heart, DollarSign, Calendar, Target, Users, ArrowLeft, QrCode, CreditCard, CheckCircle, XCircle } from 'lucide-react';
+import { Heart, Calendar, Target, Users, ArrowLeft, CreditCard, CheckCircle } from 'lucide-react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { SiteHeader } from '@/components/layout/site-header';
 import { SiteFooter } from '@/components/layout/site-footer';
 import { toast } from 'sonner';
@@ -52,7 +52,7 @@ export default function DonateToProjectPage({ params }: { params: Promise<{ id: 
   const [loading, setLoading] = useState(true);
   const [submitting, setSubmitting] = useState(false);
   const [showPaymentModal, setShowPaymentModal] = useState(false);
-  const [donationSubmitted, setDonationSubmitted] = useState(false);
+  const [_donationSubmitted, setDonationSubmitted] = useState(false);
   const [formData, setFormData] = useState<DonationForm>({
     donorName: '',
     donorEmail: '',
@@ -213,7 +213,7 @@ export default function DonateToProjectPage({ params }: { params: Promise<{ id: 
                   PROYECTO ESPECÍFICO
                 </span>
                 {donationProject.isCompleted && (
-                  <span className="bg-green-600 text-white text-xs font-bold px-3 py-1 rounded-md">
+                  <span className="bg-blue-600 text-white text-xs font-bold px-3 py-1 rounded-md">
                     COMPLETADO
                   </span>
                 )}
@@ -228,15 +228,13 @@ export default function DonateToProjectPage({ params }: { params: Promise<{ id: 
 
             {donationProject.referenceImageUrl && donationProject.referenceImageUrl.trim() !== '' ? (
               <div className="relative h-64 rounded-lg overflow-hidden">
-                <img
+                <Image
                   src={donationProject.referenceImageUrl}
                   alt={donationProject.referenceImageAlt || donationProject.title}
-                  className="w-full h-full object-cover"
-                  onError={(e) => {
-                    const target = e.target as HTMLImageElement;
-                    target.src = 'https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?w=800';
-                  }}
-                  />
+                  fill
+                  className="object-cover"
+                  sizes="(max-width: 768px) 100vw, 800px"
+                />
                 </div>
             ) : (
               <div className="relative h-64 rounded-lg overflow-hidden bg-gradient-to-br from-primary/20 to-primary/40 flex items-center justify-center">
@@ -316,15 +314,15 @@ export default function DonateToProjectPage({ params }: { params: Promise<{ id: 
               <Card>
                 <CardHeader>
                   <CardTitle className="flex items-center gap-2">
-                    <Heart className="h-5 w-5 text-green-500" />
+                    <Heart className="h-5 w-5 text-blue-500" />
                     Proyecto Completado
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
                   <div className="text-center py-8">
                     <div className="mb-4">
-                      <div className="inline-flex items-center justify-center w-16 h-16 bg-green-100 dark:bg-green-900 rounded-full mb-4">
-                        <Heart className="h-8 w-8 text-green-600 dark:text-green-400" />
+                      <div className="inline-flex items-center justify-center w-16 h-16 bg-blue-100 dark:bg-blue-900 rounded-full mb-4">
+                        <Heart className="h-8 w-8 text-blue-600 dark:text-blue-400" />
                       </div>
                     </div>
                     <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">
@@ -333,8 +331,8 @@ export default function DonateToProjectPage({ params }: { params: Promise<{ id: 
                     <p className="text-gray-600 dark:text-gray-400 mb-4">
                       Este proyecto ha alcanzado su meta de recaudación. Gracias a todos los donantes que hicieron esto posible.
                     </p>
-                    <div className="bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg p-4">
-                      <p className="text-sm text-green-800 dark:text-green-200">
+                    <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-4">
+                      <p className="text-sm text-blue-800 dark:text-blue-200">
                         <strong>Total recaudado:</strong> {formatCurrency(parseFloat(donationProject.currentAmount.toString()))}
                         {donationProject.targetAmount && (
                           <span> de {formatCurrency(parseFloat(donationProject.targetAmount.toString()))}</span>
@@ -478,28 +476,28 @@ export default function DonateToProjectPage({ params }: { params: Promise<{ id: 
 
       {/* Modal de Confirmación de Pago */}
       <Dialog open={showPaymentModal} onOpenChange={setShowPaymentModal}>
-        <DialogContent className="max-w-lg w-full mx-4">
+        <DialogContent className="max-w-lg w-[calc(100vw-2rem)] sm:w-full max-h-[90vh] overflow-y-auto">
           <DialogHeader>
-            <DialogTitle className="flex items-center gap-2">
-              <CreditCard className="h-5 w-5" />
+            <DialogTitle className="flex items-center gap-2 text-base sm:text-lg">
+              <CreditCard className="h-4 w-4 sm:h-5 sm:w-5" />
               Información de Pago
             </DialogTitle>
           </DialogHeader>
           
-          <div className="space-y-3">
+          <div className="space-y-3 sm:space-y-4">
             {/* Información de pago */}
-            <div className="space-y-2">
-              <div className="flex justify-between items-center">
-                <span className="text-sm font-medium">Destinatario:</span>
-                <span className="text-sm text-gray-600 dark:text-gray-400">{donationProject?.recipientName}</span>
+            <div className="space-y-2 sm:space-y-3">
+              <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-1 sm:gap-0">
+                <span className="text-xs sm:text-sm font-medium">Destinatario:</span>
+                <span className="text-xs sm:text-sm text-gray-600 dark:text-gray-400 break-words text-right sm:text-left">{donationProject?.recipientName}</span>
               </div>
-              <div className="flex justify-between items-center">
-                <span className="text-sm font-medium">Monto:</span>
-                <span className="text-lg font-bold text-primary">{formatCurrency(parseFloat(formData.amount))}</span>
+              <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-1 sm:gap-0">
+                <span className="text-xs sm:text-sm font-medium">Monto:</span>
+                <span className="text-base sm:text-lg font-bold text-primary">{formatCurrency(parseFloat(formData.amount))}</span>
               </div>
               <div>
-                <span className="text-sm font-medium">Número de Cuenta:</span>
-                <p className="text-sm text-gray-600 dark:text-gray-400 font-mono bg-gray-50 dark:bg-gray-800 p-2 rounded border mt-1">
+                <span className="text-xs sm:text-sm font-medium block mb-1">Número de Cuenta:</span>
+                <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-400 font-mono bg-gray-50 dark:bg-gray-800 p-2 sm:p-3 rounded border break-all">
                   {donationProject?.accountNumber}
                 </p>
               </div>
@@ -508,36 +506,33 @@ export default function DonateToProjectPage({ params }: { params: Promise<{ id: 
             {/* Código QR */}
             {donationProject?.qrImageUrl && donationProject.qrImageUrl.trim() !== '' ? (
               <div className="text-center space-y-2">
-                <h3 className="text-base font-semibold text-gray-900 dark:text-white">
+                <h3 className="text-sm sm:text-base font-semibold text-gray-900 dark:text-white">
                   Código QR para Pago
                 </h3>
-                <div className="inline-block p-3 bg-white dark:bg-gray-800 rounded-lg shadow-sm border">
-                  <img
+                <div className="inline-block p-2 sm:p-3 bg-white dark:bg-gray-800 rounded-lg shadow-sm border relative w-[140px] h-[140px] sm:w-[180px] sm:h-[180px]">
+                  <Image
                     src={donationProject.qrImageUrl}
                     alt={donationProject.qrImageAlt || 'Código QR para pago'}
                     width={180}
                     height={180}
-                    className="rounded"
-                    onError={(e) => {
-                      const target = e.target as HTMLImageElement;
-                      target.style.display = 'none';
-                    }}
+                    className="rounded object-contain"
+                    sizes="(max-width: 640px) 140px, 180px"
                   />
                 </div>
-                <p className="text-xs text-gray-600 dark:text-gray-400">
+                <p className="text-xs text-gray-600 dark:text-gray-400 px-2">
                   Escanea el código QR con tu aplicación bancaria
                 </p>
               </div>
             ) : null}
 
             {/* Instrucciones */}
-            <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-2">
-              <h4 className="font-semibold text-blue-900 dark:text-blue-100 mb-1 text-xs">Instrucciones:</h4>
-              <ol className="text-xs text-blue-800 dark:text-blue-200 space-y-1 list-decimal list-inside">
-                <li>Realiza la transferencia bancaria al número de cuenta mostrado</li>
-                <li>O escanea el código QR con tu aplicación bancaria</li>
-                <li>Una vez completado el pago, confirma haciendo clic en "Pago Realizado"</li>
-                <li>Si tienes problemas con el pago, puedes cerrar esta ventana y intentar más tarde</li>
+            <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-3 sm:p-4">
+              <h4 className="font-semibold text-blue-900 dark:text-blue-100 mb-2 text-xs sm:text-sm">Instrucciones:</h4>
+              <ol className="text-xs sm:text-sm text-blue-800 dark:text-blue-200 space-y-1.5 sm:space-y-2 list-decimal list-inside">
+                <li className="break-words">Realiza la transferencia bancaria al número de cuenta mostrado</li>
+                <li className="break-words">O escanea el código QR con tu aplicación bancaria</li>
+                <li className="break-words">Una vez completado el pago, confirma haciendo clic en &quot;Pago Realizado&quot;</li>
+                <li className="break-words">Si tienes problemas con el pago, puedes cerrar esta ventana y intentar más tarde</li>
               </ol>
             </div>
 
@@ -545,7 +540,7 @@ export default function DonateToProjectPage({ params }: { params: Promise<{ id: 
             <div className="pt-2">
               <Button
                 onClick={handlePaymentConfirmation}
-                className="w-full bg-green-600 hover:bg-green-700"
+                className="w-full bg-primary hover:bg-primary/90 text-white text-sm sm:text-base py-2 sm:py-2.5"
                 disabled={submitting}
               >
                 <CheckCircle className="w-4 h-4 mr-2" />
@@ -553,7 +548,7 @@ export default function DonateToProjectPage({ params }: { params: Promise<{ id: 
               </Button>
             </div>
 
-            <p className="text-center text-xs text-gray-500 dark:text-gray-400">
+            <p className="text-center text-xs text-gray-500 dark:text-gray-400 px-2">
               Te contactaremos para confirmar el pago.
             </p>
           </div>

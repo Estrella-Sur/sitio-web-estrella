@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
+import { Prisma, TransparencyCategory } from '@prisma/client';
 
 // GET - Obtener documentos de transparencia públicos
 export async function GET(request: NextRequest) {
@@ -11,14 +12,14 @@ export async function GET(request: NextRequest) {
     const search = searchParams.get('search');
     const year = searchParams.get('year') ? parseInt(searchParams.get('year')!) : undefined;
     const sortBy = searchParams.get('sortBy') || 'createdAt';
-    const sortOrder = searchParams.get('sortOrder') || 'desc';
+    const sortOrder = (searchParams.get('sortOrder') || 'desc') as 'asc' | 'desc';
 
-    const where: any = {
+    const where: Prisma.TransparencyDocumentWhereInput = {
       isActive: true, // Solo documentos activos para usuarios públicos
     };
 
     if (category) {
-      where.category = category;
+      where.category = category as TransparencyCategory;
     }
 
     if (featured === 'true') {
@@ -26,24 +27,31 @@ export async function GET(request: NextRequest) {
     }
 
     if (year) {
-      where.year = year;
+      // Filtrar por año usando createdAt
+      const startOfYear = new Date(year, 0, 1);
+      const endOfYear = new Date(year, 11, 31, 23, 59, 59, 999);
+      where.createdAt = {
+        gte: startOfYear,
+        lte: endOfYear,
+      };
     }
 
     // Agregar búsqueda por título y descripción
     if (search) {
       where.OR = [
-        { title: { contains: search, mode: 'insensitive' } },
-        { description: { contains: search, mode: 'insensitive' } },
-        { fileName: { contains: search, mode: 'insensitive' } },
+        { title: { contains: search, mode: 'insensitive' as const } },
+        { description: { contains: search, mode: 'insensitive' as const } },
+        { fileName: { contains: search, mode: 'insensitive' as const } },
       ];
     }
 
     // Configurar ordenamiento
-    const orderBy: any = {};
+    const orderBy: Prisma.TransparencyDocumentOrderByWithRelationInput = {};
     if (sortBy === 'title') {
       orderBy.title = sortOrder;
     } else if (sortBy === 'year') {
-      orderBy.year = sortOrder;
+      // Ordenar por año usando createdAt
+      orderBy.createdAt = sortOrder;
     } else if (sortBy === 'category') {
       orderBy.category = sortOrder;
     } else {
