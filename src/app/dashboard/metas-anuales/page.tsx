@@ -7,7 +7,7 @@ import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, DialogFooter } from '@/components/ui/dialog';
 import { 
   Target,
   Calendar,
@@ -37,7 +37,10 @@ export default function AnnualGoalsPage() {
   const [loading, setLoading] = useState(true);
   const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false);
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
+  const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const [selectedGoal, setSelectedGoal] = useState<AnnualGoal | null>(null);
+  const [deletingGoal, setDeletingGoal] = useState<AnnualGoal | null>(null);
+  const [isDeleting, setIsDeleting] = useState(false);
   const [formData, setFormData] = useState({
     year: new Date().getFullYear(),
     targetAmount: '',
@@ -198,19 +201,20 @@ export default function AnnualGoalsPage() {
     }
   };
 
-  const handleDeleteGoal = async (goal: AnnualGoal) => {
-    if (!confirm(`¿Estás seguro de que quieres eliminar la meta de ${goal.year}?`)) {
-      return;
-    }
+  const handleDeleteGoal = async () => {
+    if (!deletingGoal) return;
 
     try {
-      const response = await fetch(`/api/annual-goals?id=${goal.id}`, {
+      setIsDeleting(true);
+      const response = await fetch(`/api/annual-goals?id=${deletingGoal.id}`, {
         method: 'DELETE',
       });
 
       if (response.ok) {
         toast.success('Meta anual eliminada exitosamente');
         fetchAnnualGoals();
+        setIsDeleteDialogOpen(false);
+        setDeletingGoal(null);
       } else {
         const error = await response.json();
         toast.error(error.error || 'Error al eliminar meta anual');
@@ -218,7 +222,14 @@ export default function AnnualGoalsPage() {
     } catch (error) {
       console.error('Error al eliminar meta anual:', error);
       toast.error('Error al eliminar meta anual');
+    } finally {
+      setIsDeleting(false);
     }
+  };
+
+  const openDeleteDialog = (goal: AnnualGoal) => {
+    setDeletingGoal(goal);
+    setIsDeleteDialogOpen(true);
   };
 
   const openEditDialog = (goal: AnnualGoal) => {
@@ -388,7 +399,7 @@ export default function AnnualGoalsPage() {
                     <Button
                       variant="outline"
                       size="sm"
-                      onClick={() => handleDeleteGoal(goal)}
+                      onClick={() => openDeleteDialog(goal)}
                       title="Eliminar meta"
                       className="text-red-600 hover:text-red-700 hover:bg-red-50"
                     >
@@ -438,8 +449,13 @@ export default function AnnualGoalsPage() {
       </div>
 
       {/* Diálogo de edición */}
-      <Dialog open={isEditDialogOpen} onOpenChange={setIsEditDialogOpen}>
-        <DialogContent>
+      <Dialog open={isEditDialogOpen} onOpenChange={(open) => {
+        setIsEditDialogOpen(open);
+        if (!open) {
+          setSelectedGoal(null);
+        }
+      }}>
+        <DialogContent className="max-w-2xl">
           <DialogHeader>
             <DialogTitle>Editar Meta Anual</DialogTitle>
           </DialogHeader>
@@ -472,17 +488,74 @@ export default function AnnualGoalsPage() {
                 value={formData.description}
                 onChange={(e) => setFormData({ ...formData, description: e.target.value })}
                 rows={3}
+                placeholder="Descripción de la meta anual"
               />
             </div>
-            <div className="flex gap-2 pt-4">
-              <Button type="submit">
-                Actualizar Meta
-              </Button>
+            <DialogFooter>
               <Button type="button" variant="outline" onClick={() => setIsEditDialogOpen(false)}>
                 Cancelar
               </Button>
-            </div>
+              <Button type="submit">
+                Actualizar Meta
+              </Button>
+            </DialogFooter>
           </form>
+        </DialogContent>
+      </Dialog>
+
+      {/* Diálogo de eliminación */}
+      <Dialog open={isDeleteDialogOpen} onOpenChange={(open) => {
+        setIsDeleteDialogOpen(open);
+        if (!open) {
+          setDeletingGoal(null);
+        }
+      }}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Eliminar Meta Anual</DialogTitle>
+          </DialogHeader>
+          <div className="py-4">
+            <p className="text-sm text-gray-600 dark:text-gray-400">
+              ¿Estás seguro de que quieres eliminar la meta del año{' '}
+              <strong>{deletingGoal?.year}</strong>?
+            </p>
+            <p className="text-sm text-red-600 dark:text-red-400 mt-2 font-medium">
+              Esta acción no se puede deshacer.
+            </p>
+            {deletingGoal && (
+              <div className="mt-4 p-3 bg-gray-50 dark:bg-gray-800 rounded-lg">
+                <p className="text-xs text-gray-500 dark:text-gray-400 mb-1">Detalles de la meta:</p>
+                <p className="text-sm font-medium">
+                  Meta: Bs. {deletingGoal.targetAmount.toLocaleString('es-BO', {
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 2
+                  })}
+                </p>
+                <p className="text-sm font-medium">
+                  Recaudado: Bs. {deletingGoal.currentAmount.toLocaleString('es-BO', {
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 2
+                  })}
+                </p>
+              </div>
+            )}
+          </div>
+          <DialogFooter>
+            <Button 
+              variant="outline" 
+              onClick={() => setIsDeleteDialogOpen(false)}
+              disabled={isDeleting}
+            >
+              Cancelar
+            </Button>
+            <Button 
+              variant="destructive" 
+              onClick={handleDeleteGoal}
+              disabled={isDeleting}
+            >
+              {isDeleting ? 'Eliminando...' : 'Eliminar'}
+            </Button>
+          </DialogFooter>
         </DialogContent>
       </Dialog>
     </div>
