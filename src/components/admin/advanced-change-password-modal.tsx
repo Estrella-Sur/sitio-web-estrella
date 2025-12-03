@@ -9,6 +9,7 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage, FormDescription } from '@/components/ui/form'
 import { useToast } from '@/components/ui/use-toast'
+import { generateTemporaryPassword } from '@/lib/temp-password'
 import { 
   Key, 
   Eye, 
@@ -58,6 +59,7 @@ export function AdvancedChangePasswordModal({
   const [showPassword, setShowPassword] = useState(false)
   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const [generatedPassword, setGeneratedPassword] = useState<string | null>(null)
   const { toast } = useToast()
 
   const form = useForm<ChangePasswordFormData>({
@@ -86,6 +88,15 @@ export function AdvancedChangePasswordModal({
   }
 
   const passwordStrength = getPasswordStrength(newPassword || '')
+
+  const handleGeneratePassword = () => {
+    const tempPassword = generateTemporaryPassword()
+    setGeneratedPassword(tempPassword)
+    form.setValue('newPassword', tempPassword, { shouldValidate: true })
+    form.setValue('confirmPassword', tempPassword, { shouldValidate: true })
+    setShowPassword(true)
+    setShowConfirmPassword(true)
+  }
 
   const onSubmit = async (data: ChangePasswordFormData) => {
     if (!user) return
@@ -131,7 +142,7 @@ export function AdvancedChangePasswordModal({
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="sm:max-w-[500px]">
+      <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2 text-xl">
             <Key className="h-5 w-5 text-primary" />
@@ -193,6 +204,19 @@ export function AdvancedChangePasswordModal({
                   </FormItem>
                 )}
               />
+
+              {/* Botón para generar contraseña automática */}
+              <div className="flex justify-end">
+                <Button
+                  type="button"
+                  variant="outline"
+                  size="sm"
+                  onClick={handleGeneratePassword}
+                >
+                  <Key className="h-4 w-4 mr-1" />
+                  Generar contraseña segura
+                </Button>
+              </div>
 
               {/* Indicador de fortaleza de contraseña */}
               {newPassword && (

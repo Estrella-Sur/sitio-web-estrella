@@ -11,11 +11,12 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '../../../components/ui/tabs'
 import { Checkbox } from '@/components/ui/checkbox'
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
-import { Users, Search, Filter, MoreHorizontal, Edit, Trash2, UserCheck, UserX, Settings } from 'lucide-react'
+import { Users, Search, Filter, MoreHorizontal, Edit, Trash2, UserCheck, UserX, Settings, Key } from 'lucide-react'
 import { CreateUserForm } from '@/components/admin/create-user-form'
 import { ToggleUserStatusDialog } from '@/components/admin/toggle-user-status-dialog'
 import { EditUserModal } from '@/components/admin/edit-user-modal'
 import { DeleteUserDialog } from '@/components/admin/delete-user-dialog'
+import { AdvancedChangePasswordModal } from '@/components/admin/advanced-change-password-modal'
 import { UserRole, getRoleDisplayName } from '@/lib/roles'
 
 interface User {
@@ -42,6 +43,7 @@ export default function UsersPage() {
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('list')
   const [sortBy, setSortBy] = useState<'name' | 'email' | 'role' | 'status' | 'lastLogin'>('name')
   const [editingUser, setEditingUser] = useState<User | null>(null)
+  const [passwordUser, setPasswordUser] = useState<User | null>(null)
 
   // Cargar usuarios desde la API
   const fetchUsers = useCallback(async () => {
@@ -434,6 +436,7 @@ export default function UsersPage() {
             onDeleteUser={handleDeleteUser}
             onEditUser={handleEditUser}
             onOpenEditModal={handleOpenEditModal}
+            onOpenChangePassword={setPasswordUser}
             canEditUsers={canEditUsers}
             canDeleteUsers={canDeleteUsers}
             getRoleBadgeVariant={getRoleBadgeVariant}
@@ -453,6 +456,7 @@ export default function UsersPage() {
             onDeleteUser={handleDeleteUser}
             onEditUser={handleEditUser}
             onOpenEditModal={handleOpenEditModal}
+            onOpenChangePassword={setPasswordUser}
             canEditUsers={canEditUsers}
             canDeleteUsers={canDeleteUsers}
             getRoleBadgeVariant={getRoleBadgeVariant}
@@ -472,6 +476,7 @@ export default function UsersPage() {
             onDeleteUser={handleDeleteUser}
             onEditUser={handleEditUser}
             onOpenEditModal={handleOpenEditModal}
+            onOpenChangePassword={setPasswordUser}
             canEditUsers={canEditUsers}
             canDeleteUsers={canDeleteUsers}
             getRoleBadgeVariant={getRoleBadgeVariant}
@@ -486,6 +491,13 @@ export default function UsersPage() {
         isOpen={!!editingUser}
         onClose={() => setEditingUser(null)}
         onSave={handleEditUser}
+      />
+
+      <AdvancedChangePasswordModal
+        user={passwordUser}
+        isOpen={!!passwordUser}
+        onClose={() => setPasswordUser(null)}
+        onPasswordChanged={() => fetchUsers()}
       />
     </div>
   )
@@ -502,6 +514,7 @@ interface UserListProps {
   onDeleteUser: (userId: string) => void
   onEditUser: (userId: string, userData: { name: string, email: string, role: string, isActive: boolean }) => void
   onOpenEditModal: (user: User) => void
+  onOpenChangePassword: (user: User) => void
   canEditUsers: () => boolean
   canDeleteUsers: () => boolean
   getRoleBadgeVariant: (role: string) => "destructive" | "default" | "secondary" | "outline"
@@ -519,6 +532,7 @@ function UserList({
   onDeleteUser,
   onEditUser: _onEditUser,
   onOpenEditModal,
+  onOpenChangePassword,
   canEditUsers,
   canDeleteUsers,
   getRoleBadgeVariant,
@@ -583,6 +597,12 @@ function UserList({
                       <DropdownMenuItem onClick={() => onOpenEditModal(user)}>
                         <Edit className="mr-2 h-4 w-4" />
                         Editar
+                      </DropdownMenuItem>
+                    )}
+                    {canEditUsers() && (
+                      <DropdownMenuItem onClick={() => onOpenChangePassword(user)}>
+                        <Key className="mr-2 h-4 w-4" />
+                        Cambiar contraseña
                       </DropdownMenuItem>
                     )}
                     <ToggleUserStatusDialog
@@ -706,6 +726,16 @@ function UserList({
                     <Edit className="h-4 w-4" />
                   </Button>
                 )}
+                {canEditUsers() && (
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    title="Cambiar contraseña"
+                    onClick={() => onOpenChangePassword(user)}
+                  >
+                    <Key className="h-4 w-4" />
+                  </Button>
+                )}
                 <ToggleUserStatusDialog
                   user={user}
                   onStatusChanged={onToggleStatus}
@@ -747,6 +777,12 @@ function UserList({
                       <DropdownMenuItem onClick={() => onOpenEditModal(user)}>
                         <Edit className="mr-2 h-4 w-4" />
                         Editar
+                      </DropdownMenuItem>
+                    )}
+                    {canEditUsers() && (
+                      <DropdownMenuItem onClick={() => onOpenChangePassword(user)}>
+                        <Key className="mr-2 h-4 w-4" />
+                        Cambiar contraseña
                       </DropdownMenuItem>
                     )}
                     <ToggleUserStatusDialog

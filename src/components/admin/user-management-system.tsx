@@ -24,6 +24,7 @@ import {
   Save,
   X
 } from 'lucide-react'
+import { generateTemporaryPassword } from '@/lib/temp-password'
 
 interface User {
   id: string
@@ -207,6 +208,15 @@ export const UserManagementSystem: React.FC<UserManagementSystemProps> = ({ clas
       console.error('Error changing password:', error)
       alert('Error al cambiar contraseña')
     }
+  }
+
+  const generateNewPassword = () => {
+    const tempPassword = generateTemporaryPassword()
+    setPasswordData({
+      newPassword: tempPassword,
+      confirmPassword: tempPassword
+    })
+    alert(`Nueva contraseña generada:\n\n${tempPassword}\n\nCópiala y compártela de forma segura con el usuario.`)
   }
 
   const toggleUserStatus = async (userId: string, currentStatus: boolean) => {
@@ -655,6 +665,15 @@ export const UserManagementSystem: React.FC<UserManagementSystemProps> = ({ clas
                     onChange={(e) => setPasswordData({ ...passwordData, confirmPassword: e.target.value })}
                     required
                   />
+                </div>
+                <div className="flex justify-end">
+                  <Button
+                    type="button"
+                    variant="outline"
+                    onClick={generateNewPassword}
+                  >
+                    Generar nueva contraseña
+                  </Button>
                 </div>
                 <div className="flex gap-2">
                   <Button type="submit">

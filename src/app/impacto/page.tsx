@@ -160,8 +160,6 @@ export default function ImpactoPage() {
                       src="/static-images/sections/tarjeta-programas.jpg"
                       alt="Programas de Estrella del Sur"
                       className="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-all duration-500"
-                      width={1200}
-                      height={448}
                       fill
                     />
                   <div
@@ -200,8 +198,6 @@ export default function ImpactoPage() {
                       src="/static-images/sections/tarjeta-proyectos.jpg"
                       alt="Proyectos de Estrella del Sur"
                       className="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-all duration-500"
-                      width={1200}
-                      height={448}
                       fill
                     />
                   <div
@@ -239,8 +235,6 @@ export default function ImpactoPage() {
                     <Image
                       src="/static-images/sections/tarjeta-metodologias.jpg"
                       alt="Iniciativas de Estrella del Sur"
-                      width={1200}
-                      height={448}
                       fill
                       className="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-all duration-500"
                     />
