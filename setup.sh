@@ -12,10 +12,10 @@ set -e  # Exit on any error
 # Configuration variables - CHANGE THESE AS NEEDED
 APP_NAME="cms-estrella-sur"
 APP_USER="ubuntu"
-APP_DOMAIN="estrella.boring.lat"
+APP_DOMAIN="estrelladelsurbolivia.org"
 APP_PATH="/opt/$APP_NAME"
 APP_PORT="3000"
-GIT_REPO="https://github.com/MALVV/cms-estrella-sur.git"
+GIT_REPO="https://github.com/Estrella-Sur/sitio-web-estrella.git"
 
 # Colors for output
 RED='\033[0;31m'
