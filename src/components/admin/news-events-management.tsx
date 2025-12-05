@@ -70,6 +70,8 @@ export const NewsEventsManagement: React.FC<NewsEventsManagementProps> = ({ defa
     imageAlt: '',
     isFeatured: false,
     isActive: true,
+    // News specific
+    publishedAt: new Date().toISOString().split('T')[0], // Fecha de hoy por defecto
     // Event specific
     eventDate: '',
     location: '',
@@ -115,6 +117,7 @@ export const NewsEventsManagement: React.FC<NewsEventsManagementProps> = ({ defa
       imageAlt: '',
       isFeatured: false,
       isActive: true,
+      publishedAt: new Date().toISOString().split('T')[0],
       eventDate: '',
       location: '',
     });
@@ -171,6 +174,7 @@ export const NewsEventsManagement: React.FC<NewsEventsManagementProps> = ({ defa
             imageUrl: formData.imageUrl,
             imageAlt: formData.imageAlt,
             isFeatured: formData.isFeatured,
+            publishedAt: formData.publishedAt ? new Date(formData.publishedAt).toISOString() : new Date().toISOString(),
           }
         : {
             title: formData.title,
@@ -223,6 +227,7 @@ export const NewsEventsManagement: React.FC<NewsEventsManagementProps> = ({ defa
             imageAlt: formData.imageAlt,
             isFeatured: formData.isFeatured,
             isActive: formData.isActive,
+            publishedAt: formData.publishedAt ? new Date(formData.publishedAt).toISOString() : new Date().toISOString(),
           }
         : {
             title: formData.title,
@@ -369,6 +374,10 @@ export const NewsEventsManagement: React.FC<NewsEventsManagementProps> = ({ defa
 
   const openEditDialog = (item: NewsItem | EventItem) => {
     setEditingItem(item);
+    const publishedDate = 'publishedAt' in item && item.publishedAt
+      ? new Date(item.publishedAt).toISOString().split('T')[0]
+      : new Date().toISOString().split('T')[0];
+    
     setFormData({
       title: item.title,
       content: 'content' in item ? item.content || '' : '',
@@ -376,6 +385,7 @@ export const NewsEventsManagement: React.FC<NewsEventsManagementProps> = ({ defa
       imageAlt: item.imageAlt || '',
       isFeatured: item.isFeatured,
       isActive: item.isActive,
+      publishedAt: publishedDate,
       eventDate: 'eventDate' in item ? item.eventDate.split('T')[0] : '',
       location: 'location' in item ? item.location || '' : '',
     });
@@ -746,6 +756,18 @@ export const NewsEventsManagement: React.FC<NewsEventsManagementProps> = ({ defa
                     placeholder="Contenido de la noticia"
                     rows={6}
                   />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium mb-2">Fecha de Publicación *</label>
+                  <Input
+                    type="date"
+                    value={formData.publishedAt ?? new Date().toISOString().split('T')[0]}
+                    onChange={(e) => setFormData({ ...formData, publishedAt: e.target.value })}
+                    required
+                  />
+                  <p className="text-xs text-muted-foreground mt-1">
+                    Selecciona la fecha en que se publicó o se publicará la noticia
+                  </p>
                 </div>
               </>
             ) : (

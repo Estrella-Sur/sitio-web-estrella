@@ -12,6 +12,7 @@
     "db:seed": "prisma db seed",
     "db:studio": "prisma studio",
     "db:reset": "prisma migrate reset",
+    "db:create-admin": "tsx prisma/create-admin.ts",
     "docker:up": "sg docker -c 'docker-compose up -d'",
     "docker:down": "sg docker -c 'docker-compose down'",
     "docker:logs": "sg docker -c 'docker-compose logs -f'",

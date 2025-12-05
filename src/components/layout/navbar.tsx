@@ -5,6 +5,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { useSession } from 'next-auth/react';
 import { createPortal } from 'react-dom';
+import { ArrowRight } from 'lucide-react';
 
 export const Navbar: React.FC = () => {
   const { data: session, status } = useSession();
@@ -29,7 +30,18 @@ export const Navbar: React.FC = () => {
   const closeTimeouts = useRef<{ [key: string]: NodeJS.Timeout }>({});
 
   const toggleMenu = () => {
-    setIsMenuOpen(!isMenuOpen);
+    const newState = !isMenuOpen;
+    setIsMenuOpen(newState);
+    // Cerrar todos los dropdowns cuando se cierra el menú móvil
+    if (!newState) {
+      setIsBlogOpen(false);
+      setIsProgramasOpen(false);
+      setIsNosotrosOpen(false);
+      setIsHistoriasOpen(false);
+      setIsParticiparOpen(false);
+      setIsTransparenciaOpen(false);
+      setIsRecursosOpen(false);
+    }
   };
 
   // Función helper para manejar el hover con delay
@@ -103,7 +115,7 @@ export const Navbar: React.FC = () => {
               {/* Dropdown con portal para evitar cortes */}
               {isNosotrosOpen && nosotrosButtonRef && typeof window !== 'undefined' && createPortal(
                 <div 
-                  className="fixed bg-background-light dark:bg-background-dark border border-border-light dark:border-border-dark rounded-md shadow-lg z-[9999] min-w-[180px]"
+                  className="hidden md:block fixed bg-background-light dark:bg-background-dark border border-border-light dark:border-border-dark rounded-md shadow-lg z-[9999] min-w-[180px]"
                   style={{
                     top: nosotrosButtonRef.getBoundingClientRect().bottom + 4,
                     left: nosotrosButtonRef.getBoundingClientRect().left,
@@ -173,7 +185,7 @@ export const Navbar: React.FC = () => {
               {/* Dropdown con portal para evitar cortes */}
               {isProgramasOpen && programasButtonRef && typeof window !== 'undefined' && createPortal(
                 <div 
-                  className="fixed bg-background-light dark:bg-background-dark border border-border-light dark:border-border-dark rounded-md shadow-lg z-[9999] min-w-[200px]"
+                  className="hidden md:block fixed bg-background-light dark:bg-background-dark border border-border-light dark:border-border-dark rounded-md shadow-lg z-[9999] min-w-[200px]"
                   style={{
                     top: programasButtonRef.getBoundingClientRect().bottom + 4,
                     left: programasButtonRef.getBoundingClientRect().left,
@@ -252,7 +264,7 @@ export const Navbar: React.FC = () => {
               {/* Dropdown con portal para evitar cortes */}
               {isTransparenciaOpen && transparenciaButtonRef && typeof window !== 'undefined' && createPortal(
                 <div 
-                  className="fixed bg-background-light dark:bg-background-dark border border-border-light dark:border-border-dark rounded-md shadow-lg z-[9999] min-w-[220px]"
+                  className="hidden md:block fixed bg-background-light dark:bg-background-dark border border-border-light dark:border-border-dark rounded-md shadow-lg z-[9999] min-w-[220px]"
                   style={{
                     top: transparenciaButtonRef.getBoundingClientRect().bottom + 4,
                     left: transparenciaButtonRef.getBoundingClientRect().left,
@@ -304,7 +316,7 @@ export const Navbar: React.FC = () => {
               {/* Dropdown con portal para evitar cortes */}
               {isRecursosOpen && recursosButtonRef && typeof window !== 'undefined' && createPortal(
                 <div 
-                  className="fixed bg-background-light dark:bg-background-dark border border-border-light dark:border-border-dark rounded-md shadow-lg z-[9999] min-w-[200px]"
+                  className="hidden md:block fixed bg-background-light dark:bg-background-dark border border-border-light dark:border-border-dark rounded-md shadow-lg z-[9999] min-w-[200px]"
                   style={{
                     top: recursosButtonRef.getBoundingClientRect().bottom + 4,
                     left: recursosButtonRef.getBoundingClientRect().left,
@@ -374,7 +386,7 @@ export const Navbar: React.FC = () => {
               {/* Dropdown con portal para evitar cortes */}
               {isParticiparOpen && participarButtonRef && typeof window !== 'undefined' && createPortal(
                 <div 
-                  className="fixed bg-background-light dark:bg-background-dark border border-border-light dark:border-border-dark rounded-md shadow-lg z-[9999] min-w-[200px]"
+                  className="hidden md:block fixed bg-background-light dark:bg-background-dark border border-border-light dark:border-border-dark rounded-md shadow-lg z-[9999] min-w-[200px]"
                   style={{
                     top: participarButtonRef.getBoundingClientRect().bottom + 4,
                     left: participarButtonRef.getBoundingClientRect().left,
@@ -444,7 +456,7 @@ export const Navbar: React.FC = () => {
               {/* Dropdown con portal para evitar cortes */}
               {isHistoriasOpen && historiasButtonRef && typeof window !== 'undefined' && createPortal(
                 <div 
-                  className="fixed bg-background-light dark:bg-background-dark border border-border-light dark:border-border-dark rounded-md shadow-lg z-[9999] min-w-[200px]"
+                  className="hidden md:block fixed bg-background-light dark:bg-background-dark border border-border-light dark:border-border-dark rounded-md shadow-lg z-[9999] min-w-[200px]"
                   style={{
                     top: historiasButtonRef.getBoundingClientRect().bottom + 4,
                     left: historiasButtonRef.getBoundingClientRect().left,
@@ -505,7 +517,7 @@ export const Navbar: React.FC = () => {
               {/* Dropdown con portal para evitar cortes */}
               {isBlogOpen && blogButtonRef && typeof window !== 'undefined' && createPortal(
                 <div 
-                  className="fixed bg-background-light dark:bg-background-dark border border-border-light dark:border-border-dark rounded-md shadow-lg z-[9999] min-w-[180px]"
+                  className="hidden md:block fixed bg-background-light dark:bg-background-dark border border-border-light dark:border-border-dark rounded-md shadow-lg z-[9999] min-w-[180px]"
                   style={{
                     top: blogButtonRef.getBoundingClientRect().bottom + 4,
                     left: blogButtonRef.getBoundingClientRect().left,
@@ -564,7 +576,7 @@ export const Navbar: React.FC = () => {
                 href="/dashboard" 
                 className="flex items-center text-text-light dark:text-text-dark px-4 py-2 rounded text-sm hover:text-primary dark:hover:text-primary font-bold font-condensed uppercase"
               >
-                Panel de Control
+                Dashboard
               </Link>
             ) : (
               <Link 
@@ -576,7 +588,7 @@ export const Navbar: React.FC = () => {
             )}
             <Link className="flex items-center bg-primary text-white px-4 py-2 rounded text-sm hover:bg-primary/90 font-bold" href="/donar">
               Donar
-              <span className="material-symbols-outlined ml-2 text-base">arrow_forward</span>
+              <ArrowRight className="ml-2 h-4 w-4" />
             </Link>
           </div>
         </div>
@@ -584,39 +596,294 @@ export const Navbar: React.FC = () => {
         {/* Menú móvil desplegable */}
         {isMenuOpen && (
           <div className="md:hidden border-t border-border-light dark:border-border-dark bg-background-light dark:bg-background-dark">
-            <div className="px-4 py-4 space-y-4">
+            <div className="px-4 py-4 space-y-4 w-full">
               {/* Enlaces de navegación */}
-              <div className="space-y-3 font-condensed">
-                <Link href="/" className="block hover:text-primary dark:hover:text-primary font-bold uppercase py-2" onClick={() => setIsMenuOpen(false)}>Inicio</Link>
-                <Link href="/nosotros" className="block hover:text-primary dark:hover:text-primary font-bold uppercase py-2" onClick={() => setIsMenuOpen(false)}>Nosotros</Link>
-                <Link href="/impacto" className="block hover:text-primary dark:hover:text-primary font-bold uppercase py-2" onClick={() => setIsMenuOpen(false)}>Impacto</Link>
-                <Link href="/participar" className="block hover:text-primary dark:hover:text-primary font-bold uppercase py-2" onClick={() => setIsMenuOpen(false)}>Participar</Link>
-                <Link href="/historias-impacto" className="block hover:text-primary dark:hover:text-primary font-bold uppercase py-2" onClick={() => setIsMenuOpen(false)}>Comunidad</Link>
-                <Link href="/transparencia" className="block hover:text-primary dark:hover:text-primary font-bold uppercase py-2" onClick={() => setIsMenuOpen(false)}>Transparencia</Link>
-                <Link href="/recursos" className="block hover:text-primary dark:hover:text-primary font-bold uppercase py-2" onClick={() => setIsMenuOpen(false)}>Recursos</Link>
+              <div className="space-y-3 font-condensed w-full">
+                <Link href="/" className="block w-full hover:text-primary dark:hover:text-primary font-bold uppercase py-2" onClick={() => setIsMenuOpen(false)}>Inicio</Link>
                 
-                {/* Submenú de Blog en móvil (solo visual) */}
-                <div className="space-y-2">
-                  <div className="flex items-center justify-between">
-                    <span className="font-bold uppercase text-text-light dark:text-text-dark">Blog</span>
-                    <span className="text-text-light dark:text-text-dark">+</span>
+                {/* Dropdown de Nosotros en móvil */}
+                <div className="space-y-2 bg-transparent w-full">
+                  <button
+                    onClick={() => setIsNosotrosOpen(!isNosotrosOpen)}
+                    className="flex items-center justify-between w-full hover:text-primary dark:hover:text-primary font-bold uppercase py-2 bg-transparent text-left"
+                  >
+                    <span className="flex-1">Nosotros</span>
+                    <span className={`ml-2 transition-transform duration-200 flex-shrink-0 ${isNosotrosOpen ? 'rotate-45' : ''}`}>+</span>
+                  </button>
+                  {isNosotrosOpen && (
+                    <div className="ml-4 space-y-2 bg-transparent w-[calc(100%-1rem)]">
+                      <Link 
+                        href="/nosotros" 
+                        className="block w-full hover:text-primary dark:hover:text-primary font-bold uppercase py-1 text-sm transition-colors" 
+                        onClick={() => {
+                          setIsMenuOpen(false);
+                          setIsNosotrosOpen(false);
+                        }}
+                      >
+                        Quiénes Somos
+                      </Link>
+                      <Link 
+                        href="/equipo" 
+                        className="block w-full hover:text-primary dark:hover:text-primary font-bold uppercase py-1 text-sm transition-colors" 
+                        onClick={() => {
+                          setIsMenuOpen(false);
+                          setIsNosotrosOpen(false);
+                        }}
+                      >
+                        Nuestro Equipo
+                      </Link>
+                      <Link 
+                        href="/contacto" 
+                        className="block w-full hover:text-primary dark:hover:text-primary font-bold uppercase py-1 text-sm transition-colors" 
+                        onClick={() => {
+                          setIsMenuOpen(false);
+                          setIsNosotrosOpen(false);
+                        }}
+                      >
+                        Contactanos
+                      </Link>
+                    </div>
+                  )}
+                </div>
+
+                {/* Dropdown de Impacto en móvil */}
+                <div className="space-y-2 bg-transparent w-full">
+                  <button
+                    onClick={() => setIsProgramasOpen(!isProgramasOpen)}
+                    className="flex items-center justify-between w-full hover:text-primary dark:hover:text-primary font-bold uppercase py-2 bg-transparent text-left"
+                  >
+                    <span className="flex-1">Impacto</span>
+                    <span className={`ml-2 transition-transform duration-200 flex-shrink-0 ${isProgramasOpen ? 'rotate-45' : ''}`}>+</span>
+                  </button>
+                  {isProgramasOpen && (
+                    <div className="ml-4 space-y-2 bg-transparent w-[calc(100%-1rem)]">
+                      <Link 
+                        href="/impacto" 
+                        className="block w-full hover:text-primary dark:hover:text-primary font-bold uppercase py-1 text-sm transition-colors" 
+                        onClick={() => {
+                          setIsMenuOpen(false);
+                          setIsProgramasOpen(false);
+                        }}
+                      >
+                        Nuestro Trabajo
+                      </Link>
+                      <Link 
+                        href="/programas" 
+                        className="block w-full hover:text-primary dark:hover:text-primary font-bold uppercase py-1 text-sm transition-colors" 
+                        onClick={() => {
+                          setIsMenuOpen(false);
+                          setIsProgramasOpen(false);
+                        }}
+                      >
+                        Programas
+                      </Link>
+                      <Link 
+                        href="/proyectos" 
+                        className="block w-full hover:text-primary dark:hover:text-primary font-bold uppercase py-1 text-sm transition-colors" 
+                        onClick={() => {
+                          setIsMenuOpen(false);
+                          setIsProgramasOpen(false);
+                        }}
+                      >
+                        Proyectos
+                      </Link>
+                      <Link 
+                        href="/iniciativas" 
+                        className="block w-full hover:text-primary dark:hover:text-primary font-bold uppercase py-1 text-sm transition-colors" 
+                        onClick={() => {
+                          setIsMenuOpen(false);
+                          setIsProgramasOpen(false);
+                        }}
+                      >
+                        Iniciativas
+                      </Link>
+                    </div>
+                  )}
+                </div>
+
+                {/* Dropdown de Participar en móvil */}
+                <div className="space-y-2 bg-transparent w-full">
+                  <button
+                    onClick={() => setIsParticiparOpen(!isParticiparOpen)}
+                    className="flex items-center justify-between w-full hover:text-primary dark:hover:text-primary font-bold uppercase py-2 bg-transparent text-left"
+                  >
+                    <span className="flex-1">Participar</span>
+                    <span className={`ml-2 transition-transform duration-200 flex-shrink-0 ${isParticiparOpen ? 'rotate-45' : ''}`}>+</span>
+                  </button>
+                  {isParticiparOpen && (
+                    <div className="ml-4 space-y-2 bg-transparent w-[calc(100%-1rem)]">
+                      <Link 
+                        href="/participar" 
+                        className="block w-full hover:text-primary dark:hover:text-primary font-bold uppercase py-1 text-sm transition-colors" 
+                        onClick={() => {
+                          setIsMenuOpen(false);
+                          setIsParticiparOpen(false);
+                        }}
+                      >
+                        Cómo Participar
+                      </Link>
+                      <Link 
+                        href="/voluntariados" 
+                        className="block w-full hover:text-primary dark:hover:text-primary font-bold uppercase py-1 text-sm transition-colors" 
+                        onClick={() => {
+                          setIsMenuOpen(false);
+                          setIsParticiparOpen(false);
+                        }}
+                      >
+                        Voluntariados/Pasantías
+                      </Link>
+                      <Link 
+                        href="/convocatorias" 
+                        className="block w-full hover:text-primary dark:hover:text-primary font-bold uppercase py-1 text-sm transition-colors" 
+                        onClick={() => {
+                          setIsMenuOpen(false);
+                          setIsParticiparOpen(false);
+                        }}
+                      >
+                        Convocatorias
+                      </Link>
+                    </div>
+                  )}
+                </div>
+
+                {/* Dropdown de Comunidad en móvil */}
+                <div className="space-y-2 bg-transparent w-full">
+                  <button
+                    onClick={() => setIsHistoriasOpen(!isHistoriasOpen)}
+                    className="flex items-center justify-between w-full hover:text-primary dark:hover:text-primary font-bold uppercase py-2 bg-transparent text-left"
+                  >
+                    <span className="flex-1">Comunidad</span>
+                    <span className={`ml-2 transition-transform duration-200 flex-shrink-0 ${isHistoriasOpen ? 'rotate-45' : ''}`}>+</span>
+                  </button>
+                  {isHistoriasOpen && (
+                    <div className="ml-4 space-y-2 bg-transparent w-[calc(100%-1rem)]">
+                      <Link 
+                        href="/historias-impacto" 
+                        className="block w-full hover:text-primary dark:hover:text-primary font-bold uppercase py-1 text-sm transition-colors" 
+                        onClick={() => {
+                          setIsMenuOpen(false);
+                          setIsHistoriasOpen(false);
+                        }}
+                      >
+                        Historias de Impacto
+                      </Link>
+                      <Link 
+                        href="/videos-testimoniales" 
+                        className="block w-full hover:text-primary dark:hover:text-primary font-bold uppercase py-1 text-sm transition-colors" 
+                        onClick={() => {
+                          setIsMenuOpen(false);
+                          setIsHistoriasOpen(false);
+                        }}
+                      >
+                        Videos Testimoniales
+                      </Link>
+                    </div>
+                  )}
+                </div>
+
+                {/* Dropdown de Transparencia en móvil */}
+                <div className="space-y-2 bg-transparent w-full">
+                  <button
+                    onClick={() => setIsTransparenciaOpen(!isTransparenciaOpen)}
+                    className="flex items-center justify-between w-full hover:text-primary dark:hover:text-primary font-bold uppercase py-2 bg-transparent text-left"
+                  >
+                    <span className="flex-1">Transparencia</span>
+                    <span className={`ml-2 transition-transform duration-200 flex-shrink-0 ${isTransparenciaOpen ? 'rotate-45' : ''}`}>+</span>
+                  </button>
+                  {isTransparenciaOpen && (
+                    <div className="ml-4 space-y-2 bg-transparent w-[calc(100%-1rem)]">
+                      <Link 
+                        href="/transparencia" 
+                        className="block w-full hover:text-primary dark:hover:text-primary font-bold uppercase py-1 text-sm transition-colors" 
+                        onClick={() => {
+                          setIsMenuOpen(false);
+                          setIsTransparenciaOpen(false);
+                        }}
+                      >
+                        Documentos Institucionales
+                      </Link>
+                    </div>
+                  )}
+                </div>
+
+                {/* Dropdown de Recursos en móvil */}
+                <div className="space-y-2 bg-transparent w-full">
+                  <button
+                    onClick={() => setIsRecursosOpen(!isRecursosOpen)}
+                    className="flex items-center justify-between w-full hover:text-primary dark:hover:text-primary font-bold uppercase py-2 bg-transparent text-left"
+                  >
+                    <span className="flex-1">Recursos</span>
+                    <span className={`ml-2 transition-transform duration-200 flex-shrink-0 ${isRecursosOpen ? 'rotate-45' : ''}`}>+</span>
+                  </button>
+                  {isRecursosOpen && (
+                    <div className="ml-4 space-y-2 bg-transparent w-[calc(100%-1rem)]">
+                      <Link 
+                        href="/recursos" 
+                        className="block w-full hover:text-primary dark:hover:text-primary font-bold uppercase py-1 text-sm transition-colors" 
+                        onClick={() => {
+                          setIsMenuOpen(false);
+                          setIsRecursosOpen(false);
+                        }}
+                      >
+                        Biblioteca Digital
+                      </Link>
+                      <Link 
+                        href="/videos-testimoniales" 
+                        className="block w-full hover:text-primary dark:hover:text-primary font-bold uppercase py-1 text-sm transition-colors" 
+                        onClick={() => {
+                          setIsMenuOpen(false);
+                          setIsRecursosOpen(false);
+                        }}
+                      >
+                        Videos Testimoniales
+                      </Link>
+                      <Link 
+                        href="/recursos" 
+                        className="block w-full hover:text-primary dark:hover:text-primary font-bold uppercase py-1 text-sm transition-colors" 
+                        onClick={() => {
+                          setIsMenuOpen(false);
+                          setIsRecursosOpen(false);
+                        }}
+                      >
+                        Galeria de Fotografias
+                      </Link>
+                    </div>
+                  )}
                   </div>
-                  <div className="ml-4 space-y-2">
+                
+                {/* Dropdown de Blog en móvil */}
+                <div className="space-y-2 bg-transparent w-full">
+                  <button
+                    onClick={() => setIsBlogOpen(!isBlogOpen)}
+                    className="flex items-center justify-between w-full hover:text-primary dark:hover:text-primary font-bold uppercase py-2 bg-transparent text-left"
+                  >
+                    <span className="flex-1">Blog</span>
+                    <span className={`ml-2 transition-transform duration-200 flex-shrink-0 ${isBlogOpen ? 'rotate-45' : ''}`}>+</span>
+                  </button>
+                  {isBlogOpen && (
+                  <div className="ml-4 space-y-2 bg-transparent w-[calc(100%-1rem)]">
                     <Link 
                       href="/noticias-eventos" 
-                      className="block hover:text-primary dark:hover:text-primary font-bold uppercase py-1 text-sm transition-colors" 
-                      onClick={() => setIsMenuOpen(false)}
+                      className="block w-full hover:text-primary dark:hover:text-primary font-bold uppercase py-1 text-sm transition-colors" 
+                        onClick={() => {
+                          setIsMenuOpen(false);
+                          setIsBlogOpen(false);
+                        }}
                     >
                       Noticias
                     </Link>
                     <Link 
                       href="/noticias-eventos" 
-                      className="block hover:text-primary dark:hover:text-primary font-bold uppercase py-1 text-sm transition-colors" 
-                      onClick={() => setIsMenuOpen(false)}
+                      className="block w-full hover:text-primary dark:hover:text-primary font-bold uppercase py-1 text-sm transition-colors" 
+                        onClick={() => {
+                          setIsMenuOpen(false);
+                          setIsBlogOpen(false);
+                        }}
                     >
                       Eventos
                     </Link>
                   </div>
+                  )}
                 </div>
               </div>
               
@@ -633,7 +900,7 @@ export const Navbar: React.FC = () => {
                     className="flex items-center text-text-light dark:text-text-dark px-4 py-2 rounded text-sm hover:text-primary dark:hover:text-primary font-bold font-condensed uppercase"
                     onClick={() => setIsMenuOpen(false)}
                   >
-                    Panel de Control
+                    Dashboard
                   </Link>
                 ) : (
                   <Link 
@@ -647,21 +914,13 @@ export const Navbar: React.FC = () => {
                 
                 {/* Botones de acción */}
                 <div className="space-y-3 mt-4">
-                  <a 
-                    className="flex items-center justify-center border border-text-light dark:border-text-dark px-4 py-2 rounded text-sm hover:bg-gray-100 dark:hover:bg-gray-700 font-bold" 
-                    href="#"
-                    onClick={() => setIsMenuOpen(false)}
-                  >
-                    Obtener Ayuda
-                    <span className="material-symbols-outlined ml-2 text-base">arrow_forward</span>
-                  </a>
                   <Link 
                     className="flex items-center justify-center bg-primary text-white px-4 py-2 rounded text-sm hover:bg-primary/90 font-bold" 
                     href="/donar"
                     onClick={() => setIsMenuOpen(false)}
                   >
                     Donar
-                    <span className="material-symbols-outlined ml-2 text-base">arrow_forward</span>
+                    <ArrowRight className="ml-2 h-4 w-4" />
                   </Link>
                 </div>
               </div>

@@ -431,6 +431,9 @@ export default function ProyectosDonacionDashboardPage() {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
+          title: formData.projectTitle,
+          description: formData.projectDescription,
+          context: formData.projectDescription,
           accountNumber: formData.accountNumber,
           recipientName: formData.recipientName,
           qrImageUrl: finalQrImageUrl,
@@ -1014,6 +1017,29 @@ export default function ProyectosDonacionDashboardPage() {
             <DialogTitle>Editar Proyecto de Donación</DialogTitle>
           </DialogHeader>
           <form onSubmit={handleEditProject} className="space-y-4 w-full min-w-0">
+            <div>
+              <Label htmlFor="edit-projectTitle">Título del Proyecto *</Label>
+              <Input
+                id="edit-projectTitle"
+                value={formData.projectTitle}
+                onChange={(e) => setFormData(prev => ({ ...prev, projectTitle: e.target.value }))}
+                placeholder="Nombre del proyecto de donación"
+                required
+              />
+            </div>
+
+            <div>
+              <Label htmlFor="edit-projectDescription">Descripción del Proyecto *</Label>
+              <Textarea
+                id="edit-projectDescription"
+                value={formData.projectDescription}
+                onChange={(e) => setFormData(prev => ({ ...prev, projectDescription: e.target.value }))}
+                placeholder="Describe el proyecto y su impacto..."
+                rows={3}
+                required
+              />
+            </div>
+
             <div>
               <Label htmlFor="edit-targetAmount">Meta de Recaudación (Bs.)</Label>
               <Input

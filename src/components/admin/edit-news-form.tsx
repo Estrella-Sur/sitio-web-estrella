@@ -63,12 +63,18 @@ export const EditNewsForm: React.FC<EditNewsFormProps> = ({ news, onNewsUpdated,
     programId: 'none',
     projectId: 'none',
     methodologyId: 'none',
+    publishedAt: new Date().toISOString().split('T')[0], // Fecha de hoy por defecto
   });
   const { toast } = useToast();
   const { data: session } = useSession();
 
   useEffect(() => {
     if (news) {
+      // Formatear la fecha para el input type="date" (YYYY-MM-DD)
+      const publishedDate = news.publishedAt 
+        ? new Date(news.publishedAt).toISOString().split('T')[0]
+        : new Date().toISOString().split('T')[0];
+      
       setFormData({
         title: news.title,
         content: news.content,
@@ -79,6 +85,7 @@ export const EditNewsForm: React.FC<EditNewsFormProps> = ({ news, onNewsUpdated,
         programId: news.program?.id || 'none',
         projectId: news.project?.id || 'none',
         methodologyId: news.methodology?.id || 'none',
+        publishedAt: publishedDate,
       });
       setImageMarkedForDeletion(false);
       setSelectedImageFile(null);
@@ -257,6 +264,7 @@ export const EditNewsForm: React.FC<EditNewsFormProps> = ({ news, onNewsUpdated,
           ...formData,
           imageUrl: finalImageUrl || null,
           imageAlt: finalImageAlt || null,
+          publishedAt: formData.publishedAt ? new Date(formData.publishedAt).toISOString() : new Date().toISOString(),
           programId: formData.programId === 'none' ? null : formData.programId,
           projectId: formData.projectId === 'none' ? null : formData.projectId,
           methodologyId: formData.methodologyId === 'none' ? null : formData.methodologyId,
@@ -349,6 +357,10 @@ export const EditNewsForm: React.FC<EditNewsFormProps> = ({ news, onNewsUpdated,
         setImageMarkedForDeletion(false);
         setSelectedImageFile(null);
         setImagePreviewUrl('');
+        const publishedDate = news.publishedAt 
+          ? new Date(news.publishedAt).toISOString().split('T')[0]
+          : new Date().toISOString().split('T')[0];
+        
         setFormData({
           title: news.title,
           content: news.content,
@@ -359,6 +371,7 @@ export const EditNewsForm: React.FC<EditNewsFormProps> = ({ news, onNewsUpdated,
           programId: news.program?.id || 'none',
           projectId: news.project?.id || 'none',
           methodologyId: news.methodology?.id || 'none',
+          publishedAt: publishedDate,
         });
       }
     }}>
@@ -522,6 +535,20 @@ export const EditNewsForm: React.FC<EditNewsFormProps> = ({ news, onNewsUpdated,
             </div>
           </div>
 
+          <div>
+            <label className="text-sm font-medium">Fecha de Publicación *</label>
+            <Input
+              type="date"
+              value={formData.publishedAt ?? new Date().toISOString().split('T')[0]}
+              onChange={(e) => handleChange('publishedAt', e.target.value)}
+              required
+              className="mt-1"
+            />
+            <p className="text-xs text-muted-foreground mt-1">
+              Selecciona la fecha en que se publicó o se publicará la noticia
+            </p>
+          </div>
+
           <div className="flex items-center space-x-4">
             <label className="flex items-center space-x-2">
               <input
@@ -550,6 +577,10 @@ export const EditNewsForm: React.FC<EditNewsFormProps> = ({ news, onNewsUpdated,
               setSelectedImageFile(null);
               setImagePreviewUrl('');
               // Resetear a valores originales
+              const publishedDate = news.publishedAt 
+                ? new Date(news.publishedAt).toISOString().split('T')[0]
+                : new Date().toISOString().split('T')[0];
+              
               setFormData({
                 title: news.title,
                 content: news.content,
@@ -560,6 +591,7 @@ export const EditNewsForm: React.FC<EditNewsFormProps> = ({ news, onNewsUpdated,
                 programId: news.program?.id || 'none',
                 projectId: news.project?.id || 'none',
                 methodologyId: news.methodology?.id || 'none',
+                publishedAt: publishedDate,
               });
             }}>
               Cancelar

@@ -74,7 +74,17 @@ export default function DonarPage() {
   }, []);
 
   const formatDate = (dateString: string) => {
-    return new Date(dateString).toLocaleDateString('es-ES', {
+    if (!dateString) return '';
+    const dateMatch = dateString.match(/(\d{4})-(\d{2})-(\d{2})/);
+    if (!dateMatch) {
+      return new Date(dateString).toLocaleDateString('es-ES', {
+        year: 'numeric',
+        month: 'long'
+      });
+    }
+    const [, year, month, day] = dateMatch;
+    const date = new Date(parseInt(year), parseInt(month) - 1, parseInt(day));
+    return date.toLocaleDateString('es-ES', {
       year: 'numeric',
       month: 'long'
     });
@@ -88,7 +98,7 @@ export default function DonarPage() {
       <div 
         className="relative min-h-screen flex items-start"
         style={{
-          backgroundImage: "url('https://images.unsplash.com/photo-1593113598332-cd288d649433?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80')",
+          backgroundImage: "url('/static-images/heroes/donaciones_hero.jpg')",
           backgroundSize: 'cover',
           backgroundPosition: 'center'
         }}

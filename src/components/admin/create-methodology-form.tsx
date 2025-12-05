@@ -308,22 +308,35 @@ export function CreateMethodologyForm({ onSuccess, onCancel }: CreateMethodology
   const getSectorColor = (sector: string) => {
     switch (sector) {
       case 'SALUD':
-        return 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200';
+        return 'bg-red-500 text-white dark:bg-red-600 dark:text-white font-semibold';
       case 'EDUCACION':
-        return 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200';
+        return 'bg-blue-500 text-white dark:bg-blue-600 dark:text-white font-semibold';
       case 'MEDIOS_DE_VIDA':
-        return 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200';
+        return 'bg-green-500 text-white dark:bg-green-600 dark:text-white font-semibold';
       case 'PROTECCION':
-        return 'bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-200';
+        return 'bg-purple-500 text-white dark:bg-purple-600 dark:text-white font-semibold';
       case 'SOSTENIBILIDAD':
-        return 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200';
+        return 'bg-emerald-500 text-white dark:bg-emerald-600 dark:text-white font-semibold';
       case 'DESARROLLO_INFANTIL_TEMPRANO':
-        return 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200';
+        return 'bg-amber-600 text-white dark:bg-amber-700 dark:text-white font-semibold';
       case 'NINEZ_EN_CRISIS':
-        return 'bg-orange-100 text-orange-800 dark:bg-orange-900 dark:text-orange-200';
+        return 'bg-orange-500 text-white dark:bg-orange-600 dark:text-white font-semibold';
       default:
-        return 'bg-gray-100 text-gray-800 dark:bg-gray-900 dark:text-gray-200';
+        return 'bg-gray-500 text-white dark:bg-gray-600 dark:text-white font-semibold';
     }
+  };
+
+  const getSectorLabel = (sector: string) => {
+    const sectorLabels: Record<string, string> = {
+      'SALUD': 'Salud',
+      'EDUCACION': 'Educación',
+      'MEDIOS_DE_VIDA': 'Medios de Vida',
+      'PROTECCION': 'Protección',
+      'SOSTENIBILIDAD': 'Sostenibilidad',
+      'DESARROLLO_INFANTIL_TEMPRANO': 'Desarrollo Infantil Temprano',
+      'NINEZ_EN_CRISIS': 'Niñez en Crisis'
+    };
+    return sectorLabels[sector] || sector.replace(/_/g, ' ');
   };
 
   return (
@@ -379,7 +392,7 @@ export function CreateMethodologyForm({ onSuccess, onCancel }: CreateMethodology
                 <div className="mt-2 flex flex-wrap gap-2">
                   {formData.sectors.map((sector) => (
                     <Badge key={sector} className={getSectorColor(sector)}>
-                      {sector.replace(/_/g, ' ')}
+                      {getSectorLabel(sector)}
                     </Badge>
                   ))}
                 </div>

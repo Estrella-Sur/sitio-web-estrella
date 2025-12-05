@@ -140,7 +140,17 @@ export default function DonateToProjectPage({ params }: { params: Promise<{ id: 
   };
 
   const formatDate = (dateString: string) => {
-    return new Date(dateString).toLocaleDateString('es-ES', {
+    if (!dateString) return '';
+    const dateMatch = dateString.match(/(\d{4})-(\d{2})-(\d{2})/);
+    if (!dateMatch) {
+      return new Date(dateString).toLocaleDateString('es-ES', {
+        year: 'numeric',
+        month: 'long'
+      });
+    }
+    const [, year, month, day] = dateMatch;
+    const date = new Date(parseInt(year), parseInt(month) - 1, parseInt(day));
+    return date.toLocaleDateString('es-ES', {
       year: 'numeric',
       month: 'long'
     });

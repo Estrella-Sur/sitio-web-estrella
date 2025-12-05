@@ -61,14 +61,47 @@ export default function ProjectsPage() {
       fetchProjects();
   }, []);
 
+  const formatDate = (dateString: string) => {
+    if (!dateString) return '';
+    const dateMatch = dateString.match(/(\d{4})-(\d{2})-(\d{2})/);
+    if (!dateMatch) {
+      return new Date(dateString).toLocaleDateString('es-ES', { 
+        day: '2-digit', 
+        month: '2-digit', 
+        year: 'numeric' 
+      });
+    }
+    const [, year, month, day] = dateMatch;
+    const date = new Date(parseInt(year), parseInt(month) - 1, parseInt(day));
+    return date.toLocaleDateString('es-ES', { 
+      day: '2-digit', 
+      month: '2-digit', 
+      year: 'numeric' 
+    });
+  };
+
   const _formatPeriod = (start: string, end: string) => {
-    const startDate = new Date(start);
-    const endDate = new Date(end);
+    const startMatch = start.match(/(\d{4})-(\d{2})-(\d{2})/);
+    const endMatch = end.match(/(\d{4})-(\d{2})-(\d{2})/);
     
-    const startMonth = startDate.toLocaleDateString('es-ES', { month: 'long' });
-    const endMonth = endDate.toLocaleDateString('es-ES', { month: 'long' });
+    if (!startMatch || !endMatch) {
+      const startDate = new Date(start);
+      const endDate = new Date(end);
+      const startMonth = startDate.toLocaleDateString('es-ES', { month: 'long' });
+      const endMonth = endDate.toLocaleDateString('es-ES', { month: 'long' });
+      return `${startMonth} ${startDate.getFullYear()} - ${endMonth} ${endDate.getFullYear()}`;
+    }
     
-    return `${startMonth} ${startDate.getFullYear()} - ${endMonth} ${endDate.getFullYear()}`;
+    const [, startYear, startMonth, startDay] = startMatch;
+    const [, endYear, endMonth, endDay] = endMatch;
+    
+    const startDate = new Date(parseInt(startYear), parseInt(startMonth) - 1, parseInt(startDay));
+    const endDate = new Date(parseInt(endYear), parseInt(endMonth) - 1, parseInt(endDay));
+    
+    const startMonthName = startDate.toLocaleDateString('es-ES', { month: 'long' });
+    const endMonthName = endDate.toLocaleDateString('es-ES', { month: 'long' });
+    
+    return `${startMonthName} ${startDate.getFullYear()} - ${endMonthName} ${endDate.getFullYear()}`;
   };
 
   if (loading) {
@@ -182,19 +215,11 @@ export default function ProjectsPage() {
                       <div className="flex items-center gap-2 text-xs text-gray-600 dark:text-gray-400 mb-1.5 min-h-[1rem]">
                         <Calendar className="h-3 w-3" />
                         <span className="font-medium">
-                          {new Date(project.executionStart).toLocaleDateString('es-ES', { 
-                            day: '2-digit', 
-                            month: '2-digit', 
-                            year: 'numeric' 
-                          })}
+                          {formatDate(project.executionStart)}
                         </span>
                         <span className="text-gray-400">-</span>
                         <span className="font-medium">
-                          {new Date(project.executionEnd).toLocaleDateString('es-ES', { 
-                            day: '2-digit', 
-                            month: '2-digit', 
-                            year: 'numeric' 
-                          })}
+                          {formatDate(project.executionEnd)}
                         </span>
                       </div>
                       

@@ -29,6 +29,7 @@ export const ToggleNewsStatusDialog: React.FC<ToggleNewsStatusDialogProps> = ({
   const isActivating = !news.isActive;
   const action = isActivating ? 'activar' : 'desactivar';
   const actionCapitalized = isActivating ? 'Activar' : 'Desactivar';
+  const actionPast = isActivating ? 'activada' : 'desactivada';
 
   const handleToggleStatus = async () => {
     setIsLoading(true);
@@ -49,7 +50,7 @@ export const ToggleNewsStatusDialog: React.FC<ToggleNewsStatusDialogProps> = ({
         throw new Error(errorData.error || 'Error al cambiar estado de la noticia');
       }
 
-      toast.success(`Noticia ${action} exitosamente`);
+      toast.success(`Noticia ${actionPast} exitosamente`);
       setIsOpen(false);
       onStatusChanged(news.id, !news.isActive);
     } catch (error) {

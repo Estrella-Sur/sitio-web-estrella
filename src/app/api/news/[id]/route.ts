@@ -100,6 +100,7 @@ export async function PUT(
       programId,
       projectId,
       methodologyId,
+      publishedAt,
     } = body;
 
     const existingNews = await prisma.news.findUnique({
@@ -202,6 +203,7 @@ export async function PUT(
         imageAlt: imageAlt === undefined ? existingNews.imageAlt : (imageAlt || null),
         isFeatured: isFeatured ?? existingNews.isFeatured,
         isActive: isActive ?? existingNews.isActive,
+        publishedAt: publishedAt ? new Date(publishedAt) : existingNews.publishedAt,
         // Actualizar relaciones
         programId: programId ?? null,
         projectId: projectId ?? null,

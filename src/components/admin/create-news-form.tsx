@@ -49,6 +49,7 @@ export const CreateNewsForm: React.FC<CreateNewsFormProps> = ({ onNewsCreated })
     programId: 'none',
     projectId: 'none',
     methodologyId: 'none',
+    publishedAt: new Date().toISOString().split('T')[0], // Fecha de hoy por defecto (formato YYYY-MM-DD)
   });
   const { toast } = useToast();
   const { data: session } = useSession();
@@ -123,13 +124,14 @@ export const CreateNewsForm: React.FC<CreateNewsFormProps> = ({ onNewsCreated })
 
     try {
       setLoading(true);
+      console.log('[CreateNewsForm] Iniciando creación de noticia...');
       
       // Si hay una imagen seleccionada, subirla al bucket primero
       let finalImageUrl = formData.imageUrl;
       let finalImageAlt = formData.imageAlt;
       
       if (selectedImageFile) {
-        console.log('[CreateNewsForm] handleSubmit - Iniciando subida de imagen al bucket (usuario presionó "Crear")');
+        console.log('[CreateNewsForm] Subiendo imagen al bucket...');
         setUploading(true);
         try {
           const maxMb = Number(process.env.NEXT_PUBLIC_MAX_UPLOAD_MB || process.env.MAX_UPLOAD_MB || 20);
@@ -153,15 +155,18 @@ export const CreateNewsForm: React.FC<CreateNewsFormProps> = ({ onNewsCreated })
           });
 
           if (!uploadResponse.ok) {
-            const error = await uploadResponse.json();
+            const error = await uploadResponse.json().catch(() => ({ error: 'Error desconocido al subir imagen' }));
             throw new Error(error.error || 'Error al subir imagen');
           }
 
           const uploadData = await uploadResponse.json();
           finalImageUrl = uploadData.url;
-          finalImageAlt = uploadData.alt || selectedImageFile.name;
+          // Priorizar el valor que el usuario haya ingresado en el formulario
+          // Solo usar el valor del servidor o el nombre del archivo si el usuario no ingresó nada
+          finalImageAlt = formData.imageAlt || uploadData.alt || selectedImageFile.name;
+          console.log('[CreateNewsForm] Imagen subida exitosamente:', finalImageUrl);
         } catch (error) {
-          console.error('Error uploading file:', error);
+          console.error('[CreateNewsForm] Error uploading file:', error);
           toast({
             title: 'Error',
             description: error instanceof Error ? error.message : 'Error al subir la imagen',
@@ -175,58 +180,86 @@ export const CreateNewsForm: React.FC<CreateNewsFormProps> = ({ onNewsCreated })
         }
       }
       
-      const response = await fetch('/api/news', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${session?.customToken}`,
-        },
-        body: JSON.stringify({
-          ...formData,
-          imageUrl: finalImageUrl || null,
-          imageAlt: finalImageAlt || null,
-          publishedAt: new Date().toISOString(),
-          programId: formData.programId === 'none' ? null : formData.programId,
-          projectId: formData.projectId === 'none' ? null : formData.projectId,
-          methodologyId: formData.methodologyId === 'none' ? null : formData.methodologyId,
-        }),
-      });
+      console.log('[CreateNewsForm] Creando noticia en la base de datos...');
+      
+      // Agregar timeout a la creación de noticia
+      const createController = new AbortController();
+      const createTimeout = setTimeout(() => createController.abort(), 30000); // 30 segundos
 
-      if (!response.ok) {
-        throw new Error('Error al crear noticia');
+      try {
+        const response = await fetch('/api/news', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${session?.customToken}`,
+          },
+          credentials: 'include',
+          body: JSON.stringify({
+            ...formData,
+            imageUrl: finalImageUrl || null,
+            imageAlt: finalImageAlt || null,
+            publishedAt: formData.publishedAt ? new Date(formData.publishedAt).toISOString() : new Date().toISOString(),
+            programId: formData.programId === 'none' ? null : formData.programId,
+            projectId: formData.projectId === 'none' ? null : formData.projectId,
+            methodologyId: formData.methodologyId === 'none' ? null : formData.methodologyId,
+          }),
+          signal: createController.signal,
+        });
+
+        clearTimeout(createTimeout);
+
+        if (!response.ok) {
+          const errorData = await response.json().catch(() => ({ error: 'Error desconocido al crear noticia' }));
+          throw new Error(errorData.error || errorData.message || 'Error al crear noticia');
+        }
+
+        const createdNews = await response.json();
+        console.log('[CreateNewsForm] Noticia creada exitosamente:', createdNews.id);
+
+        toast({
+          title: 'Éxito',
+          description: 'Noticia creada exitosamente',
+        });
+
+        // Reset form
+        setFormData({
+          title: '',
+          content: '',
+          imageUrl: '',
+          imageAlt: '',
+          isActive: true,
+          isFeatured: false,
+          programId: 'none',
+          projectId: 'none',
+          methodologyId: 'none',
+          publishedAt: new Date().toISOString().split('T')[0],
+        });
+        setSelectedImageFile(null);
+        setImagePreviewUrl('');
+
+        setIsOpen(false);
+        
+        // Llamar onNewsCreated después de cerrar el diálogo para evitar bloqueos
+        setTimeout(() => {
+          onNewsCreated();
+        }, 100);
+      } catch (createError: any) {
+        clearTimeout(createTimeout);
+        if (createError.name === 'AbortError') {
+          throw new Error('La creación de la noticia tardó demasiado. Por favor, intenta nuevamente.');
+        }
+        throw createError;
       }
-
-      toast({
-        title: 'Éxito',
-        description: 'Noticia creada exitosamente',
-      });
-
-      // Reset form
-      setFormData({
-        title: '',
-        content: '',
-        imageUrl: '',
-        imageAlt: '',
-        isActive: true,
-        isFeatured: false,
-        programId: 'none',
-        projectId: 'none',
-        methodologyId: 'none',
-      });
-      setSelectedImageFile(null);
-      setImagePreviewUrl('');
-
-      setIsOpen(false);
-      onNewsCreated();
     } catch (error) {
-      console.error('Error al crear noticia:', error);
+      console.error('[CreateNewsForm] Error al crear noticia:', error);
       toast({
         title: 'Error',
-        description: 'Error al crear la noticia',
+        description: error instanceof Error ? error.message : 'Error al crear la noticia',
         variant: 'destructive',
       });
     } finally {
       setLoading(false);
+      setUploading(false);
     }
   };
 
@@ -257,10 +290,12 @@ export const CreateNewsForm: React.FC<CreateNewsFormProps> = ({ onNewsCreated })
         const previewUrl = reader.result as string;
         setImagePreviewUrl(previewUrl);
         setSelectedImageFile(file);
-      setFormData(prev => ({
-        ...prev,
-          imageAlt: file.name,
-      }));
+        // Solo establecer el nombre del archivo como alt si el campo está vacío
+        // Esto permite que el usuario pueda cambiar el valor después
+        setFormData(prev => ({
+          ...prev,
+          imageAlt: prev.imageAlt || file.name,
+        }));
         console.log('[CreateNewsForm] Preview local creado - Archivo guardado para subir después');
       };
       reader.readAsDataURL(file);
@@ -296,6 +331,7 @@ export const CreateNewsForm: React.FC<CreateNewsFormProps> = ({ onNewsCreated })
           programId: 'none',
           projectId: 'none',
           methodologyId: 'none',
+          publishedAt: new Date().toISOString().split('T')[0],
         });
       }
     }}>
@@ -459,6 +495,20 @@ export const CreateNewsForm: React.FC<CreateNewsFormProps> = ({ onNewsCreated })
                 </SelectContent>
               </Select>
             </div>
+          </div>
+
+          <div>
+            <label className="text-sm font-medium">Fecha de Publicación *</label>
+            <Input
+              type="date"
+              value={formData.publishedAt ?? new Date().toISOString().split('T')[0]}
+              onChange={(e) => handleChange('publishedAt', e.target.value)}
+              required
+              className="mt-1"
+            />
+            <p className="text-xs text-muted-foreground mt-1">
+              Selecciona la fecha en que se publicó o se publicará la noticia
+            </p>
           </div>
 
           <div className="flex items-center space-x-4">

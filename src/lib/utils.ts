@@ -58,3 +58,33 @@ export function getSafeImageUrl(url: string | null | undefined, fallback?: strin
   }
   return url
 }
+
+/**
+ * Formatea una fecha sin conversión de zona horaria
+ * Evita el problema donde fechas como "2016-04-01" se muestran como "2016-03-31"
+ * debido a la conversión UTC a zona horaria local
+ */
+export function formatDateLocal(dateString: string, options?: Intl.DateTimeFormatOptions): string {
+  if (!dateString) return '';
+  
+  // Parsear la fecha manualmente para evitar conversión de zona horaria
+  // Si la fecha viene como "2016-04-01" o "2016-04-01T00:00:00.000Z"
+  const dateMatch = dateString.match(/(\d{4})-(\d{2})-(\d{2})/);
+  if (!dateMatch) {
+    // Si no coincide el formato esperado, usar Date normal como fallback
+    return new Date(dateString).toLocaleDateString('es-ES', options);
+  }
+  
+  const [, year, month, day] = dateMatch;
+  // Crear fecha en zona horaria local directamente
+  const date = new Date(parseInt(year), parseInt(month) - 1, parseInt(day));
+  
+  const defaultOptions: Intl.DateTimeFormatOptions = {
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+    ...options
+  };
+  
+  return date.toLocaleDateString('es-ES', defaultOptions);
+}

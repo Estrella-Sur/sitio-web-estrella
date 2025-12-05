@@ -334,9 +334,9 @@ export const UserManagementSystem: React.FC<UserManagementSystemProps> = ({ clas
                 className="px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
               >
                 <option value="ALL">Todos los roles</option>
-                <option value={UserRole.ADMINISTRATOR}>ADMINISTRATOR</option>
-                <option value={UserRole.MANAGER}>MANAGER de Contenido</option>
-                <option value={UserRole.MANAGER}>MANAGER de Contenido</option>
+                <option value={UserRole.ADMINISTRATOR}>{getRoleDisplayName(UserRole.ADMINISTRATOR)}</option>
+                <option value={UserRole.MANAGER}>{getRoleDisplayName(UserRole.MANAGER)}</option>
+                <option value={UserRole.CONSULTANT}>{getRoleDisplayName(UserRole.CONSULTANT)}</option>
               </select>
 
               <select
@@ -407,9 +407,9 @@ export const UserManagementSystem: React.FC<UserManagementSystemProps> = ({ clas
                     onChange={(e) => setFormData({ ...formData, role: e.target.value as UserRole })}
                     className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
                   >
-                    <option value={UserRole.MANAGER}>MANAGER de Contenido</option>
-                    <option value={UserRole.MANAGER}>MANAGER de Contenido</option>
-                    <option value={UserRole.ADMINISTRATOR}>ADMINISTRATOR</option>
+                    <option value={UserRole.MANAGER}>{getRoleDisplayName(UserRole.MANAGER)}</option>
+                    <option value={UserRole.CONSULTANT}>{getRoleDisplayName(UserRole.CONSULTANT)}</option>
+                    <option value={UserRole.ADMINISTRATOR}>{getRoleDisplayName(UserRole.ADMINISTRATOR)}</option>
                   </select>
                 </div>
               </div>
@@ -603,9 +603,9 @@ export const UserManagementSystem: React.FC<UserManagementSystemProps> = ({ clas
                     onChange={(e) => setEditData({ ...editData, role: e.target.value as UserRole })}
                     className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
                   >
-                    <option value={UserRole.MANAGER}>MANAGER de Contenido</option>
-                    <option value={UserRole.MANAGER}>MANAGER de Contenido</option>
-                    <option value={UserRole.ADMINISTRATOR}>ADMINISTRATOR</option>
+                    <option value={UserRole.MANAGER}>{getRoleDisplayName(UserRole.MANAGER)}</option>
+                    <option value={UserRole.CONSULTANT}>{getRoleDisplayName(UserRole.CONSULTANT)}</option>
+                    <option value={UserRole.ADMINISTRATOR}>{getRoleDisplayName(UserRole.ADMINISTRATOR)}</option>
                   </select>
                 </div>
                 <div className="flex items-center gap-2">

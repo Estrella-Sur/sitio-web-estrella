@@ -8,7 +8,7 @@ export enum UserRole {
 export function getRoleDisplayName(role: string): string {
   const roleNames: Record<string, string> = {
     'ADMINISTRATOR': 'Administrador',
-    'MANAGER': 'Manager',
+    'MANAGER': 'Gestor',
     'CONSULTANT': 'Consultor'
   }
   return roleNames[role] || role

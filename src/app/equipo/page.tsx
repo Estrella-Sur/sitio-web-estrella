@@ -538,7 +538,7 @@ export default function EquipoPage() {
             <div className="text-center mb-6">
               <h3 className="text-4xl font-bold text-text-light dark:text-text-dark mb-4">ÁREA DE FINANZAS</h3>
             </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 justify-items-center">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 justify-items-center">
               <div className="text-center">
                 <Image 
                   alt="Portrait of Lic. Pablo Abner Tejada Calizaya" 
@@ -583,34 +583,13 @@ export default function EquipoPage() {
               </div>
               <div className="text-center">
                 <Image 
-                  alt="Portrait of Roxanita" 
+                  alt="Portrait of Roxana Luz Rosales Diego" 
                   className="w-64 h-80 object-cover mx-auto" 
                   src="/static-images/team/ROXANITA.jpg"
                   width={256}
                   height={320}
                 />
                 <p className="text-xs text-gray-600 dark:text-gray-400 mt-4">Área de Finanzas</p>
-                <h4 className="text-lg font-bold text-text-light dark:text-text-dark">ROXANITA</h4>
-                <div className="mt-1 space-y-1">
-                  <div className="flex items-center justify-center gap-2 text-xs text-gray-500 dark:text-gray-500">
-                    <Phone className="h-3 w-3" />
-                    <span>N/A</span>
-                  </div>
-                  <div className="flex items-center justify-center gap-2 text-xs text-gray-500 dark:text-gray-500">
-                    <Mail className="h-3 w-3" />
-                    <span>N/A</span>
-                  </div>
-                </div>
-              </div>
-              <div className="text-center">
-                <Image 
-                  alt="Portrait of Roxana Luz Rosales Diego" 
-                  className="w-64 h-80 object-cover mx-auto" 
-                  src="/static-images/sections/user_default.png"
-                  width={256}
-                  height={320}
-                />
-                <p className="text-xs text-gray-600 dark:text-gray-400 mt-4">Conserje - Portera</p>
                 <h4 className="text-lg font-bold text-text-light dark:text-text-dark">ROXANA LUZ ROSALES DIEGO</h4>
                 <div className="mt-1 space-y-1">
                   <div className="flex items-center justify-center gap-2 text-xs text-gray-500 dark:text-gray-500">

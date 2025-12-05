@@ -112,8 +112,14 @@ export async function GET(request: NextRequest) {
 
 // POST - Crear nueva noticia (requiere autenticación)
 export async function POST(request: NextRequest) {
+  const startTime = Date.now();
   try {
+    console.log('[News API] Iniciando creación de noticia...');
+    
+    const authStartTime = Date.now();
     const authResult = await verifyAuth(request);
+    console.log(`[News API] Autenticación completada en ${Date.now() - authStartTime}ms`);
+    
     if (!authResult.isAuthenticated || !authResult.user) {
       return NextResponse.json(
         { error: 'No autorizado' },
@@ -123,7 +129,10 @@ export async function POST(request: NextRequest) {
 
     const user = authResult.user;
 
+    const bodyStartTime = Date.now();
     const body = await request.json();
+    console.log(`[News API] Body parseado en ${Date.now() - bodyStartTime}ms`);
+    
     const {
       title,
       content,
@@ -133,6 +142,7 @@ export async function POST(request: NextRequest) {
       programId,
       projectId,
       methodologyId,
+      publishedAt,
     } = body;
 
     if (!title || !content) {
@@ -150,6 +160,10 @@ export async function POST(request: NextRequest) {
       return url;
     };
 
+    console.log('[News API] Creando noticia en la base de datos...');
+    const dbStartTime = Date.now();
+    
+    // Crear la noticia sin includes para ser más rápido
     const news = await prisma.news.create({
       data: {
         title,
@@ -160,35 +174,33 @@ export async function POST(request: NextRequest) {
         programId,
         projectId,
         methodologyId,
+        publishedAt: publishedAt ? new Date(publishedAt) : new Date(),
         createdBy: user.id,
       },
-      include: {
+      // Solo incluir lo esencial para la respuesta
+      select: {
+        id: true,
+        title: true,
+        content: true,
+        imageUrl: true,
+        imageAlt: true,
+        isFeatured: true,
+        isActive: true,
+        publishedAt: true,
+        createdAt: true,
+        programId: true,
+        projectId: true,
+        methodologyId: true,
         author: {
           select: {
             name: true,
             email: true,
           },
         },
-        program: {
-          select: {
-            id: true,
-            sectorName: true,
-          },
-        },
-        project: {
-          select: {
-            id: true,
-            title: true,
-          },
-        },
-        methodology: {
-          select: {
-            id: true,
-            title: true,
-          },
-        },
       },
     });
+    
+    console.log(`[News API] Noticia creada en ${Date.now() - dbStartTime}ms`);
 
     // Normalizar imageUrl antes de devolver
     const normalizeImageUrl = (url: string | null | undefined): string | null => {
@@ -204,11 +216,16 @@ export async function POST(request: NextRequest) {
       imageAlt: news.imageAlt || null,
     };
 
+    console.log(`[News API] Noticia creada exitosamente en ${Date.now() - startTime}ms total`);
+    
     return NextResponse.json(normalizedNews, { status: 201 });
   } catch (error) {
-    console.error('Error creating news:', error);
+    console.error(`[News API] Error después de ${Date.now() - startTime}ms:`, error);
     return NextResponse.json(
-      { error: 'Error interno del servidor' },
+      { 
+        error: 'Error interno del servidor',
+        message: error instanceof Error ? error.message : 'Error desconocido'
+      },
       { status: 500 }
     );
   }

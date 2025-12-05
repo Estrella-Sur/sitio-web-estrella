@@ -187,8 +187,9 @@ export const UserManagement: React.FC<UserManagementProps> = ({ className }) => 
                 className="px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
               >
                 <option value="ALL">Todos los roles</option>
-                <option value={UserRole.ADMINISTRATOR}>ADMINISTRATOR</option>
-                <option value={UserRole.MANAGER}>MANAGER de Contenido</option>
+                <option value={UserRole.ADMINISTRATOR}>{getRoleDisplayName(UserRole.ADMINISTRATOR)}</option>
+                <option value={UserRole.MANAGER}>{getRoleDisplayName(UserRole.MANAGER)}</option>
+                <option value={UserRole.CONSULTANT}>{getRoleDisplayName(UserRole.CONSULTANT)}</option>
               </select>
 
               {/* Filtro por estado */}

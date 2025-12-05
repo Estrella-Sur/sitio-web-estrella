@@ -80,6 +80,7 @@ export async function PUT(
       imageUrl,
       imageAlt,
       presentationVideo,
+      videoThumbnail,
       odsAlignment,
       resultsAreas,
       results,
@@ -148,6 +149,25 @@ export async function PUT(
       }
     }
 
+    // Determinar si necesitamos eliminar la miniatura de video anterior
+    const finalVideoThumbnail = normalizeImageUrlForSave(videoThumbnail);
+    const oldVideoThumbnail = normalizeImageUrl(existing.videoThumbnail);
+    const shouldDeleteOldVideoThumbnail = oldVideoThumbnail && (
+      (finalVideoThumbnail && oldVideoThumbnail !== finalVideoThumbnail) || // Reemplazo
+      (finalVideoThumbnail === null && oldVideoThumbnail !== null)    // Eliminación explícita
+    );
+
+    if (shouldDeleteOldVideoThumbnail && oldVideoThumbnail) {
+      const { bucket, key } = extractBucketAndKey(oldVideoThumbnail);
+      if (bucket && key) {
+        try {
+          await storageService.deleteFile(bucket, key);
+        } catch (e) {
+          console.warn('[Programs][PUT] No se pudo eliminar miniatura de video anterior', { bucket, key, id, error: String(e) });
+        }
+      }
+    }
+
     const programa = await prisma.program.update({
       where: { id: id },
       data: {
@@ -156,6 +176,7 @@ export async function PUT(
         imageUrl: finalImageUrl,
         imageAlt: imageAlt === undefined ? existing.imageAlt : (imageAlt || null),
         presentationVideo,
+        videoThumbnail: finalVideoThumbnail,
         odsAlignment,
         resultsAreas,
         results,
@@ -199,29 +220,30 @@ export async function DELETE(
       return NextResponse.json({ message: 'Programa eliminado exitosamente' });
     }
 
-    if (programa.imageUrl) {
-      const extractBucketAndKey = (u: string): { bucket: string | null; key: string | null } => {
-        try {
-          const publicBase = (process.env.AWS_S3_PUBLIC_URL || process.env.AWS_URL || '').replace(/\/$/, '');
-          const endpoint = (process.env.AWS_S3_ENDPOINT || process.env.AWS_ENDPOINT || '').replace(/\/$/, '');
-          const envBucket = process.env.AWS_S3_BUCKET || process.env.AWS_BUCKET || '';
-          const vhMatch = u.match(/^https?:\/\/([^\.]+)\.[^\/]+digitaloceanspaces\.com\/(.+)$/);
-          if (vhMatch) return { bucket: vhMatch[1], key: vhMatch[2] };
-          const awsVhMatch = u.match(/^https?:\/\/([^\.]+)\.s3\.[^\/]+\.amazonaws\.com\/(.+)$/);
-          if (awsVhMatch) return { bucket: awsVhMatch[1], key: awsVhMatch[2] };
-          if (endpoint && u.startsWith(endpoint + '/')) {
-            const rest = u.substring((endpoint + '/').length);
-            const idx = rest.indexOf('/');
-            if (idx > 0) return { bucket: rest.substring(0, idx), key: rest.substring(idx + 1) };
-          }
-          if (publicBase && u.startsWith(publicBase + '/')) {
-            return { bucket: envBucket || null, key: u.substring((publicBase + '/').length) };
-          }
-          return { bucket: envBucket || null, key: null };
-        } catch {
-          return { bucket: null, key: null };
+    const extractBucketAndKey = (u: string): { bucket: string | null; key: string | null } => {
+      try {
+        const publicBase = (process.env.AWS_S3_PUBLIC_URL || process.env.AWS_URL || '').replace(/\/$/, '');
+        const endpoint = (process.env.AWS_S3_ENDPOINT || process.env.AWS_ENDPOINT || '').replace(/\/$/, '');
+        const envBucket = process.env.AWS_S3_BUCKET || process.env.AWS_BUCKET || '';
+        const vhMatch = u.match(/^https?:\/\/([^\.]+)\.[^\/]+digitaloceanspaces\.com\/(.+)$/);
+        if (vhMatch) return { bucket: vhMatch[1], key: vhMatch[2] };
+        const awsVhMatch = u.match(/^https?:\/\/([^\.]+)\.s3\.[^\/]+\.amazonaws\.com\/(.+)$/);
+        if (awsVhMatch) return { bucket: awsVhMatch[1], key: awsVhMatch[2] };
+        if (endpoint && u.startsWith(endpoint + '/')) {
+          const rest = u.substring((endpoint + '/').length);
+          const idx = rest.indexOf('/');
+          if (idx > 0) return { bucket: rest.substring(0, idx), key: rest.substring(idx + 1) };
         }
-      };
+        if (publicBase && u.startsWith(publicBase + '/')) {
+          return { bucket: envBucket || null, key: u.substring((publicBase + '/').length) };
+        }
+        return { bucket: envBucket || null, key: null };
+      } catch {
+        return { bucket: null, key: null };
+      }
+    };
+
+    if (programa.imageUrl) {
       const { bucket, key } = extractBucketAndKey(programa.imageUrl);
       if (bucket && key) {
         try {

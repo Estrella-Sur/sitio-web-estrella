@@ -5,6 +5,28 @@ import { authOptions } from '@/lib/auth';
 
 const prisma = new PrismaClient();
 
+// Límite máximo para Decimal(12, 2): 9,999,999,999.99
+const MAX_DECIMAL_VALUE = 9999999999.99;
+
+function validateDecimalValue(value: number, fieldName: string): { valid: boolean; error?: string } {
+  if (isNaN(value) || !isFinite(value)) {
+    return { valid: false, error: `${fieldName} debe ser un número válido` };
+  }
+  
+  if (value < 0) {
+    return { valid: false, error: `${fieldName} no puede ser negativo` };
+  }
+  
+  if (Math.abs(value) > MAX_DECIMAL_VALUE) {
+    return { 
+      valid: false, 
+      error: `${fieldName} excede el límite máximo permitido (${MAX_DECIMAL_VALUE.toLocaleString('es-CL')})` 
+    };
+  }
+  
+  return { valid: true };
+}
+
 export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url);
@@ -93,10 +115,20 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    // Validar targetAmount
+    const parsedTargetAmount = parseFloat(targetAmount);
+    const targetValidation = validateDecimalValue(parsedTargetAmount, 'targetAmount');
+    if (!targetValidation.valid) {
+      return NextResponse.json(
+        { error: targetValidation.error },
+        { status: 400 }
+      );
+    }
+
     const annualGoal = await prisma.annualGoal.create({
       data: {
         year: parseInt(year),
-        targetAmount: parseFloat(targetAmount),
+        targetAmount: parsedTargetAmount,
         currentAmount: 0,
         description: description || null,
         isActive: true
@@ -104,8 +136,20 @@ export async function POST(request: NextRequest) {
     });
 
     return NextResponse.json(annualGoal, { status: 201 });
-  } catch (error) {
+  } catch (error: any) {
     console.error('Error creating annual goal:', error);
+    
+    // Detectar errores de desbordamiento numérico específicamente
+    if (error?.message?.includes('numeric field overflow') || 
+        error?.message?.includes('must round to an absolute value less than')) {
+      return NextResponse.json(
+        { 
+          error: `El valor excede el límite máximo permitido (${MAX_DECIMAL_VALUE.toLocaleString('es-CL')})` 
+        },
+        { status: 400 }
+      );
+    }
+    
     return NextResponse.json(
       { error: 'Error interno del servidor' },
       { status: 500 }
@@ -133,6 +177,29 @@ export async function PUT(request: NextRequest) {
         { error: 'ID es requerido' },
         { status: 400 }
       );
+    }
+
+    // Validar valores numéricos antes de actualizar
+    if (targetAmount !== undefined) {
+      const parsedTargetAmount = parseFloat(targetAmount);
+      const targetValidation = validateDecimalValue(parsedTargetAmount, 'targetAmount');
+      if (!targetValidation.valid) {
+        return NextResponse.json(
+          { error: targetValidation.error },
+          { status: 400 }
+        );
+      }
+    }
+
+    if (currentAmount !== undefined) {
+      const parsedCurrentAmount = parseFloat(currentAmount);
+      const currentValidation = validateDecimalValue(parsedCurrentAmount, 'currentAmount');
+      if (!currentValidation.valid) {
+        return NextResponse.json(
+          { error: currentValidation.error },
+          { status: 400 }
+        );
+      }
     }
 
     const updateData: Prisma.AnnualGoalUpdateInput = {};
@@ -171,8 +238,20 @@ export async function PUT(request: NextRequest) {
     });
 
     return NextResponse.json(annualGoal);
-  } catch (error) {
+  } catch (error: any) {
     console.error('Error updating annual goal:', error);
+    
+    // Detectar errores de desbordamiento numérico específicamente
+    if (error?.message?.includes('numeric field overflow') || 
+        error?.message?.includes('must round to an absolute value less than')) {
+      return NextResponse.json(
+        { 
+          error: `El valor excede el límite máximo permitido (${MAX_DECIMAL_VALUE.toLocaleString('es-CL')})` 
+        },
+        { status: 400 }
+      );
+    }
+    
     return NextResponse.json(
       { error: 'Error interno del servidor' },
       { status: 500 }

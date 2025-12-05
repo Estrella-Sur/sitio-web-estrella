@@ -19,6 +19,7 @@ interface Programa {
   imageUrl?: string;
   imageAlt?: string;
   presentationVideo?: string;
+  videoThumbnail?: string;
   targetGroups?: string;
   contentTopics?: string;
   results?: string;
@@ -202,21 +203,35 @@ export default function ProgramaDetailPage({ params }: { params: Promise<{ id: s
                   </CardHeader>
                   <CardContent>
                     {youtubeId ? (
-                      <div className="aspect-video bg-gray-100 dark:bg-gray-800 rounded-lg overflow-hidden">
+                      <div className="aspect-video bg-gray-100 dark:bg-gray-800 rounded-lg overflow-hidden relative">
                         <button
                           onClick={() => setIsVideoDialogOpen(true)}
                           className="block relative group w-full h-full cursor-pointer"
                         >
                           <Image
-                            src={`https://img.youtube.com/vi/${youtubeId}/maxresdefault.jpg`}
+                            src={
+                              programa.videoThumbnail || 
+                              `https://img.youtube.com/vi/${youtubeId}/maxresdefault.jpg`
+                            }
                             alt={`Video de ${programa.sectorName}`}
                             width={800}
                             height={450}
                             className="w-full h-full object-cover"
+                            onError={(e) => {
+                              // Fallback a hqdefault si maxresdefault no está disponible
+                              const target = e.target as HTMLImageElement;
+                              if (!target.src.includes('hqdefault') && !programa.videoThumbnail) {
+                                target.src = `https://img.youtube.com/vi/${youtubeId}/hqdefault.jpg`;
+                              } else if (!programa.videoThumbnail) {
+                                // Si hqdefault tampoco funciona, mostrar placeholder
+                                target.src = '/static-images/sections/user_default.png';
+                              }
+                            }}
+                            unoptimized
                           />
                           <div className="absolute inset-0 flex items-center justify-center bg-black/30 group-hover:bg-black/50 transition-colors">
-                            <div className="bg-red-600 text-white rounded-full p-4 group-hover:bg-red-700 transition-colors">
-                              <Play className="h-12 w-12" />
+                            <div className="bg-red-600 text-white rounded-full p-4 group-hover:bg-red-700 transition-colors shadow-lg">
+                              <Play className="h-12 w-12 fill-white" />
                             </div>
                           </div>
                         </button>

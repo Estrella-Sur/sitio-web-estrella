@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from 'react'
+import { useSession } from 'next-auth/react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
@@ -16,6 +17,7 @@ interface CreateUserFormProps {
 }
 
 export function CreateUserForm({ onUserCreated }: CreateUserFormProps) {
+  const { data: session } = useSession()
   const [open, setOpen] = useState(false)
   const [loading, setLoading] = useState(false)
   const [formData, setFormData] = useState({
@@ -55,30 +57,45 @@ export function CreateUserForm({ onUserCreated }: CreateUserFormProps) {
     setLoading(true)
 
     try {
-      // Generar contraseña
-      const password = generatePassword()
-      setGeneratedPassword(password)
-
-      // Llamar a la API para crear el usuario
-      const response = await fetch('/api/users', {
+      // Preparar headers con token de autenticación
+      const headers: HeadersInit = {
+        'Content-Type': 'application/json',
+      }
+      
+      // Agregar token de autenticación si está disponible
+      if (session?.customToken) {
+        headers['Authorization'] = `Bearer ${session.customToken}`
+      }
+      
+      // Llamar a la API para crear el usuario (la API genera la contraseña)
+      const response = await fetch('/api/admin/users', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers,
+        credentials: 'include',
         body: JSON.stringify({
           name: formData.name,
           email: formData.email,
-          role: formData.role,
-          password: password
+          role: formData.role
         }),
       })
 
       if (!response.ok) {
         const errorData = await response.json()
-        throw new Error(errorData.error || 'Error al crear usuario')
+        throw new Error(errorData.message || errorData.error || 'Error al crear usuario')
       }
 
-      const newUser = await response.json()
+      const result = await response.json()
+      const newUser = result.user
+      const temporaryPassword = result.temporaryCredentials?.password
+
+      // Guardar la contraseña generada por la API
+      if (temporaryPassword) {
+        setGeneratedPassword(temporaryPassword)
+      } else {
+        // Fallback: generar contraseña localmente si la API no la devuelve
+        const password = generatePassword()
+        setGeneratedPassword(password)
+      }
 
       // Transformar para el formato esperado por el frontend
       const transformedUser = {
@@ -87,10 +104,10 @@ export function CreateUserForm({ onUserCreated }: CreateUserFormProps) {
         email: newUser.email,
         role: newUser.role,
         status: newUser.isActive ? 'ACTIVE' : 'INACTIVE',
-        createdAt: newUser.createdAt.split('T')[0],
+        createdAt: newUser.createdAt ? newUser.createdAt.split('T')[0] : new Date().toISOString().split('T')[0],
         department: 'Sistema',
         phone: null,
-        password: password
+        password: temporaryPassword || generatedPassword
       }
 
       // Almacenar información del usuario creado
@@ -110,8 +127,7 @@ export function CreateUserForm({ onUserCreated }: CreateUserFormProps) {
         description: "El usuario ha sido creado y la contraseña generada.",
       })
 
-      // Resetear formulario
-      setFormData({ name: '', email: '', role: 'MANAGER' })
+      // NO resetear el formulario aquí, mantener los datos para mostrar la contraseña
       
     } catch (error) {
       toast({
@@ -119,12 +135,23 @@ export function CreateUserForm({ onUserCreated }: CreateUserFormProps) {
         description: error instanceof Error ? error.message : "Hubo un problema al crear el usuario. Inténtalo de nuevo.",
         variant: "destructive",
       })
+      // Si hay error, resetear la contraseña generada
+      setGeneratedPassword('')
     } finally {
       setLoading(false)
     }
   }
 
   const copyPassword = async () => {
+    if (!generatedPassword) {
+      toast({
+        title: "Error",
+        description: "No hay contraseña para copiar.",
+        variant: "destructive",
+      })
+      return
+    }
+
     try {
       await navigator.clipboard.writeText(generatedPassword)
       setPasswordCopied(true)
@@ -134,11 +161,29 @@ export function CreateUserForm({ onUserCreated }: CreateUserFormProps) {
       })
       setTimeout(() => setPasswordCopied(false), 2000)
     } catch (error) {
-      toast({
-        title: "Error al copiar",
-        description: "No se pudo copiar la contraseña al portapapeles.",
-        variant: "destructive",
-      })
+      // Fallback para navegadores que no soportan clipboard API
+      try {
+        const textArea = document.createElement('textarea')
+        textArea.value = generatedPassword
+        textArea.style.position = 'fixed'
+        textArea.style.left = '-999999px'
+        document.body.appendChild(textArea)
+        textArea.select()
+        document.execCommand('copy')
+        document.body.removeChild(textArea)
+        setPasswordCopied(true)
+        toast({
+          title: "Contraseña copiada",
+          description: "La contraseña ha sido copiada al portapapeles.",
+        })
+        setTimeout(() => setPasswordCopied(false), 2000)
+      } catch (fallbackError) {
+        toast({
+          title: "Error al copiar",
+          description: "No se pudo copiar la contraseña al portapapeles. Cópiala manualmente.",
+          variant: "destructive",
+        })
+      }
     }
   }
 
@@ -205,8 +250,8 @@ export function CreateUserForm({ onUserCreated }: CreateUserFormProps) {
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="MANAGER">MANAGER de Contenido</SelectItem>
-                  <SelectItem value="ADMINISTRATOR">ADMINISTRATOR</SelectItem>
+                  <SelectItem value="MANAGER">Gestor</SelectItem>
+                  <SelectItem value="ADMINISTRATOR">Administrador</SelectItem>
                   <SelectItem value="CONSULTANT">CONSULTANT</SelectItem>
                 </SelectContent>
               </Select>

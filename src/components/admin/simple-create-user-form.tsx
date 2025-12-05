@@ -23,7 +23,9 @@ import {
   CheckCircle,
   Key,
   Crown,
-  Briefcase
+  Briefcase,
+  Copy,
+  Check
 } from 'lucide-react'
 
 const createUserSchema = z.object({
@@ -46,6 +48,7 @@ export function SimpleCreateUserForm({ onUserCreated, onCancel }: SimpleCreateUs
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [generatedCredentials, setGeneratedCredentials] = useState<{email: string, password: string} | null>(null)
   const [showCredentials, setShowCredentials] = useState(false)
+  const [passwordCopied, setPasswordCopied] = useState(false)
   const { toast } = useToast()
 
   const { register, handleSubmit, formState: { errors }, watch, setValue } = useForm<CreateUserFormData>({
@@ -94,6 +97,26 @@ export function SimpleCreateUserForm({ onUserCreated, onCancel }: SimpleCreateUs
     }
   }
 
+  const copyPassword = async () => {
+    if (!generatedCredentials?.password) return
+    
+    try {
+      await navigator.clipboard.writeText(generatedCredentials.password)
+      setPasswordCopied(true)
+      toast({
+        title: "Contraseña copiada",
+        description: "La contraseña ha sido copiada al portapapeles.",
+      })
+      setTimeout(() => setPasswordCopied(false), 2000)
+    } catch (error) {
+      toast({
+        title: "Error al copiar",
+        description: "No se pudo copiar la contraseña al portapapeles.",
+        variant: "destructive",
+      })
+    }
+  }
+
   const onSubmit = async (data: CreateUserFormData) => {
     if (!generatedCredentials) {
       toast({
@@ -109,6 +132,7 @@ export function SimpleCreateUserForm({ onUserCreated, onCancel }: SimpleCreateUs
       const response = await fetch('/api/users', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
+        credentials: 'include', // Incluir cookies de sesión
         body: JSON.stringify({
           name: data.name,
           email: data.email,
@@ -129,10 +153,22 @@ export function SimpleCreateUserForm({ onUserCreated, onCancel }: SimpleCreateUs
         setShowCredentials(false)
         onUserCreated()
       } else {
-        const errorData = await response.json()
+        const errorData = await response.json().catch(() => ({ error: 'Error desconocido' }))
+        
+        // Mensajes de error más específicos
+        let errorMessage = errorData.message || errorData.error || "No se pudo crear el usuario"
+        
+        if (response.status === 409) {
+          errorMessage = errorData.message || "Este email ya está registrado. Por favor, usa un email diferente."
+        } else if (response.status === 403) {
+          errorMessage = errorData.message || "No tienes permisos para realizar esta acción."
+        } else if (response.status === 400) {
+          errorMessage = errorData.message || errorData.error || "Los datos proporcionados no son válidos."
+        }
+        
         toast({
           title: "❌ Error al crear usuario",
-          description: errorData.message || "No se pudo crear el usuario",
+          description: errorMessage,
           variant: "destructive",
         })
       }
@@ -245,8 +281,18 @@ export function SimpleCreateUserForm({ onUserCreated, onCancel }: SimpleCreateUs
                       variant="ghost"
                       size="sm"
                       onClick={() => setShowPassword(!showPassword)}
+                      title={showPassword ? "Ocultar contraseña" : "Mostrar contraseña"}
                     >
                       {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                    </Button>
+                    <Button
+                      type="button"
+                      variant="ghost"
+                      size="sm"
+                      onClick={copyPassword}
+                      title="Copiar contraseña"
+                    >
+                      {passwordCopied ? <Check className="h-4 w-4 text-green-600" /> : <Copy className="h-4 w-4" />}
                     </Button>
                   </div>
                 </div>

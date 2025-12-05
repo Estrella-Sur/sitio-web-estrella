@@ -23,12 +23,15 @@ export const CreateProgramaDialog: React.FC<CreateProgramaDialogProps> = ({ onSu
   const [uploading, setUploading] = useState(false);
   const [selectedImageFile, setSelectedImageFile] = useState<File | null>(null);
   const [imagePreviewUrl, setImagePreviewUrl] = useState<string>('');
+  const [selectedVideoThumbnailFile, setSelectedVideoThumbnailFile] = useState<File | null>(null);
+  const [videoThumbnailPreviewUrl, setVideoThumbnailPreviewUrl] = useState<string>('');
   const [formData, setFormData] = useState({
     sectorName: '',
     description: '',
     imageUrl: '',
     imageAlt: '',
     presentationVideo: '',
+    videoThumbnail: '',
     odsAlignment: '',
     resultsAreas: '',
     resultados: '',
@@ -65,6 +68,53 @@ export const CreateProgramaDialog: React.FC<CreateProgramaDialogProps> = ({ onSu
       // Si hay una imagen seleccionada, subirla al bucket primero
       let finalImageUrl = formData.imageUrl;
       let finalImageAlt = formData.imageAlt;
+      let finalVideoThumbnailUrl = formData.videoThumbnail;
+      
+      // Subir miniatura de video si hay una seleccionada
+      if (selectedVideoThumbnailFile) {
+        setUploading(true);
+        try {
+          const maxMb = Number(process.env.NEXT_PUBLIC_MAX_UPLOAD_MB || process.env.MAX_UPLOAD_MB || 20);
+          const maxBytes = maxMb * 1024 * 1024;
+          const allowed = ['image/jpeg', 'image/png', 'image/webp', 'image/gif'];
+
+          if (!allowed.includes(selectedVideoThumbnailFile.type)) {
+            throw new Error('Formato no permitido. Usa JPG, PNG, WEBP o GIF');
+          }
+          if (selectedVideoThumbnailFile.size > maxBytes) {
+            throw new Error(`El archivo es demasiado grande. Máximo ${maxMb}MB`);
+          }
+
+          const formDataToUpload = new FormData();
+          formDataToUpload.append('file', selectedVideoThumbnailFile);
+
+          const uploadResponse = await fetch('/api/admin/programas/upload', {
+            method: 'POST',
+            credentials: 'include',
+            body: formDataToUpload,
+          });
+
+          if (!uploadResponse.ok) {
+            const error = await uploadResponse.json();
+            throw new Error(error.error || 'Error al subir miniatura de video');
+          }
+
+          const uploadData = await uploadResponse.json();
+          finalVideoThumbnailUrl = uploadData.url;
+        } catch (error) {
+          console.error('Error uploading video thumbnail:', error);
+          toast({
+            title: 'Error',
+            description: error instanceof Error ? error.message : 'Error al subir la miniatura de video',
+            variant: 'destructive',
+          });
+          setUploading(false);
+          setIsLoading(false);
+          return;
+        } finally {
+          setUploading(false);
+        }
+      }
       
       if (selectedImageFile) {
         setUploading(true);
@@ -119,6 +169,7 @@ export const CreateProgramaDialog: React.FC<CreateProgramaDialogProps> = ({ onSu
         imageUrl: finalImageUrl?.trim() || null,
         imageAlt: finalImageAlt?.trim() || null,
         videoPresentacion: formData.presentationVideo?.trim() || null,
+        videoThumbnail: finalVideoThumbnailUrl?.trim() || null,
         alineacionODS: formData.odsAlignment?.trim() || null,
         subareasResultados: formData.resultsAreas?.trim() || null,
         resultados: formData.resultados?.trim() || null,
@@ -152,6 +203,7 @@ export const CreateProgramaDialog: React.FC<CreateProgramaDialogProps> = ({ onSu
         imageUrl: '',
         imageAlt: '',
         presentationVideo: '',
+        videoThumbnail: '',
         odsAlignment: '',
         resultsAreas: '',
         resultados: '',
@@ -161,6 +213,8 @@ export const CreateProgramaDialog: React.FC<CreateProgramaDialogProps> = ({ onSu
       });
       setSelectedImageFile(null);
       setImagePreviewUrl('');
+      setSelectedVideoThumbnailFile(null);
+      setVideoThumbnailPreviewUrl('');
       
       onSuccess?.();
     } catch (error) {
@@ -223,6 +277,52 @@ export const CreateProgramaDialog: React.FC<CreateProgramaDialogProps> = ({ onSu
     }
   };
 
+  const handleVideoThumbnailFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    
+    try {
+      const maxMb = Number(process.env.NEXT_PUBLIC_MAX_UPLOAD_MB || process.env.MAX_UPLOAD_MB || 20);
+      const maxBytes = maxMb * 1024 * 1024;
+      const allowed = ['image/jpeg', 'image/png', 'image/webp', 'image/gif'];
+      if (!allowed.includes(file.type)) {
+        toast({
+          title: 'Error',
+          description: 'Formato no permitido. Usa JPG, PNG, WEBP o GIF',
+          variant: 'destructive',
+        });
+        return;
+      }
+      if (file.size > maxBytes) {
+        toast({
+          title: 'Error',
+          description: `El archivo es demasiado grande. Máximo ${maxMb}MB`,
+          variant: 'destructive',
+        });
+        return;
+      }
+
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        const previewUrl = reader.result as string;
+        setVideoThumbnailPreviewUrl(previewUrl);
+        setSelectedVideoThumbnailFile(file);
+      };
+      reader.readAsDataURL(file);
+
+      toast({
+        title: 'Miniatura de video seleccionada',
+        description: 'La miniatura se subirá al bucket al crear el programa',
+      });
+    } catch (error) {
+      toast({
+        title: 'Error',
+        description: error instanceof Error ? error.message : 'Error al procesar la miniatura',
+        variant: 'destructive',
+      });
+    }
+  };
+
   return (
     <Dialog open={isOpen} onOpenChange={(open) => {
       setIsOpen(open);
@@ -230,12 +330,15 @@ export const CreateProgramaDialog: React.FC<CreateProgramaDialogProps> = ({ onSu
         // Si se cierra sin guardar, resetear el estado
         setSelectedImageFile(null);
         setImagePreviewUrl('');
+        setSelectedVideoThumbnailFile(null);
+        setVideoThumbnailPreviewUrl('');
         setFormData({
           sectorName: '',
           description: '',
           imageUrl: '',
           imageAlt: '',
           presentationVideo: '',
+          videoThumbnail: '',
           odsAlignment: '',
           resultsAreas: '',
           resultados: '',
@@ -365,6 +468,65 @@ export const CreateProgramaDialog: React.FC<CreateProgramaDialogProps> = ({ onSu
                 onChange={(e) => setFormData({ ...formData, presentationVideo: e.target.value })}
                 placeholder="https://youtube.com/watch?v=..."
               />
+            </div>
+
+            <div className="space-y-4">
+              <Label>Miniatura del Video (Opcional)</Label>
+              <p className="text-xs text-gray-500 dark:text-gray-400 -mt-2">
+                Si no se proporciona una miniatura personalizada, se usará automáticamente la miniatura de YouTube
+              </p>
+              {!videoThumbnailPreviewUrl && !formData.videoThumbnail ? (
+                <div className="border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg p-8 text-center hover:border-primary transition-colors">
+                  <ImageIcon className="mx-auto h-16 w-16 text-gray-400 mb-4" />
+                  <div className="mt-4">
+                    <label htmlFor="video-thumbnail-upload" className="cursor-pointer">
+                      <span className="mt-2 block text-base font-semibold text-gray-900 dark:text-gray-100 mb-1 underline">
+                        {uploading ? 'Subiendo miniatura...' : 'Haz clic para subir miniatura'}
+                      </span>
+                      <input
+                        id="video-thumbnail-upload"
+                        name="video-thumbnail-upload"
+                        type="file"
+                        className="sr-only"
+                        accept="image/*"
+                        onChange={handleVideoThumbnailFileChange}
+                        disabled={uploading || isLoading}
+                      />
+                    </label>
+                    <p className="mt-2 text-sm text-gray-500">
+                      PNG, JPG, WEBP o GIF hasta {String(Number(process.env.NEXT_PUBLIC_MAX_UPLOAD_MB || process.env.MAX_UPLOAD_MB || 20))}MB
+                    </p>
+                  </div>
+                </div>
+              ) : (
+                <div className="space-y-4">
+                  <div className="relative w-full h-64 border rounded-lg overflow-hidden bg-gray-100 dark:bg-gray-800">
+                    <Image
+                      src={videoThumbnailPreviewUrl || formData.videoThumbnail || ''}
+                      alt="Vista previa de miniatura de video"
+                      fill
+                      className="object-cover"
+                    />
+                    <Button
+                      type="button"
+                      variant="destructive"
+                      size="sm"
+                      className="absolute top-2 right-2"
+                      onClick={() => {
+                        setSelectedVideoThumbnailFile(null);
+                        setVideoThumbnailPreviewUrl('');
+                        setFormData(prev => ({ ...prev, videoThumbnail: '' }));
+                        toast({
+                          title: 'Miniatura eliminada',
+                          description: 'Se eliminó del formulario',
+                        });
+                      }}
+                    >
+                      Eliminar
+                    </Button>
+                  </div>
+                </div>
+              )}
             </div>
           </div>
 

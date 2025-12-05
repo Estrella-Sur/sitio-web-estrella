@@ -113,19 +113,19 @@ model News {
 }
 
 model Event {
-  id          String   @id @default(cuid())
-  title       String
-  content     String
-  imageUrl    String?
-  imageAlt    String?
-  eventDate   DateTime
-  location    String?
-  isActive    Boolean  @default(true)
-  isFeatured  Boolean  @default(false)
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-  createdBy   String?
-  organizer   User?    @relation("EventOrganizer", fields: [createdBy], references: [id])
+  id         String   @id @default(cuid())
+  title      String
+  content    String
+  imageUrl   String?
+  imageAlt   String?
+  eventDate  DateTime
+  location   String?
+  isActive   Boolean  @default(true)
+  isFeatured Boolean  @default(false)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  createdBy  String?
+  organizer  User?    @relation("EventOrganizer", fields: [createdBy], references: [id])
 
   @@map("events")
 }
@@ -241,6 +241,7 @@ model Program {
   sectorName        String
   description       String
   presentationVideo String?
+  videoThumbnail    String?
   odsAlignment      String?
   resultsAreas      String?
   results           String?

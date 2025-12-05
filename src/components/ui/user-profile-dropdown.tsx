@@ -14,7 +14,7 @@ import {
   DropdownMenuTrigger 
 } from "@/components/ui/dropdown-menu"
 import { LogOut, User, Settings, Shield } from "lucide-react"
-import { UserRole } from "@/lib/roles"
+import { UserRole, getRoleDisplayName } from "@/lib/roles"
 
 interface UserProfileDropdownProps {
   showFullInfo?: boolean
@@ -34,12 +34,7 @@ export function UserProfileDropdown({ }: UserProfileDropdownProps) {
   }
 
   const getRoleLabel = (role: string) => {
-    switch (role) {
-      case UserRole.ADMINISTRATOR: return 'Administrador'
-      case UserRole.MANAGER: return 'Manager'
-      case UserRole.CONSULTANT: return 'Consultor'
-      default: return 'Usuario'
-    }
+    return getRoleDisplayName(role) || 'Usuario'
   }
 
   const getRoleColor = (role: string) => {

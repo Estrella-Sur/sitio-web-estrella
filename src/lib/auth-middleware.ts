@@ -1,4 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { getServerSession } from 'next-auth'
+import { authOptions } from './auth'
 import { verifyAccessToken } from './security'
 import { getUserById } from './auth-service'
 import { UserRole, hasEqualOrHigherPrivilege, canPerformAction } from './roles'
@@ -28,49 +30,69 @@ export async function verifyAuth(request: NextRequest): Promise<{
   error?: string
 }> {
   try {
-    // Obtener token del header Authorization
+    // Primero intentar con NextAuth session (cookies)
+    const session = await getServerSession(authOptions)
+    
+    if (session?.user) {
+      // Obtener información actualizada del usuario desde la base de datos
+      const user = await getUserById(session.user.id)
+      
+      if (user && user.isActive) {
+        return {
+          isAuthenticated: true,
+          user: {
+            id: user.id,
+            email: user.email,
+            name: user.name || undefined,
+            role: user.role as UserRole
+          }
+        }
+      }
+    }
+    
+    // Si no hay sesión de NextAuth, intentar con token Bearer
     const authHeader = request.headers.get('authorization')
     
-    if (!authHeader || !authHeader.startsWith('Bearer ')) {
-      return {
-        isAuthenticated: false,
-        error: 'Token de autorización no encontrado'
+    if (authHeader && authHeader.startsWith('Bearer ')) {
+      const token = authHeader.substring(7) // Remover 'Bearer '
+
+      try {
+        // Verificar token
+        const decoded = verifyAccessToken(token)
+
+        // Obtener información actualizada del usuario
+        interface DecodedToken {
+          id: string
+        }
+        const user = await getUserById((decoded as DecodedToken).id)
+        
+        if (user && user.isActive) {
+          return {
+            isAuthenticated: true,
+            user: {
+              id: user.id,
+              email: user.email,
+              name: user.name || undefined,
+              role: user.role as UserRole
+            }
+          }
+        }
+      } catch (tokenError) {
+        console.error('Error verificando token Bearer:', tokenError)
       }
     }
-
-    const token = authHeader.substring(7) // Remover 'Bearer '
-
-    // Verificar token
-    const decoded = verifyAccessToken(token)
-
-    // Obtener información actualizada del usuario
-    interface DecodedToken {
-      id: string
-    }
-    const user = await getUserById((decoded as DecodedToken).id)
     
-    if (!user) {
-      return {
-        isAuthenticated: false,
-        error: 'Usuario no encontrado'
-      }
-    }
-
+    // Si no hay ninguna forma de autenticación válida
     return {
-      isAuthenticated: true,
-      user: {
-        id: user.id,
-        email: user.email,
-        name: user.name || undefined,
-        role: user.role as UserRole
-      }
+      isAuthenticated: false,
+      error: 'No autorizado. Por favor, inicia sesión.'
     }
 
   } catch (error) {
     console.error('Error verificando autenticación:', error)
     return {
       isAuthenticated: false,
-      error: 'Token inválido o expirado'
+      error: 'Error al verificar autenticación'
     }
   }
 }

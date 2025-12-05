@@ -7,8 +7,7 @@ import {
   FileText,
   Newspaper,
   Target,
-  Upload,
-  Settings
+  Upload
 } from 'lucide-react'
 import { usePermissions } from '@/hooks/use-permissions'
 
@@ -27,21 +26,21 @@ export function QuickActions() {
         {canManageContent() && (
           <>
             <Button asChild variant="default" className="w-full justify-start">
-              <Link href="/dashboard/historias/create">
+              <Link href="/dashboard/historias">
                 <FileText className="mr-2 h-4 w-4" />
                 Nueva Historia
               </Link>
             </Button>
 
             <Button asChild variant="default" className="w-full justify-start">
-              <Link href="/dashboard/noticias/create">
+              <Link href="/dashboard/noticias">
                 <Newspaper className="mr-2 h-4 w-4" />
                 Nueva Noticia
               </Link>
             </Button>
 
             <Button asChild variant="default" className="w-full justify-start">
-              <Link href="/dashboard/proyectos/create">
+              <Link href="/dashboard/proyectos">
                 <Target className="mr-2 h-4 w-4" />
                 Nuevo Proyecto
               </Link>
@@ -53,13 +52,6 @@ export function QuickActions() {
           <Link href="/dashboard/galeria-imagenes/upload">
             <Upload className="mr-2 h-4 w-4" />
             Subir Imágenes
-          </Link>
-        </Button>
-
-        <Button asChild variant="secondary" className="w-full justify-start">
-          <Link href="/dashboard/settings">
-            <Settings className="mr-2 h-4 w-4" />
-            Configuración
           </Link>
         </Button>
       </CardContent>
